@@ -22,12 +22,16 @@ button:hover {
     @apply cursor-pointer;
 }
 
+button:disabled:hover {
+    @apply cursor-not-allowed;
+}
+
 @utility secondary-text {
     @apply bg-slate-900 text-zinc-200;
 }
 
 @utility secondary-text-pseudo {
-    @apply hover:bg-slate-800 active:bg-slate-700 rounded-sm;
+    @apply not-disabled:hover:bg-slate-800 not-[:disabled]:active:bg-slate-700 rounded-sm;
 }
 
 @theme {

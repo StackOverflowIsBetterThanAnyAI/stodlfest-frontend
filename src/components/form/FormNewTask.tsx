@@ -34,6 +34,7 @@ const FormRadioButton = ({
                 value={value}
                 checked={currentPriority === value}
                 onChange={onChange}
+                required
             />
             <label htmlFor={id} className="text-sm md:text-base">
                 {label}
@@ -52,6 +53,9 @@ const FormNewTask = () => {
     const [priority, setPriority] = useState<string>(
         parsedSessionData?.priorityAdd || 'middle'
     )
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(
+        !parsedSessionData?.taskAdd.length
+    )
 
     const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.target.value)
@@ -59,8 +63,14 @@ const FormNewTask = () => {
     }
 
     const handleChangeTask = (e: ChangeEvent<HTMLInputElement>) => {
-        setTask(e.target.value)
-        setItemInSessionStorage('taskAdd', e.target.value)
+        const input = e.target.value
+        setTask(input)
+        setItemInSessionStorage('taskAdd', input)
+        if (input.length) {
+            setIsSubmitDisabled(false)
+        } else {
+            setIsSubmitDisabled(true)
+        }
     }
     const handleChangePriority = (e: ChangeEvent<HTMLInputElement>) => {
         setPriority(e.target.value)
@@ -89,6 +99,7 @@ const FormNewTask = () => {
                     className="w-full min-w-32 outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 text-sm md:text-base"
                     onChange={handleChangeTask}
                     value={task}
+                    required
                 />
             </div>
             <div className="flex flex-col gap-2">
@@ -137,6 +148,7 @@ const FormNewTask = () => {
             <button
                 type="submit"
                 className="secondary-text-pseudo outline-2 outline-zinc-500 px-2 py-1 text-base md:text-lg"
+                disabled={isSubmitDisabled}
             >
                 Aufgabe anlegen
             </button>
