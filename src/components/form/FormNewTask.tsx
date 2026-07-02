@@ -1,15 +1,40 @@
+import { useState, type ChangeEvent } from 'react'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+
 const FormHeader = () => {
     return (
         <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold flex justify-center text-center items-center">
-            Aufgabe anlegen
+            Neue Aufgabe anlegen
         </h2>
     )
 }
 
-const FormRadioButton = ({ id, label }: { id: string; label: string }) => {
+type FormRadioButtonProps = {
+    id: string
+    label: string
+    value: string
+    currentPriority: string
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+}
+
+const FormRadioButton = ({
+    id,
+    label,
+    value,
+    currentPriority,
+    onChange,
+}: FormRadioButtonProps) => {
     return (
         <div className="flex flex-nowrap gap-1">
-            <input type="radio" id={id} name="priority" value="high" />
+            <input
+                type="radio"
+                id={id}
+                name="priority"
+                value={value}
+                checked={currentPriority === value}
+                onChange={onChange}
+            />
             <label htmlFor={id} className="text-sm md:text-base">
                 {label}
             </label>
@@ -18,12 +43,41 @@ const FormRadioButton = ({ id, label }: { id: string; label: string }) => {
 }
 
 const FormNewTask = () => {
+    const parsedSessionData = getStoredSessionData()
+
+    const [task, setTask] = useState<string>(parsedSessionData?.taskAdd || '')
+    const [description, setDescription] = useState<string>(
+        parsedSessionData?.descriptionAdd || ''
+    )
+    const [priority, setPriority] = useState<string>(
+        parsedSessionData?.priorityAdd || 'middle'
+    )
+
+    const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setDescription(e.target.value)
+        setItemInSessionStorage('descriptionAdd', e.target.value)
+    }
+
+    const handleChangeTask = (e: ChangeEvent<HTMLInputElement>) => {
+        setTask(e.target.value)
+        setItemInSessionStorage('taskAdd', e.target.value)
+    }
+    const handleChangePriority = (e: ChangeEvent<HTMLInputElement>) => {
+        setPriority(e.target.value)
+        setItemInSessionStorage('priorityAdd', e.target.value)
+    }
+
+    const handleSubmit = () => {}
+
     return (
-        <form className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full">
+        <form
+            className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full"
+            onSubmit={handleSubmit}
+        >
             <FormHeader />
             <div className="flex flex-wrap gap-2 items-center">
                 <label
-                    htmlFor="task-add"
+                    htmlFor="taskAdd"
                     className="font-bold text-base md:text-lg"
                 >
                     Aufgabe:
@@ -31,21 +85,25 @@ const FormNewTask = () => {
                 <input
                     type="text"
                     placeholder="Aufgabe"
-                    id="task-add"
+                    id="taskAdd"
                     className="w-full min-w-32 outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 text-sm md:text-base"
+                    onChange={handleChangeTask}
+                    value={task}
                 />
             </div>
             <div className="flex flex-col gap-2">
                 <label
-                    htmlFor="description-add"
+                    htmlFor="descriptionAdd"
                     className="font-bold text-base md:text-lg"
                 >
                     Beschreibung:
                 </label>
                 <textarea
                     placeholder="Beschreibung"
-                    id="description-add"
-                    className="w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 text-sm md:text-base"
+                    id="descriptionAdd"
+                    className="w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 text-sm md:text-base resize-none"
+                    onChange={handleChangeDescription}
+                    value={description}
                 />
             </div>
             <fieldset>
@@ -53,9 +111,27 @@ const FormNewTask = () => {
                     Priorität:
                 </legend>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
-                    <FormRadioButton id="low-add" label="Niedrig" />
-                    <FormRadioButton id="medium-add" label="Mittel" />
-                    <FormRadioButton id="high-add" label="Hoch" />
+                    <FormRadioButton
+                        id="lowAdd"
+                        label="Niedrig"
+                        value="low"
+                        currentPriority={priority}
+                        onChange={handleChangePriority}
+                    />
+                    <FormRadioButton
+                        id="mediumAdd"
+                        label="Mittel"
+                        value="middle"
+                        currentPriority={priority}
+                        onChange={handleChangePriority}
+                    />
+                    <FormRadioButton
+                        id="highAdd"
+                        label="Hoch"
+                        value="high"
+                        currentPriority={priority}
+                        onChange={handleChangePriority}
+                    />
                 </div>
             </fieldset>
             <button
