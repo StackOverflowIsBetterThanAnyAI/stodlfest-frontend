@@ -1,12 +1,28 @@
 import { useCallback, useEffect, useState } from 'react'
 
 const Home = () => {
-    const [days, setDays] = useState<number>(0)
-    const [hours, setHours] = useState<number>(0)
-    const [minutes, setMinutes] = useState<number>(0)
-    const [seconds, setSeconds] = useState<number>(0)
-
     const targetDate = new Date('2026-09-05T18:30:00').getTime()
+
+    const [days, setDays] = useState<number>(() => {
+        const delta = targetDate - Date.now()
+        const d = Math.floor(delta / (1000 * 60 * 60 * 24))
+        return d > 0 ? d : 0
+    })
+    const [hours, setHours] = useState<number>(() => {
+        const delta = targetDate - Date.now()
+        const h = Math.floor(delta / (1000 * 60 * 60)) % 24
+        return h > 0 ? h : 0
+    })
+    const [minutes, setMinutes] = useState<number>(() => {
+        const delta = targetDate - Date.now()
+        const m = Math.floor(delta / (1000 * 60)) % 60
+        return m > 0 ? m : 0
+    })
+    const [seconds, setSeconds] = useState<number>(() => {
+        const delta = targetDate - Date.now()
+        const s = Math.floor(delta / 1000) % 60
+        return s > 0 ? s : 0
+    })
 
     const calculateTimeLeft = useCallback(() => {
         const currentDate = Date.now()
@@ -31,7 +47,6 @@ const Home = () => {
     }
 
     useEffect(() => {
-        calculateTimeLeft()
         const id = setInterval(() => {
             calculateTimeLeft()
         }, 1000)
