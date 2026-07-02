@@ -31,6 +31,7 @@ const Home = () => {
     }
 
     useEffect(() => {
+        calculateTimeLeft()
         const id = setInterval(() => {
             calculateTimeLeft()
         }, 1000)
