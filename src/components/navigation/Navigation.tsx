@@ -24,7 +24,7 @@ const Navigation = () => {
                     <img
                         src={logo}
                         width={48}
-                        className="outline-2 outline-zinc-200 rounded-full w-8 md:w-12"
+                        className="outline-2 outline-zinc-200 rounded-full w-8 md:w-10 lg:w-12"
                     />
                     Stodlfest
                 </Link>
