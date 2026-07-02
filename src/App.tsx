@@ -21,6 +21,7 @@ const AppContent = () => {
                     element={<h1>Mitglieder anlegen</h1>}
                 />
                 <Route path="/aufgaben" element={<h1>Aufgaben anlegen</h1>} />
+                <Route path="/todo" element={<h1>Todo</h1>} />
             </Routes>
             <Footer />
         </div>

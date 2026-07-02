@@ -3,4 +3,5 @@ export const ROUTES = [
     'arbeitseinteilung',
     'mitglieder',
     'aufgaben',
+    'todo',
 ]

@@ -64,6 +64,9 @@ const Navigation = () => {
                         <Link to="/aufgaben" className="secondary-text-pseudo">
                             Aufgaben
                         </Link>
+                        <Link to="/todo" className="secondary-text-pseudo">
+                            Todo
+                        </Link>
                     </div>
                 )}
             </div>
@@ -83,6 +86,9 @@ const Navigation = () => {
                     </Link>
                     <Link to="/aufgaben" className="secondary-text-pseudo">
                         Aufgaben
+                    </Link>
+                    <Link to="/todo" className="secondary-text-pseudo">
+                        Todo
                     </Link>
                 </nav>
             )}
