@@ -1,0 +1,37 @@
+@import 'tailwindcss';
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    @apply font-exo;
+}
+
+a {
+    @apply underline px-2 py-1;
+}
+
+a:focus-visible {
+    @apply outline-2 outline-slate-200 rounded-lg;
+}
+
+a:hover,
+button:hover {
+    @apply cursor-pointer;
+}
+
+@utility secondary-text {
+    @apply bg-slate-900 text-zinc-200;
+}
+
+@utility secondary-text-pseudo {
+    @apply hover:bg-slate-800 active:bg-slate-700 rounded-sm;
+}
+
+@theme {
+    --font-yesteryear: 'Yesteryear', cursive;
+    --font-exo: 'Exo', sans-serif;
+    --breakpoint-xs: 30rem;
+}
