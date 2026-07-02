@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navigation from './components/navigation/Navigation'
 import Footer from './components/footer/Footer'
 import Home from './pages/Home'
+import Vorbereitung from './pages/Vorbereitung'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
 
 const AppContent = () => {
@@ -21,7 +22,7 @@ const AppContent = () => {
                     element={<h1>Mitglieder anlegen</h1>}
                 />
                 <Route path="/aufgaben" element={<h1>Aufgaben anlegen</h1>} />
-                <Route path="/todo" element={<h1>Todo</h1>} />
+                <Route path="/vorbereitung" element={<Vorbereitung />} />
             </Routes>
             <Footer />
         </div>

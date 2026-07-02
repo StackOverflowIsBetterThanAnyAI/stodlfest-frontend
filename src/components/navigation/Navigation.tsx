@@ -64,8 +64,11 @@ const Navigation = () => {
                         <Link to="/aufgaben" className="secondary-text-pseudo">
                             Aufgaben
                         </Link>
-                        <Link to="/todo" className="secondary-text-pseudo">
-                            Todo
+                        <Link
+                            to="/vorbereitung"
+                            className="secondary-text-pseudo"
+                        >
+                            Vorbereitung
                         </Link>
                     </div>
                 )}
@@ -87,8 +90,8 @@ const Navigation = () => {
                     <Link to="/aufgaben" className="secondary-text-pseudo">
                         Aufgaben
                     </Link>
-                    <Link to="/todo" className="secondary-text-pseudo">
-                        Todo
+                    <Link to="/vorbereitung" className="secondary-text-pseudo">
+                        Vorbereitung
                     </Link>
                 </nav>
             )}
