@@ -15,16 +15,16 @@ const Footer = () => {
         <footer className="secondary-text mt-auto">
             <div className="flex flex-col mx-auto gap-y-2 w-full max-w-7xl text-pretty text-center text-xs md:text-sm p-4">
                 <span>
-                    Copyright &#169; {year} Michael Münzenhofer. All Rights
-                    Reserved.
+                    Copyright &#169; {year} Michael Münzenhofer. Alle Rechte
+                    vorbehalten.
                 </span>
                 <a
                     href="https://github.com/StackOverflowIsBetterThanAnyAI/stodlfest-frontend"
                     onKeyDown={(e) => handleKeyDown(e)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label="GitHub Repository (opens in new tab)"
-                    title="GitHub Repository (opens in new tab)"
+                    aria-label="GitHub Repository (öffnet in einem neuen Tab)"
+                    title="GitHub Repository (öffnet in einem neuen Tab)"
                     className="w-fit flex items-center gap-1 px-4 py-1 m-auto secondary-text-pseudo"
                 >
                     <svg
