@@ -5,9 +5,11 @@ import FormHeader from './FormHeader'
 import FormRadioButton from './FormRadioButton'
 import { FetchLoading } from 'fetch-loading'
 import { SERVER_ADDRESS } from '../../constants/constants'
+import { useToast } from '../../context/ToastContext'
 
 const FormNewTask = () => {
     const parsedSessionData = getStoredSessionData()
+    const { showToast } = useToast()
 
     const [task, setTask] = useState<string>(parsedSessionData?.taskAdd || '')
     const [description, setDescription] = useState<string>(
@@ -63,7 +65,10 @@ const FormNewTask = () => {
             if (!response.ok) {
                 const errorData = await response.json()
                 const error = errorData.task.join(' ')
-                console.log(error)
+                showToast({
+                    isSuccess: false,
+                    label: error,
+                })
                 return
             }
 
@@ -75,7 +80,10 @@ const FormNewTask = () => {
             setItemInSessionStorage('descriptionAdd', '')
             setItemInSessionStorage('priorityAdd', 'middle')
         } catch {
-            // setApiError('An error occurred while trying to add a new task.')
+            showToast({
+                isSuccess: false,
+                label: 'Beim Hinzufügen dieser Aufgabe ist ein Fehler aufgetreten.',
+            })
         } finally {
             setIsLoading(false)
         }

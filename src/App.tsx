@@ -4,6 +4,7 @@ import Footer from './components/footer/Footer'
 import Home from './pages/Home'
 import Vorbereitung from './pages/Vorbereitung'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
+import { ToastProvider } from './context/ToastContext'
 
 const AppContent = () => {
     useDocumentTitle()
@@ -31,9 +32,11 @@ const AppContent = () => {
 
 const App = () => {
     return (
-        <BrowserRouter>
-            <AppContent />
-        </BrowserRouter>
+        <ToastProvider>
+            <BrowserRouter>
+                <AppContent />
+            </BrowserRouter>
+        </ToastProvider>
     )
 }
 
