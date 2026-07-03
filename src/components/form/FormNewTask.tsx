@@ -1,47 +1,10 @@
 import { useState, type ChangeEvent } from 'react'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
-
-const FormHeader = () => {
-    return (
-        <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold flex justify-center text-center items-center">
-            Neue Aufgabe anlegen
-        </h2>
-    )
-}
-
-type FormRadioButtonProps = {
-    id: string
-    label: string
-    value: string
-    currentPriority: string
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void
-}
-
-const FormRadioButton = ({
-    id,
-    label,
-    value,
-    currentPriority,
-    onChange,
-}: FormRadioButtonProps) => {
-    return (
-        <div className="flex flex-nowrap gap-1">
-            <input
-                type="radio"
-                id={id}
-                name="priority"
-                value={value}
-                checked={currentPriority === value}
-                onChange={onChange}
-                required
-            />
-            <label htmlFor={id} className="text-sm md:text-base">
-                {label}
-            </label>
-        </div>
-    )
-}
+import FormHeader from './FormHeader'
+import FormRadioButton from './FormRadioButton'
+import { FetchLoading } from 'fetch-loading'
+import { SERVER_ADDRESS } from '../../constants/constants'
 
 const FormNewTask = () => {
     const parsedSessionData = getStoredSessionData()
@@ -56,12 +19,12 @@ const FormNewTask = () => {
     const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(
         !parsedSessionData?.taskAdd?.length
     )
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.target.value)
         setItemInSessionStorage('descriptionAdd', e.target.value)
     }
-
     const handleChangeTask = (e: ChangeEvent<HTMLInputElement>) => {
         const input = e.target.value
         setTask(input)
@@ -77,7 +40,46 @@ const FormNewTask = () => {
         setItemInSessionStorage('priorityAdd', e.target.value)
     }
 
-    const handleSubmit = () => {}
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        const taskData = {
+            task,
+            description,
+            priority,
+        }
+
+        try {
+            setIsLoading(true)
+
+            const response = await fetch(`${SERVER_ADDRESS}/api/tasks/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(taskData),
+            })
+
+            if (!response.ok) {
+                const errorData = await response.json()
+                const error = errorData.task.join(' ')
+                console.log(error)
+                return
+            }
+
+            setTask('')
+            setDescription('')
+            setPriority('middle')
+            setIsSubmitDisabled(true)
+            setItemInSessionStorage('taskAdd', '')
+            setItemInSessionStorage('descriptionAdd', '')
+            setItemInSessionStorage('priorityAdd', 'middle')
+        } catch {
+            // setApiError('An error occurred while trying to add a new task.')
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     const inputClass =
         'w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base'
@@ -87,7 +89,7 @@ const FormNewTask = () => {
             className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full"
             onSubmit={handleSubmit}
         >
-            <FormHeader />
+            <FormHeader label="Neue Aufgabe anlegen" />
             <div className="flex flex-wrap gap-2 items-center">
                 <label
                     htmlFor="taskAdd"
@@ -150,13 +152,19 @@ const FormNewTask = () => {
                     />
                 </div>
             </fieldset>
-            <button
-                type="submit"
-                className="secondary-text-pseudo outline-2 outline-zinc-500 px-2 py-1 text-base md:text-lg"
-                disabled={isSubmitDisabled}
-            >
-                Aufgabe anlegen
-            </button>
+            {isLoading ? (
+                <div className="rounded-sm outline-2 outline-zinc-500 h-8 md:h-10 w-full flex justify-center items-center">
+                    <FetchLoading theme="#71717b" />
+                </div>
+            ) : (
+                <button
+                    type="submit"
+                    className="secondary-text-pseudo outline-2 outline-zinc-500 px-2 text-base md:text-lg h-8 md:h-10"
+                    disabled={isSubmitDisabled || isLoading}
+                >
+                    Aufgabe anlegen
+                </button>
+            )}
         </form>
     )
 }
