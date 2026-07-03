@@ -35,13 +35,13 @@ const Navigation = () => {
                         aria-expanded={isMenuExpanded}
                         aria-label={
                             isMenuExpanded
-                                ? 'Close mobile navigation menu'
-                                : 'Open mobile navigation menu'
+                                ? 'Das mobile Navigationsmenü schließen'
+                                : 'Das mobile Navigationsmenü öffnen'
                         }
                         title={
                             isMenuExpanded
-                                ? 'Close mobile navigation menu'
-                                : 'Open mobile navigation menu'
+                                ? 'Das mobile Navigationsmenü schließen'
+                                : 'Das mobile Navigationsmenü öffnen'
                         }
                         className="text-xl secondary-text-pseudo w-8 h-8 flex items-center justify-center"
                     >
