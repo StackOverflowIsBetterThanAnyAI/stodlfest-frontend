@@ -54,7 +54,7 @@ const FormNewTask = () => {
         parsedSessionData?.priorityAdd || 'middle'
     )
     const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(
-        !parsedSessionData?.taskAdd.length
+        !parsedSessionData?.taskAdd?.length
     )
 
     const handleChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -79,6 +79,9 @@ const FormNewTask = () => {
 
     const handleSubmit = () => {}
 
+    const inputClass =
+        'w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base'
+
     return (
         <form
             className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full"
@@ -96,7 +99,7 @@ const FormNewTask = () => {
                     type="text"
                     placeholder="Aufgabe"
                     id="taskAdd"
-                    className="w-full min-w-32 outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 text-sm md:text-base"
+                    className={`min-w-32 ${inputClass}`}
                     onChange={handleChangeTask}
                     value={task}
                     required
@@ -112,7 +115,7 @@ const FormNewTask = () => {
                 <textarea
                     placeholder="Beschreibung"
                     id="descriptionAdd"
-                    className="w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 text-sm md:text-base resize-none"
+                    className={`resize-none ${inputClass}`}
                     onChange={handleChangeDescription}
                     value={description}
                 />
