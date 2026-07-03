@@ -1,11 +1,11 @@
 import { useState, type ChangeEvent } from 'react'
-import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
-import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { FetchLoading } from 'fetch-loading'
 import FormHeader from './FormHeader'
 import FormRadioButton from './FormRadioButton'
-import { FetchLoading } from 'fetch-loading'
-import { SERVER_ADDRESS } from '../../constants/constants'
 import { useToast } from '../../context/ToastContext'
+import { handleAddNewTask } from '../../api/handleAddNewTask'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
 
 const FormNewTask = () => {
     const parsedSessionData = getStoredSessionData()
@@ -43,50 +43,18 @@ const FormNewTask = () => {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        const taskData = {
-            task,
+        handleAddNewTask({
+            e,
             description,
             priority,
-        }
-
-        try {
-            setIsLoading(true)
-
-            const response = await fetch(`${SERVER_ADDRESS}/api/tasks/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(taskData),
-            })
-
-            if (!response.ok) {
-                const errorData = await response.json()
-                const error = errorData.task.join(' ')
-                showToast({
-                    isSuccess: false,
-                    label: error,
-                })
-                return
-            }
-
-            setTask('')
-            setDescription('')
-            setPriority('middle')
-            setIsSubmitDisabled(true)
-            setItemInSessionStorage('taskAdd', '')
-            setItemInSessionStorage('descriptionAdd', '')
-            setItemInSessionStorage('priorityAdd', 'middle')
-        } catch {
-            showToast({
-                isSuccess: false,
-                label: 'Beim Hinzufügen dieser Aufgabe ist ein Fehler aufgetreten.',
-            })
-        } finally {
-            setIsLoading(false)
-        }
+            setDescription,
+            setIsLoading,
+            setIsSubmitDisabled,
+            setPriority,
+            setTask,
+            showToast,
+            task,
+        })
     }
 
     const inputClass =
