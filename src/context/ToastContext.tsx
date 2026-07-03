@@ -20,6 +20,10 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
         setIsVisible(true)
     }, [])
 
+    const hideToast = useCallback(() => {
+        setIsVisible(false)
+    }, [])
+
     useEffect(() => {
         if (isVisible) {
             const timeout = setTimeout(() => {
@@ -30,7 +34,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     }, [isVisible])
 
     return (
-        <ToastContext.Provider value={{ showToast }}>
+        <ToastContext.Provider value={{ showToast, hideToast }}>
             {children}
             {isVisible && toast && (
                 <Toast label={toast.label} isSuccess={toast.isSuccess} />

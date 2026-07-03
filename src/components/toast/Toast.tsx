@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import type { ToastProps } from '../../types/types'
+import { useToast } from '../../context/ToastContext'
 
 const Toast = ({ isSuccess, label }: ToastProps) => {
+    const { hideToast } = useToast()
     const [isTriggered, setIsTriggered] = useState<boolean>(true)
 
     const opacity = isTriggered ? 'opacity-90' : 'opacity-0'
@@ -11,12 +13,18 @@ const Toast = ({ isSuccess, label }: ToastProps) => {
         : 'bg-red-400 text-stone-950'
 
     useEffect(() => {
-        const animationTimeout = setTimeout(() => setIsTriggered(false), 3000)
+        setIsTriggered(true)
+
+        const animationTimeout = setTimeout(() => {
+            setIsTriggered(false)
+        }, 3000)
+
         return () => clearTimeout(animationTimeout)
-    }, [])
+    }, [label])
 
     const handleCloseToast = () => {
         setIsTriggered(false)
+        hideToast()
     }
 
     return (

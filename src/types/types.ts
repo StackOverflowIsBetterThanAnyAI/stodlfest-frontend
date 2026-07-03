@@ -19,4 +19,5 @@ export type ToastProps = {
 
 export type ToastContextType = {
     showToast: (props: ToastProps) => void
+    hideToast: () => void
 }
