@@ -7,15 +7,7 @@ import {
     type ReactNode,
 } from 'react'
 import Toast from '../components/toast/Toast'
-
-export type ToastProps = {
-    label: string
-    isSuccess: boolean
-}
-
-type ToastContextType = {
-    showToast: (props: ToastProps) => void
-}
+import type { ToastContextType, ToastProps } from '../types/types'
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined)
 

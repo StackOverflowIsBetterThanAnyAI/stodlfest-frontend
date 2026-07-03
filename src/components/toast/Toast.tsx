@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react'
+import type { ToastProps } from '../../types/types'
 
-type SuccessProps = {
-    isSuccess: boolean
-    label: string
-}
-
-const Toast = ({ isSuccess, label }: SuccessProps) => {
+const Toast = ({ isSuccess, label }: ToastProps) => {
     const [isTriggered, setIsTriggered] = useState<boolean>(true)
 
     const opacity = isTriggered ? 'opacity-90' : 'opacity-0'

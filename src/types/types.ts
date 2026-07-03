@@ -11,3 +11,12 @@ export type FormRadioButtonProps = {
     currentPriority: string
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
+
+export type ToastProps = {
+    isSuccess: boolean
+    label: string
+}
+
+export type ToastContextType = {
+    showToast: (props: ToastProps) => void
+}
