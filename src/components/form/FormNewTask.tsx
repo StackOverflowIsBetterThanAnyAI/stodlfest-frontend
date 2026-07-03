@@ -102,6 +102,7 @@ const FormNewTask = () => {
                     className={`min-w-32 ${inputClass}`}
                     onChange={handleChangeTask}
                     value={task}
+                    maxLength={127}
                     required
                 />
             </div>
@@ -118,6 +119,7 @@ const FormNewTask = () => {
                     className={`resize-none ${inputClass}`}
                     onChange={handleChangeDescription}
                     value={description}
+                    maxLength={255}
                 />
             </div>
             <fieldset>
