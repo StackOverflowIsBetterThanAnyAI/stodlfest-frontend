@@ -1,19 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
-import type { ToastProps } from '../types/types'
+import type { handleAddNewTaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
-
-type handleAddNewTaskProps = {
-    e: React.FormEvent<HTMLFormElement>
-    description: string
-    priority: string
-    setDescription: React.Dispatch<React.SetStateAction<string>>
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-    setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void
-    setPriority: React.Dispatch<React.SetStateAction<string>>
-    setTask: React.Dispatch<React.SetStateAction<string>>
-    showToast: (props: ToastProps) => void
-    task: string
-}
 
 export const handleAddNewTask = async ({
     e,

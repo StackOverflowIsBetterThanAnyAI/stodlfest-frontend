@@ -30,3 +30,23 @@ export type ToastContextType = {
     showToast: (props: ToastProps) => void
     hideToast: () => void
 }
+
+export type handleAddNewTaskProps = {
+    e: React.FormEvent<HTMLFormElement>
+    description: string
+    priority: string
+    setDescription: React.Dispatch<React.SetStateAction<string>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void
+    setPriority: React.Dispatch<React.SetStateAction<string>>
+    setTask: React.Dispatch<React.SetStateAction<string>>
+    showToast: (props: ToastProps) => void
+    task: string
+}
+
+export type handleCompleteTaskProps = {
+    setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[]>>
+    showToast: (props: ToastProps) => void
+    task: TaskProps
+    upcomingTasks: TaskProps[]
+}
