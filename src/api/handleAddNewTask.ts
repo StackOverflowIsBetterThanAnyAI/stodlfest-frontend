@@ -11,6 +11,7 @@ export const handleAddNewTask = async ({
     setIsSubmitDisabled,
     setPriority,
     setTask,
+    setUpcomingTasks,
     showToast,
     task,
 }: handleAddNewTaskProps) => {
@@ -50,6 +51,13 @@ export const handleAddNewTask = async ({
         setItemInSessionStorage('taskAdd', '')
         setItemInSessionStorage('descriptionAdd', '')
         setItemInSessionStorage('priorityAdd', 'middle')
+
+        const newTask = await response.json()
+        setUpcomingTasks((prevTasks) => {
+            const updatedTasks = [...(prevTasks || []), newTask]
+            setItemInSessionStorage('upcomingTasks', updatedTasks)
+            return updatedTasks
+        })
     } catch {
         showToast({
             isSuccess: false,

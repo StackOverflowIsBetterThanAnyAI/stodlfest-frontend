@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react'
+import { useContext, useState, type ChangeEvent } from 'react'
 import { FetchLoading } from 'fetch-loading'
 import FormRadioButton from './FormRadioButton'
 import Header from '../header/Header'
@@ -6,10 +6,19 @@ import { useToast } from '../../context/ToastContext'
 import { handleAddNewTask } from '../../api/handleAddNewTask'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 
 const FormNewTask = () => {
     const parsedSessionData = getStoredSessionData()
     const { showToast } = useToast()
+
+    const upcomingTasksContext = useContext(UpcomingTasksContext)
+    if (!upcomingTasksContext) {
+        throw new Error(
+            'FormNewTask must be used within a UpcomingTasksContext.Provider'
+        )
+    }
+    const [_upcomingTasks, setUpcomingTasks] = upcomingTasksContext
 
     const [task, setTask] = useState<string>(parsedSessionData?.taskAdd || '')
     const [description, setDescription] = useState<string>(
@@ -52,6 +61,7 @@ const FormNewTask = () => {
             setIsSubmitDisabled,
             setPriority,
             setTask,
+            setUpcomingTasks,
             showToast,
             task,
         })
