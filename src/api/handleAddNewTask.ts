@@ -54,7 +54,7 @@ export const handleAddNewTask = async ({
 
         const newTask = await response.json()
         setUpcomingTasks((prevTasks) => {
-            const updatedTasks = [...(prevTasks || []), newTask]
+            const updatedTasks = [newTask, ...(prevTasks || [])]
             setItemInSessionStorage('upcomingTasks', updatedTasks)
             return updatedTasks
         })
