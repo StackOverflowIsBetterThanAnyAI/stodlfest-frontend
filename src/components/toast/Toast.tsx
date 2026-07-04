@@ -13,14 +13,12 @@ const Toast = ({ isSuccess, label }: ToastProps) => {
         : 'bg-red-400 text-stone-950'
 
     useEffect(() => {
-        setIsTriggered(true)
-
         const animationTimeout = setTimeout(() => {
             setIsTriggered(false)
         }, 3000)
 
         return () => clearTimeout(animationTimeout)
-    }, [label])
+    }, [])
 
     const handleCloseToast = () => {
         setIsTriggered(false)

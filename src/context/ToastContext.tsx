@@ -37,7 +37,11 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
         <ToastContext.Provider value={{ showToast, hideToast }}>
             {children}
             {isVisible && toast && (
-                <Toast label={toast.label} isSuccess={toast.isSuccess} />
+                <Toast
+                    key={toast.label}
+                    label={toast.label}
+                    isSuccess={toast.isSuccess}
+                />
             )}
         </ToastContext.Provider>
     )
