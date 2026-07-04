@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from 'react'
 import { FetchLoading } from 'fetch-loading'
-import FormHeader from './FormHeader'
 import FormRadioButton from './FormRadioButton'
+import Header from '../header/Header'
 import { useToast } from '../../context/ToastContext'
 import { handleAddNewTask } from '../../api/handleAddNewTask'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
@@ -65,7 +65,7 @@ const FormNewTask = () => {
             className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full"
             onSubmit={handleSubmit}
         >
-            <FormHeader label="Neue Aufgabe anlegen" />
+            <Header label="Neue Aufgabe anlegen" />
             <div className="flex flex-wrap gap-2 items-center">
                 <label
                     htmlFor="taskAdd"
