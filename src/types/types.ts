@@ -18,6 +18,7 @@ export type TaskProps = {
     id: number
     priority: 'low' | 'middle' | 'high'
     task: string
+    finished?: boolean
 }
 
 export type ToastProps = {
