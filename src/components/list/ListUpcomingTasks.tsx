@@ -24,7 +24,7 @@ const ListUpcomingTasks = () => {
             'ListUpcomingTasks must be used within a CompletedTasksContext.Provider'
         )
     }
-    const [_completedTasks, setCompletedTasks] = completedTasksContext
+    const [completedTasks, setCompletedTasks] = completedTasksContext
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -89,9 +89,11 @@ const ListUpcomingTasks = () => {
                                     <button
                                         onClick={() =>
                                             handleCompleteTask({
+                                                setCompletedTasks,
                                                 setUpcomingTasks,
                                                 showToast,
                                                 task,
+                                                completedTasks,
                                                 upcomingTasks,
                                             })
                                         }

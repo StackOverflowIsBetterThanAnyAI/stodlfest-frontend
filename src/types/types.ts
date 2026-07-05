@@ -53,9 +53,11 @@ export type handleAddNewTaskProps = {
 }
 
 export type handleCompleteTaskProps = {
+    setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     showToast: (props: ToastProps) => void
     task: TaskProps
+    completedTasks: TaskProps[]
     upcomingTasks: TaskProps[]
 }
 

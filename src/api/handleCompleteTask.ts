@@ -3,9 +3,11 @@ import type { handleCompleteTaskProps, TaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleCompleteTask = async ({
+    setCompletedTasks,
     setUpcomingTasks,
     showToast,
     task,
+    completedTasks,
     upcomingTasks,
 }: handleCompleteTaskProps) => {
     try {
@@ -33,6 +35,7 @@ export const handleCompleteTask = async ({
         )
         setUpcomingTasks(updatedTasks)
         setItemInSessionStorage('upcomingTasks', updatedTasks)
+        setCompletedTasks([task, ...completedTasks])
     } catch {
         showToast({
             isSuccess: false,
