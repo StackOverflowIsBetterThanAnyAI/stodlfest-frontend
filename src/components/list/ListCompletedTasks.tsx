@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react'
-import Header from '../header/Header'
-import { handleFetchUpcomingTasks } from '../../api/handleFetchUpcomingTasks'
 import { FetchLoading } from 'fetch-loading'
+import Header from '../header/Header'
+import ListTask from './ListTask'
+import { handleFetchUpcomingTasks } from '../../api/handleFetchUpcomingTasks'
 import { CompletedTasksContext } from '../../context/CompletedTasksContext'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { useToast } from '../../context/ToastContext'
-import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
 
 const ListCompletedTasks = () => {
     const { showToast } = useToast()
@@ -53,47 +53,13 @@ const ListCompletedTasks = () => {
                 </button>
             )}
             {completedTasks?.length ? (
-                <ul className="flex flex-col gap-4 mx-2">
-                    {completedTasks.map((task, id) => (
-                        <li
-                            key={task.id}
-                            className={`flex flex-col ${id < completedTasks.length - 1 ? 'pb-4 border-b-2' : ''} border-zinc-200`}
-                        >
-                            <div
-                                className={`py-2 px-3 flex flex-col gap-2 ${id % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
-                            >
-                                <div className="flex justify-between items-center">
-                                    <h3 className="text-base md:text-lg">
-                                        {task.task}
-                                    </h3>
-                                    <span className="text-sm md:text-base">
-                                        {task.priority}
-                                    </span>
-                                </div>
-                                {task?.description?.length ? (
-                                    <em className="text-sm md:text-base line-clamp-3 break-words">
-                                        {task.description}
-                                    </em>
-                                ) : undefined}
-                                <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
-                                    <button
-                                        onClick={() =>
-                                            handleDeleteCompletedTask({
-                                                setCompletedTasks,
-                                                showToast,
-                                                task,
-                                                completedTasks,
-                                            })
-                                        }
-                                        className="secondary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto"
-                                    >
-                                        Löschen
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                <ListTask
+                    allowDelete
+                    completedTasks={completedTasks}
+                    setCompletedTasks={setCompletedTasks}
+                    showToast={showToast}
+                    tasks={completedTasks}
+                />
             ) : undefined}
         </section>
     )

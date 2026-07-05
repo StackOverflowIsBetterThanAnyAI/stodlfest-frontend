@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
+import { FetchLoading } from 'fetch-loading'
 import { useToast } from '../../context/ToastContext'
 import Header from '../header/Header'
-import { FetchLoading } from 'fetch-loading'
-import { handleCompleteTask } from '../../api/handleCompleteTask'
+import ListTask from './ListTask'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleFetchUpcomingTasks } from '../../api/handleFetchUpcomingTasks'
 import { CompletedTasksContext } from '../../context/CompletedTasksContext'
@@ -57,55 +57,16 @@ const ListUpcomingTasks = () => {
                 </button>
             )}
             {upcomingTasks?.length ? (
-                <ul className="flex flex-col gap-4 mx-2">
-                    {upcomingTasks.map((task, id) => (
-                        <li
-                            key={task.id}
-                            className={`flex flex-col ${id < upcomingTasks.length - 1 ? 'pb-4 border-b-2' : ''} border-zinc-200`}
-                        >
-                            <div
-                                className={`py-2 px-3 flex flex-col gap-2 ${id % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
-                            >
-                                <div className="flex justify-between items-center">
-                                    <h3 className="text-base md:text-lg">
-                                        {task.task}
-                                    </h3>
-                                    <span className="text-sm md:text-base">
-                                        {task.priority}
-                                    </span>
-                                </div>
-                                {task?.description?.length ? (
-                                    <em className="text-sm md:text-base line-clamp-3 break-words">
-                                        {task.description}
-                                    </em>
-                                ) : undefined}
-                                <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
-                                    <button
-                                        onClick={fetchUpcomingTasks}
-                                        className="secondary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto"
-                                    >
-                                        Bearbeiten
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            handleCompleteTask({
-                                                setCompletedTasks,
-                                                setUpcomingTasks,
-                                                showToast,
-                                                task,
-                                                completedTasks,
-                                                upcomingTasks,
-                                            })
-                                        }
-                                        className="secondary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto"
-                                    >
-                                        Erledigt
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                <ListTask
+                    allowComplete
+                    allowEdit
+                    setCompletedTasks={setCompletedTasks}
+                    setUpcomingTasks={setUpcomingTasks}
+                    completedTasks={completedTasks}
+                    upcomingTasks={upcomingTasks}
+                    showToast={showToast}
+                    tasks={upcomingTasks}
+                />
             ) : undefined}
         </section>
     )
