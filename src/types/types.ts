@@ -58,3 +58,10 @@ export type handleCompleteTaskProps = {
     task: TaskProps
     upcomingTasks: TaskProps[]
 }
+
+export type handleDeleteCompletedTaskProps = {
+    setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
+    showToast: (props: ToastProps) => void
+    task: TaskProps
+    completedTasks: TaskProps[]
+}

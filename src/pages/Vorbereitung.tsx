@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import FormNewTask from '../components/form/FormNewTask'
+import ListCompletedTasks from '../components/list/ListCompletedTasks'
 import ListUpcomingTasks from '../components/list/ListUpcomingTasks'
 import type { TaskProps } from '../types/types'
 import { UpcomingTasksContext } from '../context/UpcomingTasksContext'
@@ -28,9 +29,7 @@ const Vorbereitung = () => {
                         Vorbereitungen
                     </h1>
                     <ListUpcomingTasks />
-                    <div>
-                        <h2>Erledigte Aufgaben</h2>
-                    </div>
+                    <ListCompletedTasks />
                     <FormNewTask />
                 </UpcomingTasksContext.Provider>
             </CompletedTasksContext.Provider>
