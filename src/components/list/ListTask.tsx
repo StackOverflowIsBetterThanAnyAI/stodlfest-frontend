@@ -1,53 +1,6 @@
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
-import type { TaskProps, ToastProps } from '../../types/types'
-
-type BaseListTaskProps = {
-    tasks: TaskProps[]
-}
-
-type DeleteProps =
-    | {
-          allowDelete: true
-          setCompletedTasks: React.Dispatch<
-              React.SetStateAction<TaskProps[] | []>
-          >
-          showToast: (props: ToastProps) => void
-          completedTasks: TaskProps[]
-      }
-    | {
-          allowDelete?: false
-      }
-
-type CompleteProps =
-    | {
-          allowComplete: true
-          setCompletedTasks: React.Dispatch<
-              React.SetStateAction<TaskProps[] | []>
-          >
-          setUpcomingTasks: React.Dispatch<
-              React.SetStateAction<TaskProps[] | []>
-          >
-          completedTasks: TaskProps[]
-          upcomingTasks: TaskProps[]
-          showToast: (props: ToastProps) => void
-      }
-    | {
-          allowComplete?: false
-      }
-
-type EditProps =
-    | {
-          allowEdit: true
-      }
-    | {
-          allowEdit?: false
-      }
-
-export type ListTaskProps = BaseListTaskProps &
-    DeleteProps &
-    CompleteProps &
-    EditProps
+import type { ListTaskProps, TaskProps } from '../../types/types'
 
 const ListTask = (props: ListTaskProps) => {
     return (

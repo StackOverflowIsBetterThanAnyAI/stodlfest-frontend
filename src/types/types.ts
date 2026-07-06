@@ -67,3 +67,50 @@ export type handleDeleteCompletedTaskProps = {
     task: TaskProps
     completedTasks: TaskProps[]
 }
+
+type BaseListTaskProps = {
+    tasks: TaskProps[]
+}
+
+type DeleteProps =
+    | {
+          allowDelete: true
+          setCompletedTasks: React.Dispatch<
+              React.SetStateAction<TaskProps[] | []>
+          >
+          showToast: (props: ToastProps) => void
+          completedTasks: TaskProps[]
+      }
+    | {
+          allowDelete?: false
+      }
+
+type CompleteProps =
+    | {
+          allowComplete: true
+          setCompletedTasks: React.Dispatch<
+              React.SetStateAction<TaskProps[] | []>
+          >
+          setUpcomingTasks: React.Dispatch<
+              React.SetStateAction<TaskProps[] | []>
+          >
+          completedTasks: TaskProps[]
+          upcomingTasks: TaskProps[]
+          showToast: (props: ToastProps) => void
+      }
+    | {
+          allowComplete?: false
+      }
+
+type EditProps =
+    | {
+          allowEdit: true
+      }
+    | {
+          allowEdit?: false
+      }
+
+export type ListTaskProps = BaseListTaskProps &
+    DeleteProps &
+    CompleteProps &
+    EditProps
