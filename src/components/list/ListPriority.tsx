@@ -11,10 +11,14 @@ const ListPriorityItemEmpty = () => {
 }
 
 const ListPriority = ({ priority }: ListPriorityType) => {
+    const accessibleText = `Priorität: ${priority === 'low' ? 'Niedrig' : priority === 'middle' ? 'Mittel' : 'Hoch'}`
+
     return (
         <div
             className="flex gap-2"
-            title={`Priorität: ${priority === 'low' ? 'Niedrig' : priority === 'middle' ? 'Mittel' : 'Hoch'}`}
+            title={accessibleText}
+            role="img"
+            aria-label={accessibleText}
         >
             <ListPriorityItemFull />
             {priority !== 'low' ? (
