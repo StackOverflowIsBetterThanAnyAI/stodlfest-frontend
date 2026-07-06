@@ -10,7 +10,7 @@ const AppContent = () => {
     useDocumentTitle()
 
     return (
-        <div className="flex flex-col min-h-screen bg-linear-to-b from-slate-900 to-slate-800 text-zinc-100 secondary-text">
+        <div className="flex flex-col min-h-screen bg-linear-to-b from-slate-900 to-slate-800 text-zinc-100 primary-text">
             <Navigation />
             <Routes>
                 <Route path="/" element={<Home />} />

@@ -47,7 +47,7 @@ const ListCompletedTasks = () => {
             ) : (
                 <button
                     onClick={fetchUpcomingTasks}
-                    className="secondary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-32 w-full h-8 md:h-10 px-4 py-1 mx-auto"
+                    className="primary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-32 w-full h-8 md:h-10 px-4 py-1 mx-auto"
                 >
                     Refresh
                 </button>

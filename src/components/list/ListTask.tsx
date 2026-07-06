@@ -52,13 +52,13 @@ export type ListTaskProps = BaseListTaskProps &
 const ListTask = (props: ListTaskProps) => {
     return (
         <ul className="flex flex-col gap-4 mx-2">
-            {props.tasks.map((task: TaskProps, id: number) => (
+            {props.tasks.map((task: TaskProps, index: number) => (
                 <li
                     key={task.id}
-                    className={`flex flex-col ${id < props.tasks.length - 1 ? 'pb-4 border-b-2' : ''} border-zinc-200`}
+                    className={`flex flex-col ${index < props.tasks.length - 1 ? 'pb-4 border-b-2' : ''} border-zinc-200`}
                 >
                     <div
-                        className={`py-2 px-3 flex flex-col gap-2 ${id % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
+                        className={`py-2 px-3 flex flex-col gap-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
                     >
                         <div className="flex justify-between items-center">
                             <h3 className="text-base md:text-lg">
@@ -86,7 +86,7 @@ const ListTask = (props: ListTaskProps) => {
                                                 props.completedTasks,
                                         })
                                     }
-                                    className="secondary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto"
+                                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
                                 >
                                     Löschen
                                 </button>
@@ -94,7 +94,7 @@ const ListTask = (props: ListTaskProps) => {
                             {props.allowEdit ? (
                                 <button
                                     onClick={() => console.log('todo')}
-                                    className="secondary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto"
+                                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
                                 >
                                     Bearbeiten
                                 </button>
@@ -114,7 +114,7 @@ const ListTask = (props: ListTaskProps) => {
                                             upcomingTasks: props.upcomingTasks,
                                         })
                                     }
-                                    className="secondary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto"
+                                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
                                 >
                                     Erledigt
                                 </button>

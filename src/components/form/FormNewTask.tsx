@@ -145,7 +145,7 @@ const FormNewTask = () => {
             ) : (
                 <button
                     type="submit"
-                    className="secondary-text-pseudo outline-2 outline-zinc-500 px-2 text-base md:text-lg h-8 md:h-10"
+                    className="primary-text-pseudo outline-2 outline-zinc-500 px-2 text-base md:text-lg h-8 md:h-10"
                     disabled={isSubmitDisabled || isLoading}
                 >
                     Aufgabe anlegen

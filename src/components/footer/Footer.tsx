@@ -12,7 +12,7 @@ const Footer = () => {
     }
 
     return (
-        <footer className="secondary-text mt-auto">
+        <footer className="primary-text mt-auto">
             <div className="flex flex-col mx-auto gap-y-2 w-full max-w-7xl text-pretty text-center text-xs md:text-sm p-4">
                 <span>
                     Copyright &#169; {year} Michael Münzenhofer. Alle Rechte
@@ -25,7 +25,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     aria-label="GitHub Repository (öffnet in einem neuen Tab)"
                     title="GitHub Repository (öffnet in einem neuen Tab)"
-                    className="w-fit flex items-center gap-1 px-4 py-1 m-auto secondary-text-pseudo"
+                    className="w-fit flex items-center gap-1 px-4 py-1 m-auto primary-text-pseudo"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
