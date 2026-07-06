@@ -14,7 +14,7 @@ const ListTask = (props: ListTaskProps) => {
                     <div
                         className={`py-2 px-3 flex flex-col gap-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
                     >
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-wrap gap-2 justify-between items-center">
                             <h3 className="text-base md:text-lg">
                                 {task.task}
                             </h3>
