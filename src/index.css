@@ -14,7 +14,7 @@ a {
 }
 
 a:focus-visible {
-    @apply outline-2 outline-slate-200 rounded-lg;
+    @apply outline-2 outline-zinc-200 rounded-lg;
 }
 
 a:hover,
