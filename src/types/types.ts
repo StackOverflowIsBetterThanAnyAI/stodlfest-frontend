@@ -68,6 +68,10 @@ export type handleDeleteCompletedTaskProps = {
     completedTasks: TaskProps[]
 }
 
+export type ListPriorityType = {
+    priority: 'low' | 'middle' | 'high'
+}
+
 type BaseListTaskProps = {
     tasks: TaskProps[]
 }

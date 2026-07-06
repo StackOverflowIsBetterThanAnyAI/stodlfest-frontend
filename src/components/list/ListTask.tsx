@@ -1,3 +1,4 @@
+import ListPriority from './ListPriority'
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
 import type { ListTaskProps, TaskProps } from '../../types/types'
@@ -17,9 +18,7 @@ const ListTask = (props: ListTaskProps) => {
                             <h3 className="text-base md:text-lg">
                                 {task.task}
                             </h3>
-                            <span className="text-sm md:text-base">
-                                {task.priority}
-                            </span>
+                            <ListPriority priority={task.priority} />
                         </div>
                         {task?.description?.length ? (
                             <em className="text-sm md:text-base line-clamp-3 break-words">
