@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import Header from '../header/Header'
 import ListButton from './ListButton'
+import ListNoItems from './ListNoItems'
 import ListTask from './ListTask'
 import { handleFetchUpcomingTasks } from '../../api/handleFetchUpcomingTasks'
 import { CompletedTasksContext } from '../../context/CompletedTasksContext'
@@ -54,7 +55,9 @@ const ListCompletedTasks = () => {
                     showToast={showToast}
                     tasks={completedTasks}
                 />
-            ) : undefined}
+            ) : (
+                <ListNoItems label="Derzeit sind keine erledigten Aufgaben vorhanden." />
+            )}
         </section>
     )
 }

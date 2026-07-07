@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { useToast } from '../../context/ToastContext'
 import Header from '../header/Header'
 import ListButton from './ListButton'
+import ListNoItems from './ListNoItems'
 import ListTask from './ListTask'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleFetchUpcomingTasks } from '../../api/handleFetchUpcomingTasks'
@@ -61,7 +62,9 @@ const ListUpcomingTasks = () => {
                     showToast={showToast}
                     tasks={upcomingTasks}
                 />
-            ) : undefined}
+            ) : (
+                <ListNoItems label="Derzeit sind keine anstehenden Aufgaben vorhanden." />
+            )}
         </section>
     )
 }
