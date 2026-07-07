@@ -6,6 +6,7 @@ import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
 import { handleApplyUpdate } from '../../api/handleUpdateTask'
 import type { ListTaskProps, TaskProps } from '../../types/types'
+import ListButton from './ListButton'
 
 type ListTaskItemProps = {
     props: ListTaskProps
@@ -30,11 +31,6 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     )
     const [updatedTask, setUpdatedTask] = useState<string>(task.task)
 
-    const handleCancel = () => {
-        setUpdatedDescription(task?.description || '')
-        setUpdatedTask(task.task)
-        setIsEdit(false)
-    }
     const applyUpdate = async () => {
         handleApplyUpdate({
             setIsEdit,
@@ -47,6 +43,11 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
         })
     }
 
+    const handleCancel = () => {
+        setUpdatedDescription(task?.description || '')
+        setUpdatedTask(task.task)
+        setIsEdit(false)
+    }
     const handleUpdateDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setUpdatedDescription(e.target.value)
     }
@@ -75,18 +76,16 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 maxLength={255}
             />
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
-                <button
-                    onClick={applyUpdate}
-                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
-                >
-                    Anwenden
-                </button>
-                <button
-                    onClick={handleCancel}
-                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
-                >
-                    Abbrechen
-                </button>
+                <ListButton
+                    handleClick={applyUpdate}
+                    index={index}
+                    label="Anwenden"
+                />
+                <ListButton
+                    handleClick={handleCancel}
+                    index={index}
+                    label="Abbrechen"
+                />
             </div>
         </form>
     ) : (
@@ -104,8 +103,8 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             ) : undefined}
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
                 {props.allowDelete ? (
-                    <button
-                        onClick={() =>
+                    <ListButton
+                        handleClick={() =>
                             handleDeleteCompletedTask({
                                 setCompletedTasks: props.setCompletedTasks,
                                 showToast: props.showToast,
@@ -113,22 +112,20 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                                 completedTasks: props.completedTasks,
                             })
                         }
-                        className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
-                    >
-                        Löschen
-                    </button>
+                        index={index}
+                        label="Löschen"
+                    />
                 ) : undefined}
                 {props.allowEdit ? (
-                    <button
-                        onClick={() => setIsEdit(true)}
-                        className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
-                    >
-                        Bearbeiten
-                    </button>
+                    <ListButton
+                        handleClick={() => setIsEdit(true)}
+                        index={index}
+                        label="Bearbeiten"
+                    />
                 ) : undefined}
                 {props.allowComplete ? (
-                    <button
-                        onClick={() =>
+                    <ListButton
+                        handleClick={() =>
                             handleCompleteTask({
                                 setCompletedTasks: props.setCompletedTasks,
                                 setUpcomingTasks: props.setUpcomingTasks,
@@ -138,10 +135,9 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                                 upcomingTasks: props.upcomingTasks,
                             })
                         }
-                        className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
-                    >
-                        Erledigt
-                    </button>
+                        index={index}
+                        label="Erledigt"
+                    />
                 ) : undefined}
             </div>
         </div>
