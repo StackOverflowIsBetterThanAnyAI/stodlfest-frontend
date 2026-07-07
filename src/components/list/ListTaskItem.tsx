@@ -63,10 +63,13 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         Aufgabe:
                     </label>
                     <input
-                        className="outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg animate-pulse"
+                        type="text"
+                        className="min-w-32 w-full outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg animate-pulse"
                         value={updatedTask}
                         id="taskUpdate"
                         onChange={handleUpdateTask}
+                        maxLength={127}
+                        required
                     />
                 </div>
                 <ListPriority priority={task.priority} />
