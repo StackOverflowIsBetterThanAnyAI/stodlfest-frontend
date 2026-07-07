@@ -51,20 +51,36 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
 
     return isEdit ? (
         <form
-            className={`py-2 px-3 flex flex-col gap-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
+            className={`py-2 px-3 flex flex-col gap-x-4 gap-y-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
             onSubmit={applyUpdate}
         >
-            <div className="flex flex-wrap gap-2 justify-between items-center">
-                <input
-                    className="outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg animate-pulse"
-                    value={updatedTask}
-                    onChange={handleUpdateTask}
-                />
+            <div className="flex flex-wrap gap-x-4 gap-y-2 justify-between items-center">
+                <div className="flex flex-wrap gap-x-4 gap-y-2">
+                    <label
+                        htmlFor="taskUpdate"
+                        className="font-bold text-base md:text-lg"
+                    >
+                        Aufgabe:
+                    </label>
+                    <input
+                        className="outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg animate-pulse"
+                        value={updatedTask}
+                        id="taskUpdate"
+                        onChange={handleUpdateTask}
+                    />
+                </div>
                 <ListPriority priority={task.priority} />
             </div>
+            <label
+                htmlFor="descriptionUpdate"
+                className="font-bold text-base md:text-lg"
+            >
+                Beschreibung:
+            </label>
             <textarea
-                className="resize-none outline-2 outline-zinc-500 rounded-md px-2 text-sm md:text-base line-clamp-3 break-words animate-pulse"
+                className="resize-none outline-2 outline-zinc-500 rounded-md px-2 mb-2 text-sm md:text-base line-clamp-3 break-words animate-pulse"
                 value={updatedDescription}
+                id="descriptionUpdate"
                 onChange={handleUpdateDescription}
                 placeholder="Beschreibung hinzufügen"
                 maxLength={255}
