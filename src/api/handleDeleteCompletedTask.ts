@@ -23,7 +23,7 @@ export const handleDeleteCompletedTask = async ({
         if (!response.ok) {
             showToast({
                 isSuccess: false,
-                label: 'Aufgaben konnten nicht erledigt werden.',
+                label: 'Aufgabe konnten nicht gelöscht werden.',
             })
             return
         }
