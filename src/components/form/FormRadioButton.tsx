@@ -6,6 +6,7 @@ const FormRadioButton = ({
     value,
     currentPriority,
     onChange,
+    onKeyDown,
 }: FormRadioButtonProps) => {
     return (
         <div className="flex flex-nowrap gap-1">
@@ -17,6 +18,7 @@ const FormRadioButton = ({
                 checked={currentPriority === value}
                 onChange={onChange}
                 required
+                onKeyDown={onKeyDown}
             />
             <label htmlFor={id} className="text-sm md:text-base">
                 {label}

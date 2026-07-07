@@ -58,6 +58,15 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
         })
     }
 
+    const handleEscape = (
+        e:
+            | React.KeyboardEvent<HTMLInputElement>
+            | React.KeyboardEvent<HTMLTextAreaElement>
+    ) => {
+        if (e.key === 'Escape') {
+            handleCancel()
+        }
+    }
     const handleCancel = () => {
         setUpdatedDescription(task?.description || '')
         setUpdatedTask(task.task)
@@ -92,6 +101,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         value={updatedTask}
                         id="taskUpdate"
                         onChange={handleUpdateTask}
+                        onKeyDown={handleEscape}
                         maxLength={127}
                         required
                     />
@@ -107,6 +117,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                             value="low"
                             currentPriority={updatedPriority}
                             onChange={handleUpdatePriority}
+                            onKeyDown={handleEscape}
                         />
                         <FormRadioButton
                             id="mediumAdd"
@@ -114,6 +125,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                             value="middle"
                             currentPriority={updatedPriority}
                             onChange={handleUpdatePriority}
+                            onKeyDown={handleEscape}
                         />
                         <FormRadioButton
                             id="highAdd"
@@ -121,6 +133,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                             value="high"
                             currentPriority={updatedPriority}
                             onChange={handleUpdatePriority}
+                            onKeyDown={handleEscape}
                         />
                     </div>
                 </fieldset>
@@ -138,6 +151,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 onChange={handleUpdateDescription}
                 placeholder="Beschreibung hinzufügen"
                 maxLength={255}
+                onKeyDown={handleEscape}
             />
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
                 <ListButton
