@@ -105,7 +105,7 @@ const FormNewTask = () => {
                 <textarea
                     placeholder="Beschreibung"
                     id="descriptionAdd"
-                    className={`resize-none ${inputClass}`}
+                    className={`resize-none h-20 ${inputClass}`}
                     onChange={handleChangeDescription}
                     value={description}
                     maxLength={255}

@@ -145,7 +145,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 Beschreibung:
             </label>
             <textarea
-                className="resize-none outline-2 outline-zinc-500 rounded-md px-2 mb-2 text-sm md:text-base line-clamp-3 wrap-break-word"
+                className="resize-none h-20 outline-2 outline-zinc-500 rounded-md px-2 mb-2 text-sm md:text-base wrap-break-word"
                 value={updatedDescription}
                 id="descriptionUpdate"
                 onChange={handleUpdateDescription}
