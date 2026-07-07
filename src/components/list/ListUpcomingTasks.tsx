@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { FetchLoading } from 'fetch-loading'
 import { useToast } from '../../context/ToastContext'
 import Header from '../header/Header'
+import ListButton from './ListButton'
 import ListTask from './ListTask'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleFetchUpcomingTasks } from '../../api/handleFetchUpcomingTasks'
@@ -44,18 +44,12 @@ const ListUpcomingTasks = () => {
     return (
         <section className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full">
             <Header label="Anstehende Aufgaben" />
-            {isLoading ? (
-                <div className="rounded-lg outline-2 outline-zinc-500 max-w-32 w-full h-8 md:h-10 px-4 py-1 mx-auto flex justify-center items-center">
-                    <FetchLoading theme="#71717b" />
-                </div>
-            ) : (
-                <button
-                    onClick={fetchUpcomingTasks}
-                    className="primary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-32 w-full h-8 md:h-10 px-4 py-1 mx-auto"
-                >
-                    Refresh
-                </button>
-            )}
+            <ListButton
+                handleClick={fetchUpcomingTasks}
+                isLoading={isLoading}
+                label="Neuladen"
+                type="refresh"
+            />
             {upcomingTasks?.length ? (
                 <ListTask
                     allowComplete

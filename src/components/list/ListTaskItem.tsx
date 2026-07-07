@@ -1,13 +1,13 @@
 import { useContext, useState, type ChangeEvent } from 'react'
 import ListButton from './ListButton'
 import ListPriority from './ListPriority'
+import FormRadioButton from '../form/FormRadioButton'
 import { useToast } from '../../context/ToastContext'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
 import { handleApplyUpdate } from '../../api/handleApplyUpdate'
 import type { ListTaskItemProps, PriorityType } from '../../types/types'
-import FormRadioButton from '../form/FormRadioButton'
 
 const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     const { showToast } = useToast()
@@ -88,7 +88,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     </label>
                     <input
                         type="text"
-                        className="min-w-32 w-full outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg animate-pulse"
+                        className="min-w-32 w-full outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg"
                         value={updatedTask}
                         id="taskUpdate"
                         onChange={handleUpdateTask}
@@ -132,7 +132,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 Beschreibung:
             </label>
             <textarea
-                className="resize-none outline-2 outline-zinc-500 rounded-md px-2 mb-2 text-sm md:text-base line-clamp-3 break-words animate-pulse"
+                className="resize-none outline-2 outline-zinc-500 rounded-md px-2 mb-2 text-sm md:text-base line-clamp-3 break-words"
                 value={updatedDescription}
                 id="descriptionUpdate"
                 onChange={handleUpdateDescription}
@@ -146,12 +146,14 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     label="Anwenden"
                     isLoading={isLoading}
                     isSubmit
+                    type="regular"
                 />
                 <ListButton
                     handleClick={handleCancel}
                     index={index}
                     isLoading={isLoading}
                     label="Abbrechen"
+                    type="regular"
                 />
             </div>
         </form>
@@ -183,6 +185,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         index={index}
                         isLoading={isLoading}
                         label="Löschen"
+                        type="regular"
                     />
                 ) : undefined}
                 {props.allowEdit ? (
@@ -191,6 +194,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         index={index}
                         isLoading={isLoading}
                         label="Bearbeiten"
+                        type="regular"
                     />
                 ) : undefined}
                 {props.allowComplete ? (
@@ -209,6 +213,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         isLoading={isLoading}
                         index={index}
                         label="Erledigt"
+                        type="regular"
                     />
                 ) : undefined}
             </div>

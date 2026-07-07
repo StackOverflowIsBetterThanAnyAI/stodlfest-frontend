@@ -1,7 +1,7 @@
 import { useContext, useState, type ChangeEvent } from 'react'
-import { FetchLoading } from 'fetch-loading'
 import FormRadioButton from './FormRadioButton'
 import Header from '../header/Header'
+import ListButton from '../list/ListButton'
 import { useToast } from '../../context/ToastContext'
 import { handleAddNewTask } from '../../api/handleAddNewTask'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
@@ -139,19 +139,14 @@ const FormNewTask = () => {
                     />
                 </div>
             </fieldset>
-            {isLoading ? (
-                <div className="rounded-sm outline-2 outline-zinc-500 h-8 md:h-10 w-full flex justify-center items-center">
-                    <FetchLoading theme="#71717b" />
-                </div>
-            ) : (
-                <button
-                    type="submit"
-                    className="primary-text-pseudo outline-2 outline-zinc-500 px-2 text-base md:text-lg h-8 md:h-10"
-                    disabled={isSubmitDisabled || isLoading}
-                >
-                    Aufgabe anlegen
-                </button>
-            )}
+            <ListButton
+                handleClick={() => {}}
+                isLoading={isLoading}
+                isDisabled={isSubmitDisabled}
+                label="Aufgabe anlegen"
+                isSubmit
+                type="form"
+            />
         </form>
     )
 }

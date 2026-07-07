@@ -136,9 +136,11 @@ export type ListTaskProps = BaseListTaskProps &
 
 export type ListButtonProps = {
     handleClick: () => void
-    index: number
+    index?: number
     isLoading: boolean
     label: string
+    type: 'refresh' | 'regular' | 'form'
+    isDisabled?: boolean
     isSubmit?: boolean
 }
 
