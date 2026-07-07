@@ -4,6 +4,7 @@ import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleApplyUpdate = async ({
     setIsEdit,
+    setIsLoading,
     setUpcomingTasks,
     showToast,
     task,
@@ -20,6 +21,8 @@ export const handleApplyUpdate = async ({
         setIsEdit(false)
         return
     }
+
+    setIsLoading(true)
 
     try {
         const response = await fetch(
@@ -64,5 +67,7 @@ export const handleApplyUpdate = async ({
             isSuccess: false,
             label: 'Beim Aktualisieren dieser Aufgabe ist ein Fehler aufgetreten.',
         })
+    } finally {
+        setIsLoading(false)
     }
 }

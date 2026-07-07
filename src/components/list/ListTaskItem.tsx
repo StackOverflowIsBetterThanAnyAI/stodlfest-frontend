@@ -5,7 +5,7 @@ import { useToast } from '../../context/ToastContext'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
-import { handleApplyUpdate } from '../../api/handleUpdateTask'
+import { handleApplyUpdate } from '../../api/handleApplyUpdate'
 import type { ListTaskItemProps, PriorityType } from '../../types/types'
 import FormRadioButton from '../form/FormRadioButton'
 
@@ -21,6 +21,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     const [upcomingTasks, setUpcomingTasks] = upcomingTasksContext
 
     const [isEdit, setIsEdit] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const [updatedDescription, setUpdatedDescription] = useState<string>(
         task?.description || ''
     )
@@ -33,6 +34,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
         e.preventDefault()
         handleApplyUpdate({
             setIsEdit,
+            setIsLoading,
             setUpcomingTasks,
             showToast,
             task,
@@ -45,6 +47,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     const applyUpdate = async () => {
         handleApplyUpdate({
             setIsEdit,
+            setIsLoading,
             setUpcomingTasks,
             showToast,
             task,
@@ -141,11 +144,13 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     handleClick={applyUpdate}
                     index={index}
                     label="Anwenden"
+                    isLoading={isLoading}
                     isSubmit
                 />
                 <ListButton
                     handleClick={handleCancel}
                     index={index}
+                    isLoading={isLoading}
                     label="Abbrechen"
                 />
             </div>
@@ -169,12 +174,14 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         handleClick={() =>
                             handleDeleteCompletedTask({
                                 setCompletedTasks: props.setCompletedTasks,
+                                setIsLoading: setIsLoading,
                                 showToast: props.showToast,
                                 task,
                                 completedTasks: props.completedTasks,
                             })
                         }
                         index={index}
+                        isLoading={isLoading}
                         label="Löschen"
                     />
                 ) : undefined}
@@ -182,6 +189,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     <ListButton
                         handleClick={() => setIsEdit(true)}
                         index={index}
+                        isLoading={isLoading}
                         label="Bearbeiten"
                     />
                 ) : undefined}
@@ -190,6 +198,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         handleClick={() =>
                             handleCompleteTask({
                                 setCompletedTasks: props.setCompletedTasks,
+                                setIsLoading: setIsLoading,
                                 setUpcomingTasks: props.setUpcomingTasks,
                                 showToast: props.showToast,
                                 task,
@@ -197,6 +206,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                                 upcomingTasks: props.upcomingTasks,
                             })
                         }
+                        isLoading={isLoading}
                         index={index}
                         label="Erledigt"
                     />

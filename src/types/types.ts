@@ -56,6 +56,7 @@ export type handleAddNewTaskProps = {
 
 export type handleCompleteTaskProps = {
     setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     showToast: (props: ToastProps) => void
     task: TaskProps
@@ -65,6 +66,7 @@ export type handleCompleteTaskProps = {
 
 export type handleDeleteCompletedTaskProps = {
     setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     showToast: (props: ToastProps) => void
     task: TaskProps
     completedTasks: TaskProps[]
@@ -72,6 +74,7 @@ export type handleDeleteCompletedTaskProps = {
 
 export type handleApplyUpdateProps = {
     setIsEdit: (value: React.SetStateAction<boolean>) => void
+    setIsLoading: (value: React.SetStateAction<boolean>) => void
     setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     showToast: (props: ToastProps) => void
     task: TaskProps
@@ -135,6 +138,7 @@ export type ListTaskProps = BaseListTaskProps &
 export type ListButtonProps = {
     handleClick: () => void
     index: number
+    isLoading: boolean
     label: string
     isSubmit?: boolean
 }

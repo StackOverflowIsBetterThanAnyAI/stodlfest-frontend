@@ -4,10 +4,13 @@ import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleDeleteCompletedTask = async ({
     setCompletedTasks,
+    setIsLoading,
     showToast,
     task,
     completedTasks,
 }: handleDeleteCompletedTaskProps) => {
+    setIsLoading(true)
+
     try {
         const response = await fetch(
             `${SERVER_ADDRESS}/api/tasks/${task.id}/`,
@@ -38,5 +41,7 @@ export const handleDeleteCompletedTask = async ({
             isSuccess: false,
             label: 'Beim Löschen dieser Aufgabe ist ein Fehler aufgetreten.',
         })
+    } finally {
+        setIsLoading(false)
     }
 }
