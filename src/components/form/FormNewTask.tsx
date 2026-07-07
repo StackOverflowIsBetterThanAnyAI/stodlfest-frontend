@@ -7,6 +7,7 @@ import { handleAddNewTask } from '../../api/handleAddNewTask'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
+import type { PriorityType } from '../../types/types'
 
 const FormNewTask = () => {
     const parsedSessionData = getStoredSessionData()
@@ -24,7 +25,7 @@ const FormNewTask = () => {
     const [description, setDescription] = useState<string>(
         parsedSessionData?.descriptionAdd || ''
     )
-    const [priority, setPriority] = useState<string>(
+    const [priority, setPriority] = useState<PriorityType>(
         parsedSessionData?.priorityAdd || 'middle'
     )
     const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(
@@ -47,7 +48,7 @@ const FormNewTask = () => {
         }
     }
     const handleChangePriority = (e: ChangeEvent<HTMLInputElement>) => {
-        setPriority(e.target.value)
+        setPriority(e.target.value as PriorityType)
         setItemInSessionStorage('priorityAdd', e.target.value)
     }
 

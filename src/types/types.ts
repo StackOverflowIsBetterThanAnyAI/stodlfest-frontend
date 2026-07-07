@@ -4,7 +4,7 @@ export type FormRadioButtonProps = {
     id: string
     label: string
     value: string
-    currentPriority: string
+    currentPriority: PriorityType
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -12,11 +12,13 @@ export type HeaderProps = {
     label: string
 }
 
+export type PriorityType = 'low' | 'middle' | 'high'
+
 export type TaskProps = {
     created_at: string
     description: string | null
     id: number
-    priority: 'low' | 'middle' | 'high'
+    priority: PriorityType
     task: string
     finished?: boolean
 }
@@ -41,11 +43,11 @@ export type handleFetchUpcomingTasksProps = {
 export type handleAddNewTaskProps = {
     e: React.FormEvent<HTMLFormElement>
     description: string
-    priority: string
+    priority: PriorityType
     setDescription: React.Dispatch<React.SetStateAction<string>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void
-    setPriority: React.Dispatch<React.SetStateAction<string>>
+    setPriority: React.Dispatch<React.SetStateAction<PriorityType>>
     setTask: React.Dispatch<React.SetStateAction<string>>
     setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     showToast: (props: ToastProps) => void
@@ -75,11 +77,12 @@ export type handleApplyUpdateProps = {
     task: TaskProps
     upcomingTasks: TaskProps[] | undefined
     updatedDescription: string
+    updatedPriority: PriorityType
     updatedTask: string
 }
 
 export type ListPriorityType = {
-    priority: 'low' | 'middle' | 'high'
+    priority: PriorityType
 }
 
 type BaseListTaskProps = {
