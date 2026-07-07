@@ -13,7 +13,9 @@ a {
     @apply underline px-2 py-1;
 }
 
-a:focus-visible {
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
     @apply outline-2 outline-zinc-200 rounded-lg;
 }
 
