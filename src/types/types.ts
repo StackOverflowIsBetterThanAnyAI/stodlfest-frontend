@@ -128,3 +128,15 @@ export type ListTaskProps = BaseListTaskProps &
     DeleteProps &
     CompleteProps &
     EditProps
+
+export type ListButtonProps = {
+    handleClick: () => void
+    index: number
+    label: string
+}
+
+export type ListTaskItemProps = {
+    props: ListTaskProps
+    task: TaskProps
+    index: number
+}

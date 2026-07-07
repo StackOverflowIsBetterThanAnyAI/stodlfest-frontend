@@ -1,18 +1,12 @@
 import { useContext, useState, type ChangeEvent } from 'react'
+import ListButton from './ListButton'
 import ListPriority from './ListPriority'
 import { useToast } from '../../context/ToastContext'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
 import { handleApplyUpdate } from '../../api/handleUpdateTask'
-import type { ListTaskProps, TaskProps } from '../../types/types'
-import ListButton from './ListButton'
-
-type ListTaskItemProps = {
-    props: ListTaskProps
-    task: TaskProps
-    index: number
-}
+import type { ListTaskItemProps } from '../../types/types'
 
 const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     const { showToast } = useToast()

@@ -1,8 +1,4 @@
-type ListButtonProps = {
-    handleClick: () => void
-    index: number
-    label: string
-}
+import type { ListButtonProps } from '../../types/types'
 
 const ListButton = ({ handleClick, index, label }: ListButtonProps) => {
     return (
