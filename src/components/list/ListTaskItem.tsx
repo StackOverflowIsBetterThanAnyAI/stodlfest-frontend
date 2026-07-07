@@ -141,6 +141,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     handleClick={applyUpdate}
                     index={index}
                     label="Anwenden"
+                    isSubmit
                 />
                 <ListButton
                     handleClick={handleCancel}

@@ -136,6 +136,7 @@ export type ListButtonProps = {
     handleClick: () => void
     index: number
     label: string
+    isSubmit?: boolean
 }
 
 export type ListTaskItemProps = {
