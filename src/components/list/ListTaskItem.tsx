@@ -29,6 +29,19 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     )
     const [updatedTask, setUpdatedTask] = useState<string>(task.task)
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        handleApplyUpdate({
+            setIsEdit,
+            setUpcomingTasks,
+            showToast,
+            task,
+            upcomingTasks,
+            updatedDescription,
+            updatedPriority,
+            updatedTask,
+        })
+    }
     const applyUpdate = async () => {
         handleApplyUpdate({
             setIsEdit,
@@ -60,7 +73,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     return isEdit ? (
         <form
             className={`py-2 px-3 flex flex-col gap-x-4 gap-y-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
-            onSubmit={applyUpdate}
+            onSubmit={handleSubmit}
         >
             <div className="flex flex-wrap gap-x-4 gap-y-2 justify-between items-center">
                 <div className="flex flex-wrap gap-x-4 gap-y-2">
