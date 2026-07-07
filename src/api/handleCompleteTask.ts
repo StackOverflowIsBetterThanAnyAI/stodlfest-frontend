@@ -27,7 +27,6 @@ export const handleCompleteTask = async ({
 
         if (!response.ok) {
             showToast({
-                isSuccess: false,
                 label: 'Aufgabe konnten nicht erledigt werden.',
             })
             return
@@ -41,7 +40,6 @@ export const handleCompleteTask = async ({
         setCompletedTasks([task, ...completedTasks])
     } catch {
         showToast({
-            isSuccess: false,
             label: 'Beim Erledigen dieser Aufgabe ist ein Fehler aufgetreten.',
         })
     } finally {

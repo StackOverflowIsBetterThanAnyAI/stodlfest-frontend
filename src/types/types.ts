@@ -24,7 +24,6 @@ export type TaskProps = {
 }
 
 export type ToastProps = {
-    isSuccess: boolean
     label: string
 }
 

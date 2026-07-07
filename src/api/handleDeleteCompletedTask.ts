@@ -25,7 +25,6 @@ export const handleDeleteCompletedTask = async ({
 
         if (!response.ok) {
             showToast({
-                isSuccess: false,
                 label: 'Aufgabe konnten nicht gelöscht werden.',
             })
             return
@@ -38,7 +37,6 @@ export const handleDeleteCompletedTask = async ({
         setItemInSessionStorage('completedTasks', updatedTasks)
     } catch {
         showToast({
-            isSuccess: false,
             label: 'Beim Löschen dieser Aufgabe ist ein Fehler aufgetreten.',
         })
     } finally {

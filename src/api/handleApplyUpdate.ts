@@ -42,7 +42,6 @@ export const handleApplyUpdate = async ({
 
         if (!response.ok) {
             showToast({
-                isSuccess: false,
                 label: 'Aufgabe konnten nicht aktualisiert werden.',
             })
             return
@@ -64,7 +63,6 @@ export const handleApplyUpdate = async ({
         setIsEdit(false)
     } catch {
         showToast({
-            isSuccess: false,
             label: 'Beim Aktualisieren dieser Aufgabe ist ein Fehler aufgetreten.',
         })
     } finally {

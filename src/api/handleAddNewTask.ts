@@ -38,7 +38,6 @@ export const handleAddNewTask = async ({
             const errorData = await response.json()
             const error = errorData.task.join(' ')
             showToast({
-                isSuccess: false,
                 label: error,
             })
             return
@@ -60,7 +59,6 @@ export const handleAddNewTask = async ({
         })
     } catch {
         showToast({
-            isSuccess: false,
             label: 'Beim Hinzufügen dieser Aufgabe ist ein Fehler aufgetreten.',
         })
     } finally {

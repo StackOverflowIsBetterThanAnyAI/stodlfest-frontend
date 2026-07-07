@@ -20,7 +20,6 @@ export const handleFetchUpcomingTasks = async ({
 
         if (!response.ok) {
             showToast({
-                isSuccess: false,
                 label: 'Aufgaben konnten nicht geladen werden.',
             })
             return
@@ -39,7 +38,6 @@ export const handleFetchUpcomingTasks = async ({
         setItemInSessionStorage('upcomingTasks', upcomingTasks)
     } catch {
         showToast({
-            isSuccess: false,
             label: 'Beim Laden der Aufgaben ist ein Fehler aufgetreten.',
         })
     } finally {

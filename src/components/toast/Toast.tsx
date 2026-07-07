@@ -2,15 +2,12 @@ import { useEffect, useState } from 'react'
 import type { ToastProps } from '../../types/types'
 import { useToast } from '../../context/ToastContext'
 
-const Toast = ({ isSuccess, label }: ToastProps) => {
+const Toast = ({ label }: ToastProps) => {
     const { hideToast } = useToast()
     const [isTriggered, setIsTriggered] = useState<boolean>(true)
 
     const opacity = isTriggered ? 'opacity-90' : 'opacity-0'
     const positionX = isTriggered ? 'left-2 min-[280px]:left-6' : '-left-64'
-    const theme = isSuccess
-        ? 'bg-green-500 text-stone-900/95'
-        : 'bg-red-400 text-stone-950'
 
     useEffect(() => {
         const animationTimeout = setTimeout(() => {
@@ -28,7 +25,7 @@ const Toast = ({ isSuccess, label }: ToastProps) => {
     return (
         <div
             className={`text-normal fixed flex gap-2 bottom-6 ${positionX} rounded-sm
-            outline-1 outline-zinc-50 p-2 transition-all duration-700 ${opacity} ${theme}`}
+            outline-1 outline-zinc-50 p-2 transition-all duration-700 ${opacity} bg-red-400 text-stone-950`}
             role="status"
             aria-live="polite"
         >

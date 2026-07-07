@@ -15,8 +15,8 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     const [toast, setToast] = useState<ToastProps | null>(null)
     const [isVisible, setIsVisible] = useState<boolean>(false)
 
-    const showToast = useCallback(({ label, isSuccess }: ToastProps) => {
-        setToast({ label, isSuccess })
+    const showToast = useCallback(({ label }: ToastProps) => {
+        setToast({ label })
         setIsVisible(true)
     }, [])
 
@@ -37,11 +37,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
         <ToastContext.Provider value={{ showToast, hideToast }}>
             {children}
             {isVisible && toast && (
-                <Toast
-                    key={toast.label}
-                    label={toast.label}
-                    isSuccess={toast.isSuccess}
-                />
+                <Toast key={toast.label} label={toast.label} />
             )}
         </ToastContext.Provider>
     )
