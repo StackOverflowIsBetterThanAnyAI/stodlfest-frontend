@@ -68,6 +68,16 @@ export type handleDeleteCompletedTaskProps = {
     completedTasks: TaskProps[]
 }
 
+export type handleApplyUpdateProps = {
+    setIsEdit: (value: React.SetStateAction<boolean>) => void
+    setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
+    showToast: (props: ToastProps) => void
+    task: TaskProps
+    upcomingTasks: TaskProps[] | undefined
+    updatedDescription: string
+    updatedTask: string
+}
+
 export type ListPriorityType = {
     priority: 'low' | 'middle' | 'high'
 }
