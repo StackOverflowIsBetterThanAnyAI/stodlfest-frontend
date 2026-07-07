@@ -1,6 +1,4 @@
-import ListPriority from './ListPriority'
-import { handleCompleteTask } from '../../api/handleCompleteTask'
-import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
+import ListTaskItem from './ListTaskItem'
 import type { ListTaskProps, TaskProps } from '../../types/types'
 
 const ListTask = (props: ListTaskProps) => {
@@ -11,68 +9,12 @@ const ListTask = (props: ListTaskProps) => {
                     key={task.id}
                     className={`flex flex-col ${index < props.tasks.length - 1 ? 'pb-4 border-b-2' : ''} border-zinc-200`}
                 >
-                    <div
-                        className={`py-2 px-3 flex flex-col gap-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
-                    >
-                        <div className="flex flex-wrap gap-2 justify-between items-center">
-                            <h3 className="text-base md:text-lg">
-                                {task.task}
-                            </h3>
-                            <ListPriority priority={task.priority} />
-                        </div>
-                        {task?.description?.length ? (
-                            <em className="text-sm md:text-base line-clamp-3 break-words">
-                                {task.description}
-                            </em>
-                        ) : undefined}
-                        <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
-                            {props.allowDelete ? (
-                                <button
-                                    onClick={() =>
-                                        handleDeleteCompletedTask({
-                                            setCompletedTasks:
-                                                props.setCompletedTasks,
-                                            showToast: props.showToast,
-                                            task,
-                                            completedTasks:
-                                                props.completedTasks,
-                                        })
-                                    }
-                                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
-                                >
-                                    Löschen
-                                </button>
-                            ) : undefined}
-                            {props.allowEdit ? (
-                                <button
-                                    onClick={() => console.log('todo')}
-                                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
-                                >
-                                    Bearbeiten
-                                </button>
-                            ) : undefined}
-                            {props.allowComplete ? (
-                                <button
-                                    onClick={() =>
-                                        handleCompleteTask({
-                                            setCompletedTasks:
-                                                props.setCompletedTasks,
-                                            setUpcomingTasks:
-                                                props.setUpcomingTasks,
-                                            showToast: props.showToast,
-                                            task,
-                                            completedTasks:
-                                                props.completedTasks,
-                                            upcomingTasks: props.upcomingTasks,
-                                        })
-                                    }
-                                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
-                                >
-                                    Erledigt
-                                </button>
-                            ) : undefined}
-                        </div>
-                    </div>
+                    <ListTaskItem
+                        index={index}
+                        props={props}
+                        task={task}
+                        key={task.id}
+                    />
                 </li>
             ))}
         </ul>
