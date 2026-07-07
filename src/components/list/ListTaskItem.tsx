@@ -6,7 +6,8 @@ import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
 import { handleApplyUpdate } from '../../api/handleUpdateTask'
-import type { ListTaskItemProps } from '../../types/types'
+import type { ListTaskItemProps, PriorityType } from '../../types/types'
+import FormRadioButton from '../form/FormRadioButton'
 
 const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     const { showToast } = useToast()
@@ -23,6 +24,9 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     const [updatedDescription, setUpdatedDescription] = useState<string>(
         task?.description || ''
     )
+    const [updatedPriority, setUpdatedPriority] = useState<PriorityType>(
+        task.priority
+    )
     const [updatedTask, setUpdatedTask] = useState<string>(task.task)
 
     const applyUpdate = async () => {
@@ -33,6 +37,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             task,
             upcomingTasks,
             updatedDescription,
+            updatedPriority,
             updatedTask,
         })
     }
@@ -44,6 +49,9 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     }
     const handleUpdateDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setUpdatedDescription(e.target.value)
+    }
+    const handleUpdatePriority = (e: ChangeEvent<HTMLInputElement>) => {
+        setUpdatedPriority(e.target.value as PriorityType)
     }
     const handleUpdateTask = (e: ChangeEvent<HTMLInputElement>) => {
         setUpdatedTask(e.target.value)
@@ -72,7 +80,34 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         required
                     />
                 </div>
-                <ListPriority priority={task.priority} />
+                <fieldset>
+                    <legend className="font-bold text-base md:text-lg">
+                        Priorität:
+                    </legend>
+                    <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
+                        <FormRadioButton
+                            id="lowAdd"
+                            label="Niedrig"
+                            value="low"
+                            currentPriority={updatedPriority}
+                            onChange={handleUpdatePriority}
+                        />
+                        <FormRadioButton
+                            id="mediumAdd"
+                            label="Mittel"
+                            value="middle"
+                            currentPriority={updatedPriority}
+                            onChange={handleUpdatePriority}
+                        />
+                        <FormRadioButton
+                            id="highAdd"
+                            label="Hoch"
+                            value="high"
+                            currentPriority={updatedPriority}
+                            onChange={handleUpdatePriority}
+                        />
+                    </div>
+                </fieldset>
             </div>
             <label
                 htmlFor="descriptionUpdate"

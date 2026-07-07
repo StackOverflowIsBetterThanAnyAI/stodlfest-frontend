@@ -9,9 +9,14 @@ export const handleApplyUpdate = async ({
     task,
     upcomingTasks,
     updatedDescription,
+    updatedPriority,
     updatedTask,
 }: handleApplyUpdateProps) => {
-    if (task.task === updatedTask && task.description === updatedDescription) {
+    if (
+        task.task === updatedTask &&
+        task.description === updatedDescription &&
+        task.priority === updatedPriority
+    ) {
         setIsEdit(false)
         return
     }
@@ -27,6 +32,7 @@ export const handleApplyUpdate = async ({
                 body: JSON.stringify({
                     task: updatedTask,
                     description: updatedDescription,
+                    priority: updatedPriority,
                 }),
             }
         )
@@ -34,7 +40,7 @@ export const handleApplyUpdate = async ({
         if (!response.ok) {
             showToast({
                 isSuccess: false,
-                label: 'Aufgaben konnten nicht erledigt werden.',
+                label: 'Aufgabe konnten nicht aktualisiert werden.',
             })
             return
         }
@@ -45,6 +51,7 @@ export const handleApplyUpdate = async ({
                     ...item,
                     task: updatedTask,
                     description: updatedDescription,
+                    priority: updatedPriority,
                 }
             }
             return item
@@ -55,7 +62,7 @@ export const handleApplyUpdate = async ({
     } catch {
         showToast({
             isSuccess: false,
-            label: 'Beim Löschen dieser Aufgabe ist ein Fehler aufgetreten.',
+            label: 'Beim Aktualisieren dieser Aufgabe ist ein Fehler aufgetreten.',
         })
     }
 }
