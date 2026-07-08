@@ -54,6 +54,13 @@ export const handleAddNewMember = async ({
         const newMember = await response.json()
         setAllMembers((prevMembers) => {
             const updatedMembers = [newMember, ...(prevMembers || [])]
+            updatedMembers.sort((a, b) => {
+                const surnameCompare = a.surname.localeCompare(b.surname, 'de')
+                if (!surnameCompare) {
+                    return a.name.localeCompare(b.name, 'de')
+                }
+                return surnameCompare
+            })
             setItemInSessionStorage('allMembers', updatedMembers)
             return updatedMembers
         })
