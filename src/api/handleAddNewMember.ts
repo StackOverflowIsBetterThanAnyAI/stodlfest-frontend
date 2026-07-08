@@ -36,7 +36,7 @@ export const handleAddNewMember = async ({
 
         if (!response.ok) {
             const errorData = await response.json()
-            const error = errorData.task.join(' ')
+            const error = errorData.non_field_errors.join(' ')
             showToast({
                 label: error,
             })
