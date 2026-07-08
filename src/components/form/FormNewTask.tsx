@@ -21,13 +21,37 @@ const FormNewTask = () => {
     }
     const [_upcomingTasks, setUpcomingTasks] = upcomingTasksContext
 
-    const [task, setTask] = useState<string>(parsedSessionData?.taskAdd || '')
-    const [description, setDescription] = useState<string>(
-        parsedSessionData?.descriptionAdd || ''
-    )
-    const [priority, setPriority] = useState<PriorityType>(
-        parsedSessionData?.priorityAdd || 'middle'
-    )
+    const TASK_LENGTH = 127
+    const DESCRIPTION_LENGTH = 255
+
+    const [task, setTask] = useState<string>(() => {
+        const data = parsedSessionData?.taskAdd
+        if (data?.length && typeof data === 'string') {
+            const slicedData = data.slice(0, TASK_LENGTH)
+            setItemInSessionStorage('taskAdd', slicedData)
+            return slicedData
+        }
+        setItemInSessionStorage('taskAdd', '')
+        return ''
+    })
+    const [description, setDescription] = useState<string>(() => {
+        const data = parsedSessionData?.descriptionAdd
+        if (data?.length && typeof data === 'string') {
+            const slicedData = data.slice(0, DESCRIPTION_LENGTH)
+            setItemInSessionStorage('descriptionAdd', slicedData)
+            return slicedData
+        }
+        setItemInSessionStorage('descriptionAdd', '')
+        return ''
+    })
+    const [priority, setPriority] = useState<PriorityType>(() => {
+        const data = parsedSessionData?.priorityAdd
+        if (data?.length && ['low', 'middle', 'high'].includes(data)) {
+            return data
+        }
+        setItemInSessionStorage('priorityAdd', 'middle')
+        return 'middle'
+    })
     const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(
         !parsedSessionData?.taskAdd?.length
     )
@@ -91,7 +115,7 @@ const FormNewTask = () => {
                     className={`min-w-32 ${inputClass}`}
                     onChange={handleChangeTask}
                     value={task}
-                    maxLength={127}
+                    maxLength={TASK_LENGTH}
                     required
                 />
             </div>
@@ -108,7 +132,7 @@ const FormNewTask = () => {
                     className={`resize-none h-20 ${inputClass}`}
                     onChange={handleChangeDescription}
                     value={description}
-                    maxLength={255}
+                    maxLength={DESCRIPTION_LENGTH}
                 />
             </div>
             <fieldset>
@@ -120,21 +144,21 @@ const FormNewTask = () => {
                         id="lowAdd"
                         label="Niedrig"
                         value="low"
-                        currentPriority={priority}
+                        currentValue={priority}
                         onChange={handleChangePriority}
                     />
                     <FormRadioButton
                         id="mediumAdd"
                         label="Mittel"
                         value="middle"
-                        currentPriority={priority}
+                        currentValue={priority}
                         onChange={handleChangePriority}
                     />
                     <FormRadioButton
                         id="highAdd"
                         label="Hoch"
                         value="high"
-                        currentPriority={priority}
+                        currentValue={priority}
                         onChange={handleChangePriority}
                     />
                 </div>
