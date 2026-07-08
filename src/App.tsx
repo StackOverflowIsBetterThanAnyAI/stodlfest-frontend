@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navigation from './components/navigation/Navigation'
 import Footer from './components/footer/Footer'
 import Home from './pages/Home'
+import Mitglieder from './pages/Mitglieder'
 import Vorbereitung from './pages/Vorbereitung'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
 import { ToastProvider } from './context/ToastContext'
@@ -18,10 +19,7 @@ const AppContent = () => {
                     path="/arbeitseinteilung"
                     element={<h1>Arbeitseinteilung</h1>}
                 />
-                <Route
-                    path="/mitglieder"
-                    element={<h1>Mitglieder anlegen</h1>}
-                />
+                <Route path="/mitglieder" element={<Mitglieder />} />
                 <Route path="/aufgaben" element={<h1>Aufgaben anlegen</h1>} />
                 <Route path="/vorbereitung" element={<Vorbereitung />} />
             </Routes>
