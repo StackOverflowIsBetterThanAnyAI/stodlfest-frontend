@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import FormNewTask from '../components/form/FormNewTask'
+import HeaderMain from '../components/header/HeaderMain'
 import ListCompletedTasks from '../components/list/ListCompletedTasks'
 import ListUpcomingTasks from '../components/list/ListUpcomingTasks'
 import type { TaskProps } from '../types/types'
@@ -25,9 +26,7 @@ const Vorbereitung = () => {
                 <UpcomingTasksContext.Provider
                     value={[upcomingTasks, setUpcomingTasks]}
                 >
-                    <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold flex justify-center text-center items-center">
-                        Vorbereitungen
-                    </h1>
+                    <HeaderMain label="Vorbereitungen" />
                     <ListUpcomingTasks />
                     <ListCompletedTasks />
                     <FormNewTask />
