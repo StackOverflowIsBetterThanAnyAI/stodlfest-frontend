@@ -35,7 +35,7 @@ const ListMembersItem = ({ index, member }: ListMembersItemProps) => {
             <div className="flex flex-wrap gap-x-4 justify-between items-center">
                 <span className="flex flex-col">
                     <span className="text-base md:text-lg">
-                        {member.name} {member.surname}
+                        {member.surname} {member.name}
                     </span>
                     <em className="text-sm md:text-base">
                         {member.age === 'ofLegalAge'
