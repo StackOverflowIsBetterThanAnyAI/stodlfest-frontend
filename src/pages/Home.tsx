@@ -55,7 +55,7 @@ const Home = () => {
     }, [calculateTimeLeft])
 
     return (
-        <main className="max-w-7xl w-full mx-auto items-center p-8 flex flex-col gap-8 xs:gap-16">
+        <main className="max-w-7xl w-full mx-auto items-center p-4 md:p-8 flex flex-col gap-8 xs:gap-16">
             <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold flex flex-wrap justify-center text-center items-center gap-4">
                 Countdown bis zum
                 <span className="font-yesteryear font-light text-5xl xs:text-6xl sm:text-7xl md:text-9xl">

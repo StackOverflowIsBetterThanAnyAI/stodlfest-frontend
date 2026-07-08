@@ -19,7 +19,7 @@ const Vorbereitung = () => {
     )
 
     return (
-        <main className="max-w-7xl w-full mx-auto items-center p-8 flex flex-col gap-8 xs:gap-16">
+        <main className="max-w-7xl w-full mx-auto items-center p-4 md:p-8 flex flex-col gap-8 xs:gap-16">
             <CompletedTasksContext.Provider
                 value={[completedTasks, setCompletedTasks]}
             >
