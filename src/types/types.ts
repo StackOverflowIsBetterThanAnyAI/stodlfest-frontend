@@ -99,6 +99,14 @@ export type handleDeleteCompletedTaskProps = {
     completedTasks: TaskProps[]
 }
 
+export type handleDeleteMemberProps = {
+    allMembers: MemberProps[] | undefined
+    member: MemberProps
+    setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    showToast: (props: ToastProps) => void
+}
+
 export type handleApplyUpdateProps = {
     setIsEdit: (value: React.SetStateAction<boolean>) => void
     setIsLoading: (value: React.SetStateAction<boolean>) => void
@@ -109,6 +117,15 @@ export type handleApplyUpdateProps = {
     updatedDescription: string
     updatedPriority: PriorityType
     updatedTask: string
+}
+
+export type ListMembersProps = {
+    allMembers: MemberProps[]
+}
+
+export type ListMembersItemProps = {
+    index: number
+    member: MemberProps
 }
 
 export type ListPriorityType = {
