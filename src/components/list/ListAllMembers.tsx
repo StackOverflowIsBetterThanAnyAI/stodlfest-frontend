@@ -40,7 +40,7 @@ const ListAllMembers = () => {
             {allMembers?.length ? (
                 <ListMembers allMembers={allMembers} />
             ) : (
-                <ListNoItems label="Es sind noch keine Mitglieder vorhanden." />
+                <ListNoItems label="Es sind keine Mitglieder vorhanden." />
             )}
         </section>
     )
