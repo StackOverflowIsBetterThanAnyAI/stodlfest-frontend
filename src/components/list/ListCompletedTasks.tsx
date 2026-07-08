@@ -56,7 +56,7 @@ const ListCompletedTasks = () => {
                     tasks={completedTasks}
                 />
             ) : (
-                <ListNoItems label="Derzeit sind keine erledigten Aufgaben vorhanden." />
+                <ListNoItems label="Es sind noch keine erledigten Aufgaben vorhanden." />
             )}
         </section>
     )

@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import Header from '../header/Header'
 import ListButton from './ListButton'
+import ListNoItems from './ListNoItems'
 import { AllMembersContext } from '../../context/AllMembersContext'
 import { useToast } from '../../context/ToastContext'
 import { handleFetchAllMembers } from '../../api/handleFetchAllMembers'
@@ -16,7 +17,7 @@ const ListAllMembers = () => {
             'ListAllMembers must be used within a AllMembersContext.Provider'
         )
     }
-    const [_allMembers, setAllMembers] = allMembersContext
+    const [allMembers, setAllMembers] = allMembersContext
 
     const fetchAllMembers = useCallback(async () => {
         handleFetchAllMembers({ setAllMembers, setIsLoading, showToast })
@@ -35,6 +36,9 @@ const ListAllMembers = () => {
                 label="Neuladen"
                 type="refresh"
             />
+            {allMembers ? undefined : (
+                <ListNoItems label="Es sind noch keine Mitglieder vorhanden." />
+            )}
         </section>
     )
 }

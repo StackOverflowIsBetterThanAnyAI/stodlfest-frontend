@@ -63,7 +63,7 @@ const ListUpcomingTasks = () => {
                     tasks={upcomingTasks}
                 />
             ) : (
-                <ListNoItems label="Derzeit sind keine anstehenden Aufgaben vorhanden." />
+                <ListNoItems label="Es sind noch keine anstehenden Aufgaben vorhanden." />
             )}
         </section>
     )
