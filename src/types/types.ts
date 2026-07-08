@@ -20,6 +20,7 @@ export type MemberProps = {
     name: string
     age: AgeType
     id: number
+    job?: string
 }
 
 export type TaskProps = {

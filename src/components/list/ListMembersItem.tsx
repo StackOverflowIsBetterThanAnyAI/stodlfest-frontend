@@ -32,22 +32,29 @@ const ListMembersItem = ({ index, member }: ListMembersItemProps) => {
         <div
             className={`py-2 px-3 flex flex-col gap-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm`}
         >
-            <div className="flex flex-wrap gap-2 justify-between items-center">
-                <span className="text-base md:text-lg">
-                    {member.name} {member.surname}
+            <div className="flex flex-wrap gap-x-4 justify-between items-center">
+                <span className="flex flex-col">
+                    <span className="text-base md:text-lg">
+                        {member.name} {member.surname}
+                    </span>
+                    <em className="text-sm md:text-base">
+                        {member.age === 'ofLegalAge'
+                            ? 'Volljährig'
+                            : 'Minderjährig'}
+                    </em>
                 </span>
-                <em className="text-sm md:text-base">
-                    {member.age === 'ofLegalAge'
-                        ? 'Volljährig'
-                        : 'Minderjährig'}
-                </em>
-                <ListButton
-                    handleClick={deleteMember}
-                    isLoading={isLoading}
-                    label="Entfernen"
-                    type="regular"
-                />
+                {member?.job ? (
+                    <span className="text-sm md:text-base">{member.job}</span>
+                ) : (
+                    <em className="text-sm md:text-base">keine Aufgabe</em>
+                )}
             </div>
+            <ListButton
+                handleClick={deleteMember}
+                isLoading={isLoading}
+                label="Entfernen"
+                type="regular"
+            />
         </div>
     )
 }

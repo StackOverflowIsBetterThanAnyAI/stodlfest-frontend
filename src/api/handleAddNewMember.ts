@@ -1,5 +1,5 @@
 import { SERVER_ADDRESS } from '../constants/constants'
-import type { handleAddNewMemberProps } from '../types/types'
+import type { handleAddNewMemberProps, MemberProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleAddNewMember = async ({
@@ -51,7 +51,7 @@ export const handleAddNewMember = async ({
         setItemInSessionStorage('surnameAdd', '')
         setItemInSessionStorage('ageAdd', 'underage')
 
-        const newMember = await response.json()
+        const newMember: MemberProps = await response.json()
         setAllMembers((prevMembers) => {
             const updatedMembers = [newMember, ...(prevMembers || [])]
             updatedMembers.sort((a, b) => {
