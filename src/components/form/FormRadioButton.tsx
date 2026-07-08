@@ -4,7 +4,7 @@ const FormRadioButton = ({
     id,
     label,
     value,
-    currentPriority,
+    currentValue,
     onChange,
     onKeyDown,
 }: FormRadioButtonProps) => {
@@ -15,7 +15,7 @@ const FormRadioButton = ({
                 id={id}
                 name="priority"
                 value={value}
-                checked={currentPriority === value}
+                checked={currentValue === value}
                 onChange={onChange}
                 required
                 onKeyDown={onKeyDown}

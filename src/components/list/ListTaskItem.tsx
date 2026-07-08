@@ -115,7 +115,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                             id="lowAdd"
                             label="Niedrig"
                             value="low"
-                            currentPriority={updatedPriority}
+                            currentValue={updatedPriority}
                             onChange={handleUpdatePriority}
                             onKeyDown={handleEscape}
                         />
@@ -123,7 +123,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                             id="mediumAdd"
                             label="Mittel"
                             value="middle"
-                            currentPriority={updatedPriority}
+                            currentValue={updatedPriority}
                             onChange={handleUpdatePriority}
                             onKeyDown={handleEscape}
                         />
@@ -131,7 +131,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                             id="highAdd"
                             label="Hoch"
                             value="high"
-                            currentPriority={updatedPriority}
+                            currentValue={updatedPriority}
                             onChange={handleUpdatePriority}
                             onKeyDown={handleEscape}
                         />

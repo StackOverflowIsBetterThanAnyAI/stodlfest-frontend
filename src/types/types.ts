@@ -4,7 +4,7 @@ export type FormRadioButtonProps = {
     id: string
     label: string
     value: string
-    currentPriority: PriorityType
+    currentValue: string
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
