@@ -1,11 +1,9 @@
-import type { ChangeEvent } from 'react'
-
 export type FormRadioButtonProps = {
     id: string
     label: string
     value: string
     currentValue: string
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
@@ -54,6 +52,12 @@ export type handleAddNewMemberProps = {
     setSurname: React.Dispatch<React.SetStateAction<string>>
     showToast: (props: ToastProps) => void
     surname: string
+}
+
+export type handleFetchAllMembersProps = {
+    setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
+    setIsLoading: (value: React.SetStateAction<boolean>) => void
+    showToast: (props: ToastProps) => void
 }
 
 export type handleFetchUpcomingTasksProps = {
