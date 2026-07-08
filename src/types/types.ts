@@ -15,6 +15,15 @@ export type HeaderProps = {
 
 export type PriorityType = 'low' | 'middle' | 'high'
 
+export type AgeType = 'underage' | 'ofLegalAge'
+
+export type MemberProps = {
+    surname: string
+    name: string
+    age: AgeType
+    id: number
+}
+
 export type TaskProps = {
     created_at: string
     description: string | null
@@ -31,6 +40,20 @@ export type ToastProps = {
 export type ToastContextType = {
     showToast: (props: ToastProps) => void
     hideToast: () => void
+}
+
+export type handleAddNewMemberProps = {
+    e: React.FormEvent<HTMLFormElement>
+    age: AgeType
+    name: string
+    setAge: React.Dispatch<React.SetStateAction<AgeType>>
+    setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
+    setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsSubmitDisabled: React.Dispatch<React.SetStateAction<boolean>>
+    setName: React.Dispatch<React.SetStateAction<string>>
+    setSurname: React.Dispatch<React.SetStateAction<string>>
+    showToast: (props: ToastProps) => void
+    surname: string
 }
 
 export type handleFetchUpcomingTasksProps = {
