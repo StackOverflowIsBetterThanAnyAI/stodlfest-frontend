@@ -13,7 +13,7 @@
         "fetch-loading": "^0.1.0",
         "react": "^19.2.7",
         "react-dom": "^19.2.7",
-        "react-router": "^8.1.0",
+        "react-router": "^8.2.0",
         "react-router-dom": "^7.18.1",
         "tailwindcss": "^4.3.2"
     },
