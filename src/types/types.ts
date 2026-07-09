@@ -15,6 +15,12 @@ export type PriorityType = 'low' | 'middle' | 'high'
 
 export type AgeType = 'underage' | 'ofLegalAge'
 
+export type JobProps = {
+    job: string
+    workers: number
+    id: number
+}
+
 export type MemberProps = {
     surname: string
     name: string
@@ -39,6 +45,18 @@ export type ToastProps = {
 export type ToastContextType = {
     showToast: (props: ToastProps) => void
     hideToast: () => void
+}
+
+export type handleAddNewJobProps = {
+    e: React.FormEvent<HTMLFormElement>
+    job: string
+    setAllJobs: React.Dispatch<React.SetStateAction<JobProps[]>>
+    setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void
+    setJob: (value: React.SetStateAction<string>) => void
+    setWorkers: (value: React.SetStateAction<number>) => void
+    showToast: (props: ToastProps) => void
+    workers: number
 }
 
 export type handleAddNewMemberProps = {
