@@ -1,9 +1,9 @@
 import type { JobProps, ListJobsProps } from '../../types/types'
 import ListJobsItem from './ListJobsItem'
 
-const ListJobs = ({ allJobs }: ListJobsProps) => {
+const ListJobs = ({ allJobs, ariaLabel }: ListJobsProps) => {
     return (
-        <ul className="flex flex-col gap-4 mx-2">
+        <ul className="flex flex-col gap-4 mx-2" aria-label={ariaLabel}>
             {allJobs.map((job: JobProps, index: number) => (
                 <li
                     key={job.id}

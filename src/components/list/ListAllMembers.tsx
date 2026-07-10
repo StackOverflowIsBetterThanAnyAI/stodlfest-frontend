@@ -40,7 +40,10 @@ const ListAllMembers = () => {
                 type="refresh"
             />
             {allMembers?.length ? (
-                <ListMembers allMembers={allMembers} />
+                <ListMembers
+                    allMembers={allMembers}
+                    ariaLabel="Anwesende Mitglieder"
+                />
             ) : (
                 <ListNoItems label="Es sind keine Mitglieder vorhanden." />
             )}

@@ -57,6 +57,7 @@ const ListUpcomingTasks = () => {
                 <ListTask
                     allowComplete
                     allowEdit
+                    ariaLabel="Anstehende Aufgaben"
                     setCompletedTasks={setCompletedTasks}
                     setUpcomingTasks={setUpcomingTasks}
                     completedTasks={completedTasks}

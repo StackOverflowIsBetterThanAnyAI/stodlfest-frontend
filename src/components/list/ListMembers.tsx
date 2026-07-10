@@ -1,9 +1,9 @@
 import type { ListMembersProps, MemberProps } from '../../types/types'
 import ListMembersItem from './ListMembersItem'
 
-const ListMembers = ({ allMembers }: ListMembersProps) => {
+const ListMembers = ({ allMembers, ariaLabel }: ListMembersProps) => {
     return (
-        <ul className="flex flex-col gap-4 mx-2">
+        <ul className="flex flex-col gap-4 mx-2" aria-label={ariaLabel}>
             {allMembers.map((member: MemberProps, index: number) => (
                 <li
                     key={member.id}

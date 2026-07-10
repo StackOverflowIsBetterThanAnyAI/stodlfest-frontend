@@ -153,6 +153,7 @@ export type handleApplyUpdateProps = {
 
 export type ListJobsProps = {
     allJobs: JobProps[]
+    ariaLabel: string
 }
 
 export type ListJobsItemProps = {
@@ -162,6 +163,7 @@ export type ListJobsItemProps = {
 
 export type ListMembersProps = {
     allMembers: MemberProps[]
+    ariaLabel: string
 }
 
 export type ListMembersItemProps = {
@@ -175,6 +177,7 @@ export type ListPriorityType = {
 
 type BaseListTaskProps = {
     tasks: TaskProps[]
+    ariaLabel: string
 }
 
 type DeleteProps =

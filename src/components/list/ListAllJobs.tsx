@@ -38,7 +38,7 @@ const ListAllJobs = () => {
                 type="refresh"
             />
             {allJobs?.length ? (
-                <ListJobs allJobs={allJobs} />
+                <ListJobs allJobs={allJobs} ariaLabel="Verfügbare Aufgaben" />
             ) : (
                 <ListNoItems label="Es sind keine Aufgaben vorhanden." />
             )}

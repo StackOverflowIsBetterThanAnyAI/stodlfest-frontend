@@ -3,7 +3,7 @@ import type { ListTaskProps, TaskProps } from '../../types/types'
 
 const ListTask = (props: ListTaskProps) => {
     return (
-        <ul className="flex flex-col gap-4 mx-2">
+        <ul className="flex flex-col gap-4 mx-2" aria-label={props.ariaLabel}>
             {props.tasks.map((task: TaskProps, index: number) => (
                 <li
                     key={task.id}
