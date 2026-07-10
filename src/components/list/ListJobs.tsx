@@ -8,6 +8,7 @@ const ListJobs = ({ allJobs, ariaLabel }: ListJobsProps) => {
                 <li
                     key={job.id}
                     className={`flex flex-col ${index < allJobs.length - 1 ? 'pb-4 border-b-2' : ''} border-zinc-200`}
+                    aria-label={job.job}
                 >
                     <ListJobsItem index={index} job={job} key={job.id} />
                 </li>

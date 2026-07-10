@@ -8,6 +8,7 @@ const ListTask = (props: ListTaskProps) => {
                 <li
                     key={task.id}
                     className={`flex flex-col ${index < props.tasks.length - 1 ? 'pb-4 border-b-2' : ''} border-zinc-200`}
+                    aria-label={task.task}
                 >
                     <ListTaskItem
                         index={index}
