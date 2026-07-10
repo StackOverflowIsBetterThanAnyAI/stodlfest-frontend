@@ -101,13 +101,14 @@ const FormNewTask = () => {
             onSubmit={handleSubmit}
         >
             <Header label="Neue Aufgabe anlegen" />
-            <div className="flex flex-wrap gap-2 items-center">
+            <div className="flex flex-wrap gap-x-2 gap-y-1 items-end">
                 <label
                     htmlFor="taskAdd"
                     className="font-bold text-base md:text-lg"
                 >
                     Aufgabe:
                 </label>
+                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
                 <input
                     type="text"
                     placeholder="Aufgabe"
@@ -135,10 +136,13 @@ const FormNewTask = () => {
                     maxLength={DESCRIPTION_LENGTH}
                 />
             </div>
-            <fieldset>
-                <legend className="font-bold text-base md:text-lg">
-                    Priorität:
-                </legend>
+            <fieldset className="flex flex-wrap gap-x-2 gap-y-1 items-center">
+                <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
+                    <legend className="font-bold text-base md:text-lg">
+                        Priorität:
+                    </legend>
+                    <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                </span>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
                         id="lowAdd"
