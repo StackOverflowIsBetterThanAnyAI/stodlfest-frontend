@@ -147,6 +147,7 @@ const FormNewTask = () => {
                     <FormRadioButton
                         id="lowAdd"
                         label="Niedrig"
+                        name="priority"
                         value="low"
                         currentValue={priority}
                         onChange={handleChangePriority}
@@ -154,6 +155,7 @@ const FormNewTask = () => {
                     <FormRadioButton
                         id="mediumAdd"
                         label="Mittel"
+                        name="priority"
                         value="middle"
                         currentValue={priority}
                         onChange={handleChangePriority}
@@ -161,6 +163,7 @@ const FormNewTask = () => {
                     <FormRadioButton
                         id="highAdd"
                         label="Hoch"
+                        name="priority"
                         value="high"
                         currentValue={priority}
                         onChange={handleChangePriority}

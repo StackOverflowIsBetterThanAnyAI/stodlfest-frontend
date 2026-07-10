@@ -3,6 +3,7 @@ import type { FormRadioButtonProps } from '../../types/types'
 const FormRadioButton = ({
     id,
     label,
+    name,
     value,
     currentValue,
     onChange,
@@ -13,7 +14,7 @@ const FormRadioButton = ({
             <input
                 type="radio"
                 id={id}
-                name="priority"
+                name={name}
                 value={value}
                 checked={currentValue === value}
                 onChange={onChange}

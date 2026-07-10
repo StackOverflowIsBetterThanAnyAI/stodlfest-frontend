@@ -114,6 +114,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         <FormRadioButton
                             id="lowAdd"
                             label="Niedrig"
+                            name="updatePriority"
                             value="low"
                             currentValue={updatedPriority}
                             onChange={handleUpdatePriority}
@@ -122,6 +123,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         <FormRadioButton
                             id="mediumAdd"
                             label="Mittel"
+                            name="updatePriority"
                             value="middle"
                             currentValue={updatedPriority}
                             onChange={handleUpdatePriority}
@@ -130,6 +132,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                         <FormRadioButton
                             id="highAdd"
                             label="Hoch"
+                            name="updatePriority"
                             value="high"
                             currentValue={updatedPriority}
                             onChange={handleUpdatePriority}
