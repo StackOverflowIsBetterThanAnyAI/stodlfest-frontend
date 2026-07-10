@@ -1,6 +1,7 @@
 export type FormRadioButtonProps = {
     id: string
     label: string
+    name: string
     value: string
     currentValue: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -15,9 +16,14 @@ export type PriorityType = 'low' | 'middle' | 'high'
 
 export type AgeType = 'underage' | 'ofLegalAge'
 
+export type RequiresLegalAgeType =
+    | 'doesRequireLegalAge'
+    | 'doesNotRequireLegalAge'
+
 export type JobProps = {
     job: string
     workers: number
+    requires_legal_age: RequiresLegalAgeType
     id: number
 }
 
@@ -50,6 +56,7 @@ export type ToastContextType = {
 export type handleAddNewJobProps = {
     e: React.FormEvent<HTMLFormElement>
     job: string
+    requiresLegalAge: RequiresLegalAgeType
     setAllJobs: React.Dispatch<React.SetStateAction<JobProps[]>>
     setIsLoading: (value: React.SetStateAction<boolean>) => void
     setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void

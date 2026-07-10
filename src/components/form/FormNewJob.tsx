@@ -1,4 +1,5 @@
 import { useContext, useState, type ChangeEvent } from 'react'
+import FormRadioButton from './FormRadioButton'
 import Header from '../header/Header'
 import ListButton from '../list/ListButton'
 import { handleAddNewJob } from '../../api/handleAddNewJob'
@@ -6,6 +7,7 @@ import { useToast } from '../../context/ToastContext'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { AllJobsContext } from '../../context/AllJobsContext'
+import type { RequiresLegalAgeType } from '../../types/types'
 
 const FormNewJob = () => {
     const parsedSessionData = getStoredSessionData()
@@ -31,6 +33,23 @@ const FormNewJob = () => {
         setItemInSessionStorage('jobAdd', '')
         return ''
     })
+    const [requiresLegalAge, setRequiresLegalAge] =
+        useState<RequiresLegalAgeType>(() => {
+            const data = parsedSessionData?.requiresLegalAgeAdd
+            if (
+                data?.length &&
+                (data === 'doesRequireLegalAge' ||
+                    data === 'doesNotRequireLegalAge')
+            ) {
+                setItemInSessionStorage('requiresLegalAgeAdd', data)
+                return data
+            }
+            setItemInSessionStorage(
+                'requiresLegalAgeAdd',
+                'doesNotRequireLegalAge'
+            )
+            return 'doesNotRequireLegalAge'
+        })
     const [workers, setWorkers] = useState<number>(() => {
         const data = parsedSessionData?.workersAdd
         if (data && typeof data === 'number') {
@@ -57,10 +76,15 @@ const FormNewJob = () => {
         setItemInSessionStorage('workersAdd', input)
         setIsSubmitDisabled(!input || !job?.length)
     }
+    const handleChangeRequiresLegalAge = (e: ChangeEvent<HTMLInputElement>) => {
+        setRequiresLegalAge(e.target.value as RequiresLegalAgeType)
+        setItemInSessionStorage('requiresLegalAgeAdd', e.target.value)
+    }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         handleAddNewJob({
             e,
             job,
+            requiresLegalAge,
             setAllJobs,
             setIsLoading,
             setIsSubmitDisabled,
@@ -125,6 +149,29 @@ const FormNewJob = () => {
                     />
                 </span>
             </div>
+            <fieldset>
+                <legend className="font-bold text-base md:text-lg">
+                    Erfordert Volljährigkeit:
+                </legend>
+                <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
+                    <FormRadioButton
+                        id="noLegalAgeAdd"
+                        label="Nein"
+                        name="requiresLegalAge"
+                        value="doesNotRequireLegalAge"
+                        currentValue={requiresLegalAge}
+                        onChange={handleChangeRequiresLegalAge}
+                    />
+                    <FormRadioButton
+                        id="legalAgeAdd"
+                        label="Ja"
+                        name="requiresLegalAge"
+                        value="doesRequireLegalAge"
+                        currentValue={requiresLegalAge}
+                        onChange={handleChangeRequiresLegalAge}
+                    />
+                </div>
+            </fieldset>
             <ListButton
                 handleClick={() => {}}
                 isLoading={isLoading}

@@ -1,10 +1,11 @@
 import { SERVER_ADDRESS } from '../constants/constants'
-import type { handleAddNewJobProps } from '../types/types'
+import type { handleAddNewJobProps, JobProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleAddNewJob = async ({
     e,
     job,
+    requiresLegalAge,
     setAllJobs,
     setIsLoading,
     setIsSubmitDisabled,
@@ -18,6 +19,7 @@ export const handleAddNewJob = async ({
     const jobData = {
         job,
         workers,
+        requires_legal_age: requiresLegalAge === 'doesRequireLegalAge',
     }
 
     try {
@@ -45,8 +47,9 @@ export const handleAddNewJob = async ({
         setIsSubmitDisabled(true)
         setItemInSessionStorage('jobAdd', '')
         setItemInSessionStorage('workersAdd', 1)
+        setItemInSessionStorage('requiresLegalAgeAdd', 'doesNotRequireLegalAge')
 
-        const newJob = await response.json()
+        const newJob: JobProps = await response.json()
         setAllJobs((prevJobs) => {
             const updatedJobs = [newJob, ...(prevJobs || [])]
             setItemInSessionStorage('allJobs', updatedJobs)

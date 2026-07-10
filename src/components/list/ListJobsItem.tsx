@@ -10,6 +10,9 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                 <span className="text-base md:text-lg">
                     {job.workers} erforderliche Helfer
                 </span>
+                <span className="text-base md:text-lg">
+                    {job.requires_legal_age ? '18+' : ''}
+                </span>
             </span>
         </div>
     )
