@@ -28,8 +28,8 @@ const FormNewMember = () => {
         if ((data?.length && data === 'underage') || data === 'ofLegalAge') {
             return data
         }
-        setItemInSessionStorage('ageAdd', 'underage')
-        return 'underage'
+        setItemInSessionStorage('ageAdd', 'ofLegalAge')
+        return 'ofLegalAge'
     })
     const [name, setName] = useState<string>(() => {
         const data = parsedSessionData?.nameAdd
@@ -148,6 +148,7 @@ const FormNewMember = () => {
                     <FormRadioButton
                         id="underageAdd"
                         label="Minderjährig"
+                        name="isLegalAge"
                         value="underage"
                         currentValue={age}
                         onChange={handleChangeAge}
@@ -155,6 +156,7 @@ const FormNewMember = () => {
                     <FormRadioButton
                         id="ofLegalAgeAdd"
                         label="Volljährig"
+                        name="isLegalAge"
                         value="ofLegalAge"
                         currentValue={age}
                         onChange={handleChangeAge}

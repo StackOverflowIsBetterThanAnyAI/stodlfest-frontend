@@ -45,11 +45,11 @@ export const handleAddNewMember = async ({
 
         setName('')
         setSurname('')
-        setAge('underage')
+        setAge('ofLegalAge')
         setIsSubmitDisabled(true)
         setItemInSessionStorage('nameAdd', '')
         setItemInSessionStorage('surnameAdd', '')
-        setItemInSessionStorage('ageAdd', 'underage')
+        setItemInSessionStorage('ageAdd', 'ofLegalAge')
 
         const newMember: MemberProps = await response.json()
         setAllMembers((prevMembers) => {
