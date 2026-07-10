@@ -89,15 +89,20 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
         >
             <div className="flex flex-wrap gap-x-4 gap-y-2 justify-between items-center">
                 <div className="flex flex-wrap gap-x-4 gap-y-2">
-                    <label
-                        htmlFor="taskUpdate"
-                        className="font-bold text-base md:text-lg"
-                    >
-                        Aufgabe:
-                    </label>
+                    <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
+                        <label
+                            htmlFor="taskUpdate"
+                            className="font-bold text-base md:text-lg"
+                        >
+                            Aufgabe:
+                        </label>
+                        <em className="text-xs md:text-sm pb-1">
+                            * erforderlich
+                        </em>
+                    </span>
                     <input
                         type="text"
-                        className="min-w-32 w-full outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg"
+                        className="min-w-32 w-full outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg truncate"
                         value={updatedTask}
                         id="taskUpdate"
                         onChange={handleUpdateTask}
@@ -107,9 +112,14 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     />
                 </div>
                 <fieldset>
-                    <legend className="font-bold text-base md:text-lg">
-                        Priorität:
-                    </legend>
+                    <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
+                        <legend className="font-bold text-base md:text-lg">
+                            Priorität:
+                        </legend>
+                        <em className="text-xs md:text-sm pb-1">
+                            * erforderlich
+                        </em>
+                    </span>
                     <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                         <FormRadioButton
                             id="lowAdd"
