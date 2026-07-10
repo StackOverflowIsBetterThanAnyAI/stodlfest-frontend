@@ -73,6 +73,12 @@ export type handleAddNewMemberProps = {
     surname: string
 }
 
+export type handleFetchAllJobsProps = {
+    setAllJobs: React.Dispatch<React.SetStateAction<JobProps[]>>
+    setIsLoading: (value: React.SetStateAction<boolean>) => void
+    showToast: (props: ToastProps) => void
+}
+
 export type handleFetchAllMembersProps = {
     setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
     setIsLoading: (value: React.SetStateAction<boolean>) => void
@@ -136,6 +142,15 @@ export type handleApplyUpdateProps = {
     updatedDescription: string
     updatedPriority: PriorityType
     updatedTask: string
+}
+
+export type ListJobsProps = {
+    allJobs: JobProps[]
+}
+
+export type ListJobsItemProps = {
+    index: number
+    job: JobProps
 }
 
 export type ListMembersProps = {
