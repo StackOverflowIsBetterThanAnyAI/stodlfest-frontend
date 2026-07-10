@@ -150,9 +150,12 @@ const FormNewJob = () => {
                 </span>
             </div>
             <fieldset>
-                <legend className="font-bold text-base md:text-lg">
-                    Erfordert Volljährigkeit:
-                </legend>
+                <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
+                    <legend className="font-bold text-base md:text-lg">
+                        Erfordert Volljährigkeit:
+                    </legend>
+                    <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                </span>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
                         id="noLegalAgeAdd"
