@@ -80,13 +80,14 @@ const FormNewJob = () => {
             onSubmit={handleSubmit}
         >
             <Header label="Neue Arbeit anlegen" />
-            <div className="flex flex-wrap gap-2 items-center">
+            <div className="flex flex-wrap gap-2 items-end">
                 <label
                     htmlFor="jobAdd"
                     className="font-bold text-base md:text-lg"
                 >
                     Arbeit:
                 </label>
+                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
                 <input
                     type="text"
                     placeholder="Arbeit"
@@ -97,25 +98,32 @@ const FormNewJob = () => {
                     maxLength={JOB_LENGTH}
                     required
                 />
+            </div>
+            <div className="flex flex-wrap gap-2 items-end">
                 <label
                     htmlFor="workersAdd"
                     className="font-bold text-base md:text-lg"
                 >
                     Helfer:
                 </label>
-                <span className="text-sm md:text-base">{workers}</span>
-                <input
-                    type="range"
-                    placeholder="1"
-                    id="workersAdd"
-                    className={`min-w-32 ${inputClass}`}
-                    onChange={handleChangeWorkers}
-                    value={workers}
-                    min={1}
-                    max={15}
-                    step={1}
-                    required
-                />
+                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                <span className="flex justify-center items-end w-full gap-4">
+                    <span className="text-sm md:text-base w-3 md:w-4">
+                        {workers}
+                    </span>
+                    <input
+                        type="range"
+                        placeholder="1"
+                        id="workersAdd"
+                        className={`min-w-32 ${inputClass}`}
+                        onChange={handleChangeWorkers}
+                        value={workers}
+                        min={1}
+                        max={15}
+                        step={1}
+                        required
+                    />
+                </span>
             </div>
             <ListButton
                 handleClick={() => {}}

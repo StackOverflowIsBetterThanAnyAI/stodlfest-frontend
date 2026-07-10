@@ -99,13 +99,14 @@ const FormNewMember = () => {
             onSubmit={handleSubmit}
         >
             <Header label="Neues Mitglied anlegen" />
-            <div className="flex flex-wrap gap-2 items-center">
+            <div className="flex flex-wrap gap-2 items-end">
                 <label
                     htmlFor="nameAdd"
                     className="font-bold text-base md:text-lg"
                 >
                     Vorname:
                 </label>
+                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
                 <input
                     type="text"
                     placeholder="Vorname"
@@ -117,13 +118,14 @@ const FormNewMember = () => {
                     required
                 />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-wrap gap-2 items-end">
                 <label
                     htmlFor="surnameAdd"
                     className="font-bold text-base md:text-lg"
                 >
                     Nachname:
                 </label>
+                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
                 <input
                     type="text"
                     placeholder="Nachname"
@@ -136,9 +138,12 @@ const FormNewMember = () => {
                 />
             </div>
             <fieldset>
-                <legend className="font-bold text-base md:text-lg">
-                    Alter:
-                </legend>
+                <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
+                    <legend className="font-bold text-base md:text-lg">
+                        Alter:
+                    </legend>
+                    <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                </span>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
                         id="underageAdd"
