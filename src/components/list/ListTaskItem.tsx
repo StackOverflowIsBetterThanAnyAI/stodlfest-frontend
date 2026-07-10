@@ -193,9 +193,9 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 <ListPriority priority={task.priority} />
             </div>
             {task?.description?.length ? (
-                <em className="text-sm md:text-base line-clamp-3 wrap-break-word">
+                <span className="text-sm md:text-base line-clamp-3 wrap-break-word">
                     {task.description}
-                </em>
+                </span>
             ) : undefined}
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
                 {props.allowDelete ? (
