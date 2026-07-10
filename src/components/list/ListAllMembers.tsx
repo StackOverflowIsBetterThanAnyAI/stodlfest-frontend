@@ -30,7 +30,9 @@ const ListAllMembers = () => {
 
     return (
         <section className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full">
-            <Header label="Anwesende Mitglieder" />
+            <Header
+                label={`Anwesende Mitglieder: ${allMembers?.length || 0}`}
+            />
             <ListButton
                 handleClick={fetchAllMembers}
                 isLoading={isLoading}
