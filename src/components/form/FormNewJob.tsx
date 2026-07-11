@@ -111,7 +111,12 @@ const FormNewJob = () => {
                 >
                     Arbeit:
                 </label>
-                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                <em
+                    className="text-xs md:text-sm pb-1 text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <input
                     type="text"
                     placeholder="Arbeit"
@@ -128,11 +133,20 @@ const FormNewJob = () => {
                     htmlFor="workersAdd"
                     className="font-bold text-base md:text-lg"
                 >
+                    <em className="sr-only">erforderlich</em>
                     Helfer:
                 </label>
-                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                <em
+                    className="text-xs md:text-sm pb-1 text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <span className="flex justify-center items-end w-full gap-4">
-                    <span className="text-sm md:text-base w-3 md:w-4">
+                    <span
+                        className="text-sm md:text-base w-3 md:w-4"
+                        aria-hidden="true"
+                    >
                         {workers}
                     </span>
                     <input
@@ -149,13 +163,17 @@ const FormNewJob = () => {
                     />
                 </span>
             </div>
-            <fieldset>
-                <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
-                    <legend className="font-bold text-base md:text-lg">
-                        Erfordert Volljährigkeit:
-                    </legend>
-                    <em className="text-xs md:text-sm pb-1">* erforderlich</em>
-                </span>
+            <fieldset className="flex flex-wrap gap-x-2 gap-y-1 items-end">
+                <legend className="font-bold text-base md:text-lg float-left">
+                    <em className="sr-only">erforderlich</em>
+                    Erfordert Volljährigkeit:
+                </legend>
+                <em
+                    className="text-xs md:text-sm pb-1 inline-block text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
                         id="noLegalAgeAdd"
