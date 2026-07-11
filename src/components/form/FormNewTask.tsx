@@ -108,7 +108,12 @@ const FormNewTask = () => {
                 >
                     Aufgabe:
                 </label>
-                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                <em
+                    className="text-xs md:text-sm pb-1 text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <input
                     type="text"
                     placeholder="Aufgabe"
@@ -137,12 +142,16 @@ const FormNewTask = () => {
                 />
             </div>
             <fieldset className="flex flex-wrap gap-x-2 gap-y-1 items-center">
-                <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
-                    <legend className="font-bold text-base md:text-lg">
-                        Priorität:
-                    </legend>
-                    <em className="text-xs md:text-sm pb-1">* erforderlich</em>
-                </span>
+                <legend className="font-bold text-base md:text-lg float-left">
+                    Priorität:
+                    <em className="sr-only">erforderlich</em>
+                </legend>
+                <em
+                    className="text-xs md:text-sm pb-1 inline-block text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
                         id="lowAdd"
