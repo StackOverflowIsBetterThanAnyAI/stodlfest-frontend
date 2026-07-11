@@ -141,17 +141,11 @@ const FormNewTask = () => {
                     maxLength={DESCRIPTION_LENGTH}
                 />
             </div>
-            <fieldset className="flex flex-wrap gap-x-2 gap-y-1 items-center">
+            <fieldset className="flex flex-wrap gap-x-2 gap-y-1 items-end">
                 <legend className="font-bold text-base md:text-lg float-left">
-                    Priorität:
                     <em className="sr-only">erforderlich</em>
+                    Priorität:
                 </legend>
-                <em
-                    className="text-xs md:text-sm pb-1 inline-block text-zinc-300"
-                    aria-hidden="true"
-                >
-                    * erforderlich
-                </em>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
                         id="lowAdd"

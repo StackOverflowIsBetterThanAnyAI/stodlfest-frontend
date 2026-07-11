@@ -116,8 +116,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 </div>
                 <fieldset>
                     <legend className="font-bold text-base md:text-lg float-left pr-2">
-                        Priorität:
-                        <em className="sr-only">erforderlich</em>
+                        <em className="sr-only">erforderlich</em>Priorität:
                     </legend>
                     <em
                         className="text-xs md:text-sm pb-1 inline-block text-zinc-300"
