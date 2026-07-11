@@ -146,6 +146,12 @@ const FormNewTask = () => {
                     <em className="sr-only">erforderlich</em>
                     Priorität:
                 </legend>
+                <em
+                    className="text-xs md:text-sm pb-1 text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
                         id="lowAdd"

@@ -106,7 +106,12 @@ const FormNewMember = () => {
                 >
                     Vorname:
                 </label>
-                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                <em
+                    className="text-xs md:text-sm pb-1 text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <input
                     type="text"
                     placeholder="Vorname"
@@ -125,7 +130,12 @@ const FormNewMember = () => {
                 >
                     Nachname:
                 </label>
-                <em className="text-xs md:text-sm pb-1">* erforderlich</em>
+                <em
+                    className="text-xs md:text-sm pb-1 text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <input
                     type="text"
                     placeholder="Nachname"
@@ -137,13 +147,17 @@ const FormNewMember = () => {
                     required
                 />
             </div>
-            <fieldset>
-                <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
-                    <legend className="font-bold text-base md:text-lg">
-                        Alter:
-                    </legend>
-                    <em className="text-xs md:text-sm pb-1">* erforderlich</em>
-                </span>
+            <fieldset className="flex flex-wrap gap-x-2 gap-y-1 items-end">
+                <legend className="font-bold text-base md:text-lg float-left">
+                    <em className="sr-only">erforderlich</em>
+                    Alter:
+                </legend>
+                <em
+                    className="text-xs md:text-sm pb-1 text-zinc-300"
+                    aria-hidden="true"
+                >
+                    * erforderlich
+                </em>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
                         id="underageAdd"
