@@ -4,7 +4,7 @@ import ListPriority from './ListPriority'
 import FormRadioButton from '../form/FormRadioButton'
 import { useToast } from '../../context/ToastContext'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
-import { handleApplyUpdateItem } from '../../api/handleApplyUpdateItem'
+import { handleApplyUpdateTask } from '../../api/handleApplyUpdateTask'
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
 import type { ListTaskItemProps, PriorityType } from '../../types/types'
@@ -32,7 +32,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        handleApplyUpdateItem({
+        handleApplyUpdateTask({
             setIsEdit,
             setIsLoading,
             setUpcomingTasks,
@@ -45,7 +45,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
         })
     }
     const handleUpdate = async () => {
-        handleApplyUpdateItem({
+        handleApplyUpdateTask({
             setIsEdit,
             setIsLoading,
             setUpcomingTasks,

@@ -1,8 +1,8 @@
 import { SERVER_ADDRESS } from '../constants/constants'
-import type { handleApplyUpdateItemProps, TaskProps } from '../types/types'
+import type { handleApplyUpdateTaskProps, TaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
-export const handleApplyUpdateItem = async ({
+export const handleApplyUpdateTask = async ({
     setIsEdit,
     setIsLoading,
     setUpcomingTasks,
@@ -12,7 +12,7 @@ export const handleApplyUpdateItem = async ({
     updatedDescription,
     updatedPriority,
     updatedTask,
-}: handleApplyUpdateItemProps) => {
+}: handleApplyUpdateTaskProps) => {
     if (
         task.task === updatedTask &&
         task.description === updatedDescription &&
