@@ -44,7 +44,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             updatedTask,
         })
     }
-    const applyUpdate = async () => {
+    const handleUpdate = async () => {
         handleApplyUpdate({
             setIsEdit,
             setIsLoading,
@@ -173,7 +173,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             />
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
                 <ListButton
-                    handleClick={applyUpdate}
+                    handleClick={handleUpdate}
                     index={index}
                     label="Anwenden"
                     isLoading={isLoading}
