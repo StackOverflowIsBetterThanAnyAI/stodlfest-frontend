@@ -103,13 +103,13 @@ const FormNewJob = () => {
             className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full"
             onSubmit={handleSubmit}
         >
-            <Header label="Neue Arbeit anlegen" />
+            <Header label="Neue Aufgabe anlegen" />
             <div className="flex flex-wrap gap-2 items-end">
                 <label
                     htmlFor="jobAdd"
                     className="font-bold text-base md:text-lg"
                 >
-                    Arbeit:
+                    Aufgabe:
                 </label>
                 <em
                     className="text-xs md:text-sm pb-1 text-zinc-300"
@@ -119,7 +119,7 @@ const FormNewJob = () => {
                 </em>
                 <input
                     type="text"
-                    placeholder="Arbeit"
+                    placeholder="Aufgabe"
                     id="jobAdd"
                     className={`min-w-32 ${inputClass}`}
                     onChange={handleChangeJob}
@@ -197,7 +197,7 @@ const FormNewJob = () => {
                 handleClick={() => {}}
                 isLoading={isLoading}
                 isDisabled={isSubmitDisabled}
-                label="Arbeit anlegen"
+                label="Aufgabe anlegen"
                 isSubmit
                 type="form"
             />
