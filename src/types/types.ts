@@ -139,7 +139,7 @@ export type handleDeleteMemberProps = {
     showToast: (props: ToastProps) => void
 }
 
-export type handleApplyUpdateProps = {
+export type handleApplyUpdateItemProps = {
     setIsEdit: (value: React.SetStateAction<boolean>) => void
     setIsLoading: (value: React.SetStateAction<boolean>) => void
     setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
