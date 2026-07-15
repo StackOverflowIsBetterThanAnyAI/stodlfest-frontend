@@ -70,6 +70,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     const handleCancel = () => {
         setUpdatedDescription(task?.description || '')
         setUpdatedTask(task.task)
+        setUpdatedPriority(task.priority)
         setIsEdit(false)
     }
     const handleUpdateDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
