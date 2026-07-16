@@ -131,12 +131,32 @@ export type handleDeleteCompletedTaskProps = {
     completedTasks: TaskProps[]
 }
 
+export type handleDeleteJobProps = {
+    allJobs: JobProps[] | undefined
+    job: JobProps
+    setAllJobs: React.Dispatch<React.SetStateAction<JobProps[] | []>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    showToast: (props: ToastProps) => void
+}
+
 export type handleDeleteMemberProps = {
     allMembers: MemberProps[] | undefined
     member: MemberProps
     setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     showToast: (props: ToastProps) => void
+}
+
+export type handleApplyUpdateJobProps = {
+    allJobs: JobProps[] | undefined
+    job: JobProps
+    setAllJobs: React.Dispatch<React.SetStateAction<JobProps[] | []>>
+    setIsEdit: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    showToast: (props: ToastProps) => void
+    updatedJob: string
+    updatedRequiresLegalAge: RequiresLegalAgeType
+    updatedWorkers: number
 }
 
 export type handleApplyUpdateTaskProps = {
