@@ -17,7 +17,7 @@ const Navigation = () => {
             <div className="flex justify-between items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-8 py-2 md:py-4 text-md md:text-lg">
                 <Link
                     to="/"
-                    className="primary-text-pseudo flex items-center gap-3 md:gap-4"
+                    className="primary-text-pseudo-secondary flex items-center gap-3 md:gap-4"
                     aria-label="Stodlfest Startseite"
                     title="Stodlfest Startseite"
                 >
@@ -44,7 +44,7 @@ const Navigation = () => {
                                 ? 'Das mobile Navigationsmenü schließen'
                                 : 'Das mobile Navigationsmenü öffnen'
                         }
-                        className="text-xl primary-text-pseudo w-8 h-8 flex items-center justify-center"
+                        className="text-xl primary-text-pseudo-secondary w-8 h-8 flex items-center justify-center"
                     >
                         {isMenuExpanded ? '✖' : '☰'}
                     </button>
@@ -52,19 +52,25 @@ const Navigation = () => {
                     <div className="flex gap-2">
                         <Link
                             to="/arbeitseinteilung"
-                            className="primary-text-pseudo"
+                            className="primary-text-pseudo-secondary"
                         >
                             Arbeitseinteilung
                         </Link>
-                        <Link to="/mitglieder" className="primary-text-pseudo">
+                        <Link
+                            to="/mitglieder"
+                            className="primary-text-pseudo-secondary"
+                        >
                             Mitglieder
                         </Link>
-                        <Link to="/aufgaben" className="primary-text-pseudo">
+                        <Link
+                            to="/aufgaben"
+                            className="primary-text-pseudo-secondary"
+                        >
                             Aufgaben
                         </Link>
                         <Link
                             to="/vorbereitung"
-                            className="primary-text-pseudo"
+                            className="primary-text-pseudo-secondary"
                         >
                             Vorbereitung
                         </Link>
@@ -78,17 +84,26 @@ const Navigation = () => {
                 >
                     <Link
                         to="/arbeitseinteilung"
-                        className="primary-text-pseudo"
+                        className="primary-text-pseudo-secondary"
                     >
                         Arbeitseinteilung
                     </Link>
-                    <Link to="/mitglieder" className="primary-text-pseudo">
+                    <Link
+                        to="/mitglieder"
+                        className="primary-text-pseudo-secondary"
+                    >
                         Mitglieder
                     </Link>
-                    <Link to="/aufgaben" className="primary-text-pseudo">
+                    <Link
+                        to="/aufgaben"
+                        className="primary-text-pseudo-secondary"
+                    >
                         Aufgaben
                     </Link>
-                    <Link to="/vorbereitung" className="primary-text-pseudo">
+                    <Link
+                        to="/vorbereitung"
+                        className="primary-text-pseudo-secondary"
+                    >
                         Vorbereitung
                     </Link>
                 </nav>
