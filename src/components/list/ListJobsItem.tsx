@@ -94,7 +94,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                     type="text"
                     placeholder="Aufgabe"
                     id={`jobUpdate${job.id}`}
-                    className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 text-sm md:text-base"
+                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 text-sm md:text-base`}
                     onChange={handleChangeJob}
                     onKeyDown={handleEscape}
                     value={updatedJob}
@@ -127,7 +127,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                         type="range"
                         placeholder="1"
                         id={`workersUpdate${job.id}`}
-                        className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 text-sm md:text-base"
+                        className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'}min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 text-sm md:text-base`}
                         onChange={handleChangeWorkers}
                         onKeyDown={handleEscape}
                         value={updatedWorkers}

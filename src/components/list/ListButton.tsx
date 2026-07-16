@@ -3,7 +3,7 @@ import type { ListButtonProps } from '../../types/types'
 
 const ListButton = ({
     handleClick,
-    index = 0,
+    index = 1,
     isDisabled = false,
     isLoading,
     label,
@@ -21,7 +21,7 @@ const ListButton = ({
                     type={isSubmit ? 'submit' : 'button'}
                     onClick={handleClick}
                     disabled={isDisabled || isLoading}
-                    className="primary-text-pseudo text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-32 w-full h-8 md:h-10 px-4 py-1 mx-auto"
+                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-32 w-full h-8 md:h-10 px-4 py-1 mx-auto`}
                     aria-label={`${label}${isDisabled || isLoading ? '. deaktiviert' : ''}`}
                 >
                     {label}
@@ -52,7 +52,7 @@ const ListButton = ({
                 type={isSubmit ? 'submit' : 'button'}
                 onClick={handleClick}
                 disabled={isDisabled || isLoading}
-                className="primary-text-pseudo outline-2 outline-zinc-500 px-2 text-base md:text-lg h-8 md:h-10"
+                className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} outline-2 outline-zinc-500 px-2 text-base md:text-lg h-8 md:h-10`}
                 aria-label={`${label}${isDisabled || isLoading ? '. deaktiviert' : ''}`}
             >
                 {label}
