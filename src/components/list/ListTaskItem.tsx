@@ -79,7 +79,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 <div className="flex flex-wrap gap-x-4 gap-y-2">
                     <span className="flex flex-wrap gap-x-2 gap-y-1 items-end">
                         <label
-                            htmlFor="taskUpdate"
+                            htmlFor={`taskUpdate${task.id}`}
                             className="font-bold text-base md:text-lg"
                         >
                             Aufgabe:
@@ -93,9 +93,9 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     </span>
                     <input
                         type="text"
-                        className="min-w-32 w-full outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg truncate"
+                        className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} min-w-32 w-full outline-2 outline-zinc-500 rounded-md px-2 text-base md:text-lg truncate`}
                         value={updatedTask}
-                        id="taskUpdate"
+                        id={`taskUpdate${task.id}`}
                         onChange={handleUpdateTask}
                         onKeyDown={handleEscape}
                         maxLength={127}
@@ -114,7 +114,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     </em>
                     <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                         <FormRadioButton
-                            id="lowAdd"
+                            id={`lowUpdate${task.id}`}
                             label="Niedrig"
                             name="updatePriority"
                             value="low"
@@ -123,7 +123,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                             onKeyDown={handleEscape}
                         />
                         <FormRadioButton
-                            id="mediumAdd"
+                            id={`mediumUpdate${task.id}`}
                             label="Mittel"
                             name="updatePriority"
                             value="middle"
@@ -132,7 +132,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                             onKeyDown={handleEscape}
                         />
                         <FormRadioButton
-                            id="highAdd"
+                            id={`highUpdate${task.id}`}
                             label="Hoch"
                             name="updatePriority"
                             value="high"
@@ -144,15 +144,15 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 </fieldset>
             </div>
             <label
-                htmlFor="descriptionUpdate"
+                htmlFor={`descriptionUpdate${task.id}`}
                 className="font-bold text-base md:text-lg"
             >
                 Beschreibung:
             </label>
             <textarea
-                className="resize-none h-20 outline-2 outline-zinc-500 rounded-md px-2 mb-2 text-sm md:text-base wrap-break-word"
+                className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} resize-none h-20 outline-2 outline-zinc-500 rounded-md px-2 mb-2 text-sm md:text-base wrap-break-word`}
                 value={updatedDescription}
-                id="descriptionUpdate"
+                id={`descriptionUpdate${task.id}`}
                 onChange={handleUpdateDescription}
                 placeholder="Beschreibung hinzufügen"
                 maxLength={255}

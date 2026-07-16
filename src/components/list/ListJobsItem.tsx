@@ -79,7 +79,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
         >
             <div className="flex flex-wrap gap-2 items-end">
                 <label
-                    htmlFor="jobUpdate"
+                    htmlFor={`jobUpdate${job.id}`}
                     className="font-bold text-base md:text-lg"
                 >
                     Aufgabe:
@@ -93,7 +93,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                 <input
                     type="text"
                     placeholder="Aufgabe"
-                    id="jobUpdate"
+                    id={`jobUpdate${job.id}`}
                     className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 text-sm md:text-base"
                     onChange={handleChangeJob}
                     onKeyDown={handleEscape}
@@ -104,7 +104,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
             </div>
             <div className="flex flex-wrap gap-2 items-end">
                 <label
-                    htmlFor="workersUpdate"
+                    htmlFor={`workersUpdate${job.id}`}
                     className="font-bold text-base md:text-lg"
                 >
                     <em className="sr-only">erforderlich</em>
@@ -126,7 +126,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                     <input
                         type="range"
                         placeholder="1"
-                        id="workersUpdate"
+                        id={`workersUpdate${job.id}`}
                         className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 text-sm md:text-base"
                         onChange={handleChangeWorkers}
                         onKeyDown={handleEscape}
@@ -151,7 +151,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                 </em>
                 <div className="flex w-full flex-wrap gap-x-4 gap-y-1 items-center">
                     <FormRadioButton
-                        id="noLegalAgeUpdate"
+                        id={`noLegalAgeUpdate${job.id}`}
                         label="Nein"
                         name="requiresLegalAge"
                         value="doesNotRequireLegalAge"
@@ -160,7 +160,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                         onKeyDown={handleEscape}
                     />
                     <FormRadioButton
-                        id="legalAgeUpdate"
+                        id={`legalAgeUpdate${job.id}`}
                         label="Ja"
                         name="requiresLegalAge"
                         value="doesRequireLegalAge"
