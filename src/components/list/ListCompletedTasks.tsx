@@ -52,6 +52,7 @@ const ListCompletedTasks = () => {
             {completedTasks?.length ? (
                 <ListTask
                     allowDelete
+                    allowRestore
                     ariaLabel="Erledigte Aufgaben"
                     completedTasks={completedTasks}
                     setCompletedTasks={setCompletedTasks}

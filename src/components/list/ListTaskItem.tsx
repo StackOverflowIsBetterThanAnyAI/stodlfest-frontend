@@ -1,12 +1,13 @@
 import { useContext, useState, type ChangeEvent } from 'react'
+import FormRadioButton from '../form/FormRadioButton'
 import ListButton from './ListButton'
 import ListPriority from './ListPriority'
-import FormRadioButton from '../form/FormRadioButton'
-import { useToast } from '../../context/ToastContext'
-import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleApplyUpdateTask } from '../../api/handleApplyUpdateTask'
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
+import { handleRestoreCompletedTask } from '../../api/handleRestoreCompletedTask'
+import { useToast } from '../../context/ToastContext'
+import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import type { ListTaskItemProps, PriorityType } from '../../types/types'
 
 const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
@@ -44,7 +45,6 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             updatedTask,
         })
     }
-
     const handleEscape = (
         e:
             | React.KeyboardEvent<HTMLInputElement>
@@ -190,6 +190,24 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 </span>
             ) : undefined}
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
+                {props.allowRestore ? (
+                    <ListButton
+                        handleClick={() =>
+                            handleRestoreCompletedTask({
+                                setCompletedTasks: props.setCompletedTasks,
+                                setIsLoading: setIsLoading,
+                                setUpcomingTasks: setUpcomingTasks,
+                                showToast: props.showToast,
+                                task,
+                                completedTasks: props.completedTasks,
+                            })
+                        }
+                        index={index}
+                        isLoading={isLoading}
+                        label="Wiederherstellen"
+                        type="regular"
+                    />
+                ) : undefined}
                 {props.allowDelete ? (
                     <ListButton
                         handleClick={() =>

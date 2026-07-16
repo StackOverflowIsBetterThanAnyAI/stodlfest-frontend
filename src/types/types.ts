@@ -131,6 +131,15 @@ export type handleDeleteCompletedTaskProps = {
     completedTasks: TaskProps[]
 }
 
+export type handleRestoreCompletedTaskProps = {
+    setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setUpcomingTasks: (value: React.SetStateAction<TaskProps[] | []>) => void
+    showToast: (props: ToastProps) => void
+    task: TaskProps
+    completedTasks: TaskProps[]
+}
+
 export type handleDeleteJobProps = {
     allJobs: JobProps[] | undefined
     job: JobProps
@@ -200,19 +209,6 @@ type BaseListTaskProps = {
     ariaLabel: string
 }
 
-type DeleteProps =
-    | {
-          allowDelete: true
-          setCompletedTasks: React.Dispatch<
-              React.SetStateAction<TaskProps[] | []>
-          >
-          showToast: (props: ToastProps) => void
-          completedTasks: TaskProps[]
-      }
-    | {
-          allowDelete?: false
-      }
-
 type CompleteProps =
     | {
           allowComplete: true
@@ -230,6 +226,19 @@ type CompleteProps =
           allowComplete?: false
       }
 
+type DeleteProps =
+    | {
+          allowDelete: true
+          setCompletedTasks: React.Dispatch<
+              React.SetStateAction<TaskProps[] | []>
+          >
+          showToast: (props: ToastProps) => void
+          completedTasks: TaskProps[]
+      }
+    | {
+          allowDelete?: false
+      }
+
 type EditProps =
     | {
           allowEdit: true
@@ -238,10 +247,24 @@ type EditProps =
           allowEdit?: false
       }
 
+type RestoreType =
+    | {
+          allowRestore: true
+          setCompletedTasks: React.Dispatch<
+              React.SetStateAction<TaskProps[] | []>
+          >
+          showToast: (props: ToastProps) => void
+          completedTasks: TaskProps[]
+      }
+    | {
+          allowRestore?: false
+      }
+
 export type ListTaskProps = BaseListTaskProps &
-    DeleteProps &
     CompleteProps &
-    EditProps
+    EditProps &
+    DeleteProps &
+    RestoreType
 
 export type ListButtonProps = {
     handleClick: () => void
