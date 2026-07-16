@@ -25,7 +25,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     aria-label="GitHub Repository (öffnet in einem neuen Tab)"
                     title="GitHub Repository (öffnet in einem neuen Tab)"
-                    className="w-fit flex items-center gap-1 px-4 py-1 m-auto primary-text-pseudo"
+                    className="w-fit flex items-center gap-1 px-4 py-1 m-auto primary-text-pseudo-secondary"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
