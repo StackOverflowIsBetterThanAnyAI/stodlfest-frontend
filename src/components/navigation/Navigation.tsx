@@ -57,16 +57,16 @@ const Navigation = () => {
                             Arbeitseinteilung
                         </Link>
                         <Link
-                            to="/mitglieder"
-                            className="primary-text-pseudo-secondary"
-                        >
-                            Mitglieder
-                        </Link>
-                        <Link
                             to="/aufgaben"
                             className="primary-text-pseudo-secondary"
                         >
                             Aufgaben
+                        </Link>
+                        <Link
+                            to="/mitglieder"
+                            className="primary-text-pseudo-secondary"
+                        >
+                            Mitglieder
                         </Link>
                         <Link
                             to="/vorbereitung"
@@ -89,16 +89,16 @@ const Navigation = () => {
                         Arbeitseinteilung
                     </Link>
                     <Link
-                        to="/mitglieder"
-                        className="primary-text-pseudo-secondary"
-                    >
-                        Mitglieder
-                    </Link>
-                    <Link
                         to="/aufgaben"
                         className="primary-text-pseudo-secondary"
                     >
                         Aufgaben
+                    </Link>
+                    <Link
+                        to="/mitglieder"
+                        className="primary-text-pseudo-secondary"
+                    >
+                        Mitglieder
                     </Link>
                     <Link
                         to="/vorbereitung"
