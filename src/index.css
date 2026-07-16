@@ -33,7 +33,7 @@ button:disabled:hover {
 }
 
 @utility primary-text-pseudo {
-    @apply not-disabled:hover:bg-slate-800 not-disabled:active:bg-slate-700 rounded-sm focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75;
+    @apply not-disabled:hover:bg-slate-700/40 not-disabled:active:bg-slate-700 rounded-sm focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75;
 }
 
 @utility primary-text-pseudo-secondary {

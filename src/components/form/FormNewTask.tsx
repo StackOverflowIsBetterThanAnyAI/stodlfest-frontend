@@ -93,7 +93,7 @@ const FormNewTask = () => {
     }
 
     const inputClass =
-        'w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base'
+        'w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/40 text-sm md:text-base'
 
     return (
         <form

@@ -118,7 +118,7 @@ const FormNewJob = () => {
                     type="text"
                     placeholder="Aufgabe"
                     id="jobAdd"
-                    className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base"
+                    className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/40 text-sm md:text-base"
                     onChange={handleChangeJob}
                     value={job}
                     maxLength={JOB_LENGTH}
@@ -150,7 +150,7 @@ const FormNewJob = () => {
                         type="range"
                         placeholder="1"
                         id="workersAdd"
-                        className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base"
+                        className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/40 text-sm md:text-base"
                         onChange={handleChangeWorkers}
                         value={workers}
                         min={1}
