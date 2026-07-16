@@ -29,7 +29,7 @@ const ListButton = ({
             )
         ) : type === 'regular' ? (
             isLoading ? (
-                <div className="cursor-not-allowed h-7 md:h-8 rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto flex justify-center items-center">
+                <div className="cursor-not-allowed h-7 md:h-8 rounded-lg outline-2 outline-zinc-500 xs:max-w-2/5 sm:max-w-60 md:max-w-72 w-full px-4 py-1 mx-auto flex justify-center items-center">
                     <FetchLoading theme="#71717b" />
                 </div>
             ) : (
@@ -37,7 +37,7 @@ const ListButton = ({
                     type={isSubmit ? 'submit' : 'button'}
                     onClick={handleClick}
                     disabled={isDisabled || isLoading}
-                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} h-7 md:h-8 text-sm md:text-base rounded-lg outline-2 outline-zinc-500 max-w-72 w-full px-4 py-1 mx-auto`}
+                    className={`${index % 2 ? 'primary-text-pseudo-secondary' : 'primary-text-pseudo'} h-7 md:h-8 text-sm md:text-base rounded-lg outline-2 outline-zinc-500 xs:max-w-2/5 sm:max-w-60 md:max-w-72 w-full px-4 py-1 mx-auto`}
                     aria-label={`${label}${isDisabled || isLoading ? '. deaktiviert' : ''}`}
                 >
                     {label}
