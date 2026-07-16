@@ -52,6 +52,10 @@ export const handleAddNewJob = async ({
         const newJob: JobProps = await response.json()
         setAllJobs((prevJobs) => {
             const updatedJobs = [newJob, ...(prevJobs || [])]
+            updatedJobs.sort((a, b) => {
+                const jobCompare = a.job.localeCompare(b.job, 'de')
+                return jobCompare
+            })
             setItemInSessionStorage('allJobs', updatedJobs)
             return updatedJobs
         })
