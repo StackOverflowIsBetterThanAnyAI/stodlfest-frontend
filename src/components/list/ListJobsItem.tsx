@@ -72,9 +72,6 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
         setUpdatedWorkers(parseInt(e.target.value) || job.workers)
     }
 
-    const inputClass =
-        'w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base'
-
     return isEdit ? (
         <form
             className={`py-2 px-3 flex flex-col gap-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm outline-2 outline-zinc-500`}
@@ -97,7 +94,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                     type="text"
                     placeholder="Aufgabe"
                     id="jobUpdate"
-                    className={`min-w-32 ${inputClass}`}
+                    className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 text-sm md:text-base"
                     onChange={handleChangeJob}
                     onKeyDown={handleEscape}
                     value={updatedJob}
@@ -130,7 +127,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
                         type="range"
                         placeholder="1"
                         id="workersUpdate"
-                        className={`min-w-32 ${inputClass}`}
+                        className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 text-sm md:text-base"
                         onChange={handleChangeWorkers}
                         onKeyDown={handleEscape}
                         value={updatedWorkers}

@@ -90,9 +90,6 @@ const FormNewMember = () => {
         })
     }
 
-    const inputClass =
-        'w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base'
-
     return (
         <form
             className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full"
@@ -116,7 +113,7 @@ const FormNewMember = () => {
                     type="text"
                     placeholder="Vorname"
                     id="nameAdd"
-                    className={`min-w-32 ${inputClass}`}
+                    className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base"
                     onChange={handleChangeName}
                     value={name}
                     maxLength={NAME_LENGTH}
@@ -140,7 +137,7 @@ const FormNewMember = () => {
                     type="text"
                     placeholder="Nachname"
                     id="surnameAdd"
-                    className={`min-w-32 ${inputClass}`}
+                    className="min-w-32 w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/50 text-sm md:text-base"
                     onChange={handleChangeSurname}
                     value={surname}
                     maxLength={NAME_LENGTH}
