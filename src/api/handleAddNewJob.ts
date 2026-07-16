@@ -19,7 +19,7 @@ export const handleAddNewJob = async ({
     const jobData = {
         job,
         workers,
-        requires_legal_age: requiresLegalAge === 'doesRequireLegalAge',
+        requires_legal_age: requiresLegalAge,
     }
 
     try {
