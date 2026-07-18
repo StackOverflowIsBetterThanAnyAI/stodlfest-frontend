@@ -93,11 +93,11 @@ const FormNewTask = () => {
     }
 
     const inputClass =
-        'w-full outline outline-zinc-500 rounded-lg px-2 py-1 bg-slate-800 hover:bg-slate-700/40 text-sm md:text-base'
+        'w-full outline outline-zinc-500 rounded-lg px-2 py-1 hover:bg-slate-700/40 text-sm md:text-base'
 
     return (
         <form
-            className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full"
+            className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full bg-slate-900"
             onSubmit={handleSubmit}
         >
             <Header label="Neue Aufgabe anlegen" />

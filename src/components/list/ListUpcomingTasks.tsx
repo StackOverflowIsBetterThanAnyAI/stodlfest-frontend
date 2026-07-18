@@ -43,7 +43,7 @@ const ListUpcomingTasks = () => {
     }, [fetchUpcomingTasks])
 
     return (
-        <section className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full">
+        <section className="flex flex-col gap-6 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full bg-slate-900">
             <Header
                 label={`Anstehende Aufgaben: ${upcomingTasks?.length || 0}`}
             />
