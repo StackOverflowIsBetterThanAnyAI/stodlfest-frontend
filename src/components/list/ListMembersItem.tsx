@@ -54,6 +54,7 @@ const ListMembersItem = ({ index, member }: ListMembersItemProps) => {
                 isLoading={isLoading}
                 label="Entfernen"
                 type="regular"
+                index={0}
             />
         </div>
     )
