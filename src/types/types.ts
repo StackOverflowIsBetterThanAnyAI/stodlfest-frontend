@@ -32,7 +32,7 @@ export type MemberProps = {
     name: string
     age: AgeType
     id: number
-    job?: number
+    job?: string
 }
 
 export type TaskProps = {
@@ -78,6 +78,18 @@ export type handleAddNewMemberProps = {
     setSurname: React.Dispatch<React.SetStateAction<string>>
     showToast: (props: ToastProps) => void
     surname: string
+}
+
+export type TargetActionType = 'assign' | 'unassign'
+
+export type handleAssignMemberToJobProps = {
+    allMembers: MemberProps[] | undefined
+    job: JobProps
+    member: MemberProps
+    setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    showToast: (props: ToastProps) => void
+    targetAction: TargetActionType
 }
 
 export type handleFetchAllJobsProps = {

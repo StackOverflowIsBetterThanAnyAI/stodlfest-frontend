@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Arbeitseinteilung from './pages/Arbeitseinteilung'
 import Aufgaben from './pages/Aufgaben'
-import Footer from './components/footer/Footer'
 import Home from './pages/Home'
 import Mitglieder from './pages/Mitglieder'
-import Navigation from './components/navigation/Navigation'
 import Vorbereitung from './pages/Vorbereitung'
+import Footer from './components/footer/Footer'
+import Navigation from './components/navigation/Navigation'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
 import { ToastProvider } from './context/ToastContext'
 
@@ -18,7 +19,7 @@ const AppContent = () => {
                 <Route path="/" element={<Home />} />
                 <Route
                     path="/arbeitseinteilung"
-                    element={<h1>Arbeitseinteilung</h1>}
+                    element={<Arbeitseinteilung />}
                 />
                 <Route path="/mitglieder" element={<Mitglieder />} />
                 <Route path="/aufgaben" element={<Aufgaben />} />
