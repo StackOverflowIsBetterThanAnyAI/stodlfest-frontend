@@ -15,7 +15,8 @@ a {
 
 a:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+ul:focus-visible {
     @apply outline-2 outline-zinc-200 rounded-lg;
 }
 
