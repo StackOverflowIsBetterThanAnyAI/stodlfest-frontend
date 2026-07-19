@@ -1,9 +1,13 @@
 import { useContext, useState, type DragEvent } from 'react'
+import { handleAssignMemberToJob } from '../../api/handleAssignMemberToJob'
+import { AllMembersContext } from '../../context/AllMembersContext'
 import { useToast } from '../../context/ToastContext'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
-import type { ListJobsItemProps, TargetActionType } from '../../types/types'
-import { AllMembersContext } from '../../context/AllMembersContext'
-import { handleAssignMemberToJob } from '../../api/handleAssignMemberToJob'
+import type {
+    ListJobsItemProps,
+    MemberProps,
+    TargetActionType,
+} from '../../types/types'
 
 const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
     const { showToast } = useToast()
@@ -71,16 +75,40 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
             if (draggedMember.job === job.job) {
                 return
             }
-            const currentlyAssignedCount = allMembers?.filter(
-                (member) => member.job === job.job
-            ).length
-            if (
-                currentlyAssignedCount &&
-                currentlyAssignedCount >= job.workers
-            ) {
-                showToast({
-                    label: 'Maximale Anzahl an Helfern für diese Aufgabe erreicht.',
-                })
+        }
+
+        await handleAssignMemberToJob({
+            allMembers,
+            job,
+            member: draggedMember,
+            setAllMembers,
+            setIsLoading,
+            showToast,
+            targetAction,
+        })
+    }
+
+    const handleKeyDown = async (
+        e: React.KeyboardEvent<HTMLButtonElement>,
+        member: MemberProps,
+        targetAction: TargetActionType
+    ) => {
+        if (e.key !== ' ' && e.key !== 'Enter') {
+            return
+        }
+
+        e.preventDefault()
+
+        setActiveTargetZone(null)
+
+        const draggedMember = allMembers?.find((item) => item.id === member.id)
+
+        if (!draggedMember) {
+            return
+        }
+
+        if (targetAction === 'assign') {
+            if (draggedMember.job === job.job) {
                 return
             }
         }
@@ -125,12 +153,20 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                             </span>
                         )}
                     </span>
-                    <span className="text-base md:text-lg">{`${currentWorkersCount}/${job.workers} erforderlichen Helfern`}</span>
+                    <span
+                        className="text-base md:text-lg"
+                        aria-hidden="true"
+                    >{`${currentWorkersCount}/${job.workers} erforderlichen Helfern`}</span>
+                    <span className="sr-only">{`${currentWorkersCount} von ${job.workers} erforderlichen Helfern`}</span>
                 </div>
             ) : (
                 <span className="gap-4 grid grid-cols-3 items-center">
                     <span className="text-base md:text-lg">{job.job}</span>
-                    <span className="text-base md:text-lg">{`${currentWorkersCount}/${job.workers} erforderlichen Helfern`}</span>
+                    <span
+                        className="text-base md:text-lg"
+                        aria-hidden="true"
+                    >{`${currentWorkersCount}/${job.workers} erforderlichen Helfern`}</span>
+                    <span className="sr-only">{`${currentWorkersCount} von ${job.workers} erforderlichen Helfern`}</span>
                     {job.requires_legal_age === 'doesRequireLegalAge' ? (
                         <span className="text-sm md:text-base text-right self-start font-bold w-full">
                             <span
@@ -152,61 +188,81 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
             )}
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50 w-full">
                 <ul
-                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-slate-400 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md transition-all
-                                ${activeTargetZone === 'unassign' ? 'outline-dashed outline-2 outline-zinc-500 bg-slate-200! animate-pulse' : ''}`}
+                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md
+                                ${activeTargetZone === 'unassign' ? 'outline-dashed outline-2 outline-slate-200 bg-slate-200 animate-pulse' : 'bg-slate-400'}`}
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'unassign')}
                     aria-label="Verfügbare Mitglieder"
                 >
                     {allMembers?.length
                         ? allMembers
-                              ?.filter((item) => {
-                                  const hasNoJob = !item.job?.length
+                              ?.filter((member) => {
+                                  const hasNoJob = !member.job?.length
                                   const meetsAgeRequirement =
                                       job.requires_legal_age !==
                                           'doesRequireLegalAge' ||
-                                      item.age === 'ofLegalAge'
+                                      member.age === 'ofLegalAge'
                                   return hasNoJob && meetsAgeRequirement
                               })
-                              .map((item) => (
+                              .map((member) => (
                                   <li
-                                      key={item.id}
-                                      className={`bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base select-none 
-                                                ${currentWorkersCount === job.workers ? 'cursor-not-allowed' : 'hover:cursor-grab active:cursor-grabbing'}`}
+                                      key={member.id}
                                       draggable={
                                           currentWorkersCount !== job.workers
                                       }
                                       onDragStart={(e) =>
-                                          handleDragStart(e, item.id)
+                                          handleDragStart(e, member.id)
                                       }
                                       onDragEnd={handleDragEnd}
                                   >
-                                      {item.surname} {item.name}
+                                      <button
+                                          disabled={
+                                              currentWorkersCount ===
+                                              job.workers
+                                          }
+                                          onKeyDown={(e) =>
+                                              handleKeyDown(e, member, 'assign')
+                                          }
+                                          className={`bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base select-none 
+                                                ${currentWorkersCount === job.workers ? '' : 'hover:cursor-grab! active:cursor-grabbing!'}`}
+                                      >
+                                          {member.surname} {member.name}
+                                      </button>
                                   </li>
                               ))
                         : undefined}
                 </ul>
                 <ul
-                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-slate-400 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md transition-all
-                                ${activeTargetZone === 'assign' ? 'outline-dashed outline-2 outline-zinc-500 bg-slate-200! animate-pulse' : ''}`}
+                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md
+                                ${activeTargetZone === 'assign' ? 'outline-dashed outline-2 outline-slate-200 bg-slate-200 animate-pulse' : 'bg-slate-400'}`}
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'assign')}
                     aria-label="Dieser Aufgabe zugewiesene Mitglieder"
                 >
                     {allMembers?.length
                         ? allMembers
-                              .filter((item) => item?.job === job.job)
-                              .map((item) => (
+                              .filter((member) => member?.job === job.job)
+                              .map((member) => (
                                   <li
-                                      key={item.id}
-                                      className="bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base hover:cursor-grab active:cursor-grabbing select-none"
+                                      key={member.id}
                                       draggable
                                       onDragStart={(e) =>
-                                          handleDragStart(e, item.id)
+                                          handleDragStart(e, member.id)
                                       }
                                       onDragEnd={handleDragEnd}
                                   >
-                                      {item.surname} {item.name}
+                                      <button
+                                          onKeyDown={(e) =>
+                                              handleKeyDown(
+                                                  e,
+                                                  member,
+                                                  'unassign'
+                                              )
+                                          }
+                                          className="bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base select-none hover:cursor-grab! active:cursor-grabbing!"
+                                      >
+                                          {member.surname} {member.name}
+                                      </button>
                                   </li>
                               ))
                         : undefined}
