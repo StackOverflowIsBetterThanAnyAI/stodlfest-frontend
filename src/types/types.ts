@@ -293,3 +293,5 @@ export type ListTaskItemProps = {
     task: TaskProps
     index: number
 }
+
+export type useScreenWidthType = 'MOBILE' | 'TABLET' | 'DESKTOP'
