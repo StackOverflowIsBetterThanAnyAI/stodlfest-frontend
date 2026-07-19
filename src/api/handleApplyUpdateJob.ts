@@ -61,21 +61,76 @@ export const handleApplyUpdateJob = async ({
         setItemInSessionStorage('allJobs', updatedJobs)
         setIsEdit(false)
 
-        const updatedMembers =
-            allMembers?.map((item) => {
-                if (item.job === job.job) {
-                    if (
-                        updatedRequiresLegalAge === 'doesRequireLegalAge' &&
-                        item.age === 'underage'
-                    ) {
-                        return { ...item, job: null }
-                    }
-                    if (job.job !== updatedJob) {
-                        return { ...item, job: updatedJob }
-                    }
+        const jobMembers =
+            allMembers?.filter((member) => member.job === job.job) || []
+        const notJobMembers =
+            allMembers?.filter((member) => member.job !== job.job) || []
+
+        let jobMembersFiltered = [...jobMembers]
+        let notJobMembersFiltered = [...notJobMembers]
+        if (
+            updatedRequiresLegalAge === 'doesRequireLegalAge' &&
+            job.requires_legal_age === 'doesNotRequireLegalAge'
+        ) {
+            jobMembersFiltered = jobMembersFiltered?.map((member) =>
+                member.age === 'underage' ? { ...member, job: null } : member
+            )
+            jobMembersFiltered = [
+                ...(jobMembersFiltered?.filter(
+                    (member) => member.job !== null
+                ) || []),
+            ]
+            notJobMembersFiltered = [
+                ...notJobMembersFiltered,
+                ...(jobMembersFiltered?.filter(
+                    (member) => member.job === null
+                ) || []),
+            ]
+        }
+
+        if (jobMembersFiltered.length > updatedWorkers) {
+            jobMembersFiltered.sort((a, b) => {
+                const surnameCompare = b.surname.localeCompare(a.surname, 'de')
+                if (surnameCompare) {
+                    return surnameCompare
                 }
-                return item
+                return b.name.localeCompare(a.name, 'de')
+            })
+            const amountToBeRemoved = jobMembersFiltered.length - updatedWorkers
+            const membersToBeRemoved = jobMembersFiltered.slice(
+                0,
+                amountToBeRemoved
+            )
+            const idsToBeRemoved = membersToBeRemoved.map((member) => member.id)
+            jobMembersFiltered = jobMembersFiltered.map((member) =>
+                idsToBeRemoved.includes(member.id)
+                    ? { ...member, job: null }
+                    : member
+            )
+            jobMembersFiltered = [
+                ...(jobMembersFiltered?.filter((item) => item.job !== null) ||
+                    []),
+            ]
+            notJobMembersFiltered = [
+                ...notJobMembersFiltered,
+                ...(jobMembersFiltered?.filter((item) => item.job === null) ||
+                    []),
+            ]
+        }
+
+        const updatedJobMembersFiltered =
+            jobMembersFiltered?.map((member) => {
+                return { ...member, job: updatedJob }
             }) || []
+
+        const updatedMembers = [
+            ...updatedJobMembersFiltered,
+            ...notJobMembersFiltered,
+        ].sort(
+            (a, b) =>
+                a.surname.localeCompare(b.surname, 'de') ||
+                a.name.localeCompare(b.name, 'de')
+        )
         setAllMembers(updatedMembers)
         setItemInSessionStorage('allMembers', updatedMembers)
     } catch {
