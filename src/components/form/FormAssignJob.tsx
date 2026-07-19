@@ -131,7 +131,7 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
             )}
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50 w-full">
                 <ul
-                    className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-70 rounded-md outline-dotted outline-2 outline-zinc-200"
+                    className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-44  xs:min-w-64 rounded-md outline-dotted outline-2 outline-zinc-200"
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'unassign')}
                     aria-label="Verfügbare Mitglieder"
@@ -161,7 +161,7 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                         : undefined}
                 </ul>
                 <ul
-                    className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-70 rounded-md outline-dotted outline-2 outline-zinc-200"
+                    className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md outline-dotted outline-2 outline-zinc-200"
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'assign')}
                     aria-label="Dieser Aufgabe zugewiesene Mitglieder"
