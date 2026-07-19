@@ -1,5 +1,5 @@
 import type { JobProps, ListJobsProps } from '../../types/types'
-import ListAssignJobItem from '../form/FormAssignJob'
+import ListAssignJobItem from './ListAssignJobItem'
 
 const ListAssignJob = ({ allJobs, ariaLabel }: ListJobsProps) => {
     return (
