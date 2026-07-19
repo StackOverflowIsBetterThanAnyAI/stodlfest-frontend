@@ -17,11 +17,28 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
     const [allMembers, setAllMembers] = allMembersContext
 
     const SCREEN_WIDTH = useScreenWidth()
+    const [activeTargetZone, setActiveTargetZone] =
+        useState<TargetActionType | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const handleDragStart = (e: DragEvent, memberId: number) => {
         e.dataTransfer.setData('text/plain', memberId.toString())
         e.dataTransfer.setData('sourceJobId', job.id.toString())
+
+        const draggedMember = allMembers?.find(
+            (member) => member.id === memberId
+        )
+        if (draggedMember) {
+            if (draggedMember.job === job.job) {
+                setActiveTargetZone('unassign')
+            } else if (!draggedMember.job?.length) {
+                setActiveTargetZone('assign')
+            }
+        }
+    }
+
+    const handleDragEnd = () => {
+        setActiveTargetZone(null)
     }
 
     const handleDragOver = (e: DragEvent) => {
@@ -30,6 +47,7 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
 
     const handleDrop = async (e: DragEvent, targetAction: TargetActionType) => {
         e.preventDefault()
+        setActiveTargetZone(null)
 
         const memberId = parseInt(e.dataTransfer.getData('text/plain'))
         const sourceJobId = parseInt(e.dataTransfer.getData('sourceJobId'))
@@ -131,7 +149,8 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
             )}
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50 w-full">
                 <ul
-                    className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-44  xs:min-w-64 rounded-md outline-dotted outline-2 outline-zinc-200"
+                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md transition-all
+                                ${activeTargetZone === 'unassign' ? 'outline-dashed outline-2 outline-zinc-500 bg-zinc-300/65' : ''}`}
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'unassign')}
                     aria-label="Verfügbare Mitglieder"
@@ -149,11 +168,12 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                               .map((item) => (
                                   <li
                                       key={item.id}
-                                      className="bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base hover:cursor-grab active:cursor-grabbing"
+                                      className="bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base hover:cursor-grab active:cursor-grabbing select-none"
                                       draggable
                                       onDragStart={(e) =>
                                           handleDragStart(e, item.id)
                                       }
+                                      onDragEnd={handleDragEnd}
                                   >
                                       {item.surname} {item.name}
                                   </li>
@@ -161,7 +181,8 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                         : undefined}
                 </ul>
                 <ul
-                    className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md outline-dotted outline-2 outline-zinc-200"
+                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md transition-all
+                                ${activeTargetZone === 'assign' ? 'outline-dashed outline-2 outline-zinc-500 bg-zinc-300/65' : ''}`}
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'assign')}
                     aria-label="Dieser Aufgabe zugewiesene Mitglieder"
@@ -172,11 +193,12 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                               .map((item) => (
                                   <li
                                       key={item.id}
-                                      className="bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base hover:cursor-grab active:cursor-grabbing"
+                                      className="bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base hover:cursor-grab active:cursor-grabbing select-none"
                                       draggable
                                       onDragStart={(e) =>
                                           handleDragStart(e, item.id)
                                       }
+                                      onDragEnd={handleDragEnd}
                                   >
                                       {item.surname} {item.name}
                                   </li>
