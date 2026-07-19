@@ -62,13 +62,20 @@ export const handleApplyUpdateJob = async ({
         setIsEdit(false)
 
         const updatedMembers =
-            allMembers?.map((item) =>
-                item.job === job.job &&
-                updatedRequiresLegalAge === 'doesRequireLegalAge' &&
-                item.age === 'underage'
-                    ? { ...item, job: null }
-                    : item
-            ) || []
+            allMembers?.map((item) => {
+                if (item.job === job.job) {
+                    if (
+                        updatedRequiresLegalAge === 'doesRequireLegalAge' &&
+                        item.age === 'underage'
+                    ) {
+                        return { ...item, job: null }
+                    }
+                    if (job.job !== updatedJob) {
+                        return { ...item, job: updatedJob }
+                    }
+                }
+                return item
+            }) || []
         setAllMembers(updatedMembers)
         setItemInSessionStorage('allMembers', updatedMembers)
     } catch {
