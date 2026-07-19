@@ -14,6 +14,7 @@ export const handleAssignMemberToJob = async ({
     try {
         setIsLoading(true)
 
+        const newJob = targetAction === 'assign' ? job.job : null
         const newJobValue = targetAction === 'assign' ? job.id : null
 
         const response = await fetch(
@@ -23,7 +24,7 @@ export const handleAssignMemberToJob = async ({
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ job: newJobValue }),
+                body: JSON.stringify({ job_id: newJobValue }),
             }
         )
 
@@ -43,7 +44,7 @@ export const handleAssignMemberToJob = async ({
                       if (m.id === member.id) {
                           return {
                               ...m,
-                              job: newJobValue,
+                              job: newJob,
                           }
                       }
                       return m
