@@ -44,6 +44,10 @@ button:disabled:hover {
     @apply not-disabled:hover:bg-slate-700/40 not-disabled:active:bg-slate-700 rounded-sm focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75;
 }
 
+@utility primary-text-pseudo-tertiary {
+    @apply not-disabled:hover:bg-slate-700 not-disabled:active:bg-slate-600 rounded-md focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75;
+}
+
 @theme {
     --font-yesteryear: 'Yesteryear', cursive;
     --font-exo: 'Exo', sans-serif;

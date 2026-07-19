@@ -223,7 +223,7 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                                           onKeyDown={(e) =>
                                               handleKeyDown(e, member, 'assign')
                                           }
-                                          className={`bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base select-none 
+                                          className={`primary-text-pseudo-tertiary bg-slate-800 text-white px-2 py-1 text-sm md:text-base select-none 
                                                 ${currentWorkersCount === job.workers ? '' : 'hover:cursor-grab! active:cursor-grabbing!'}`}
                                       >
                                           {member.surname} {member.name}
@@ -259,7 +259,7 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                                                   'unassign'
                                               )
                                           }
-                                          className="bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base select-none hover:cursor-grab! active:cursor-grabbing!"
+                                          className="primary-text-pseudo-tertiary bg-slate-800 text-white px-2 py-1 text-sm md:text-base select-none hover:cursor-grab! active:cursor-grabbing!"
                                       >
                                           {member.surname} {member.name}
                                       </button>
