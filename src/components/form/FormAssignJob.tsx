@@ -160,10 +160,10 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                     <span className="sr-only">{`${currentWorkersCount} von ${job.workers} erforderlichen Helfern`}</span>
                 </div>
             ) : (
-                <span className="gap-4 grid grid-cols-3 items-center">
+                <div className="gap-4 grid grid-cols-[1fr_2fr_1fr] items-center">
                     <span className="text-base md:text-lg">{job.job}</span>
                     <span
-                        className="text-base md:text-lg"
+                        className="text-base md:text-lg text-center"
                         aria-hidden="true"
                     >{`${currentWorkersCount}/${job.workers} erforderlichen Helfern`}</span>
                     <span className="sr-only">{`${currentWorkersCount} von ${job.workers} erforderlichen Helfern`}</span>
@@ -184,7 +184,7 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                             Keine Volljährigkeit erforderlich
                         </span>
                     )}
-                </span>
+                </div>
             )}
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50 w-full">
                 <ul
