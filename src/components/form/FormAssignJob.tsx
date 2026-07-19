@@ -4,18 +4,18 @@ import { AllMembersContext } from '../../context/AllMembersContext'
 import { useToast } from '../../context/ToastContext'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
 import type {
-    ListJobsItemProps,
+    ListAssignJobItemProps,
     MemberProps,
     TargetActionType,
 } from '../../types/types'
 
-const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
+const ListAssignJobItem = ({ index, job }: ListAssignJobItemProps) => {
     const { showToast } = useToast()
 
     const allMembersContext = useContext(AllMembersContext)
     if (!allMembersContext) {
         throw new Error(
-            'FormAssignJob must be used within a AllMembersContext.Provider'
+            'ListAssignJobItem must be used within a AllMembersContext.Provider'
         )
     }
     const [allMembers, setAllMembers] = allMembersContext
@@ -272,4 +272,4 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
     )
 }
 
-export default FormAssignJob
+export default ListAssignJobItem

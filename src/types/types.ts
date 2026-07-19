@@ -196,6 +196,11 @@ export type handleApplyUpdateTaskProps = {
     updatedTask: string
 }
 
+export type ListAssignJobItemProps = {
+    index: number
+    job: JobProps
+}
+
 export type ListJobsProps = {
     allJobs: JobProps[]
     ariaLabel: string

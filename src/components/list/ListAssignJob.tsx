@@ -1,5 +1,5 @@
 import type { JobProps, ListJobsProps } from '../../types/types'
-import FormAssignJob from '../form/FormAssignJob'
+import ListAssignJobItem from '../form/FormAssignJob'
 
 const ListAssignJob = ({ allJobs, ariaLabel }: ListJobsProps) => {
     return (
@@ -10,7 +10,7 @@ const ListAssignJob = ({ allJobs, ariaLabel }: ListJobsProps) => {
                     className={`flex flex-col ${index < allJobs.length - 1 ? 'pb-4 border-b-2' : ''} border-zinc-200`}
                     aria-label={job.job}
                 >
-                    <FormAssignJob index={index} job={job} key={job.id} />
+                    <ListAssignJobItem index={index} job={job} key={job.id} />
                 </li>
             ))}
         </ul>
