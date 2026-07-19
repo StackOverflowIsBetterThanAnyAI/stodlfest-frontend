@@ -96,6 +96,9 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
         })
     }
 
+    const currentWorkersCount =
+        allMembers?.filter((member) => member.job === job.job).length || 0
+
     return (
         <div
             className={`py-2 px-3 flex flex-col gap-2 ${index % 2 ? 'bg-slate-800' : 'bg-slate-700'} rounded-sm ${isLoading ? 'opacity-50 pointer-events-none' : ''}`}
@@ -122,12 +125,12 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                             </span>
                         )}
                     </span>
-                    <span className="text-base md:text-lg">{`${job.workers} erforderliche Helfer`}</span>
+                    <span className="text-base md:text-lg">{`${currentWorkersCount}/${job.workers} erforderlichen Helfern`}</span>
                 </div>
             ) : (
                 <span className="gap-4 grid grid-cols-3 items-center">
                     <span className="text-base md:text-lg">{job.job}</span>
-                    <span className="text-base md:text-lg">{`${job.workers} erforderliche Helfer`}</span>
+                    <span className="text-base md:text-lg">{`${currentWorkersCount}/${job.workers} erforderlichen Helfern`}</span>
                     {job.requires_legal_age === 'doesRequireLegalAge' ? (
                         <span className="text-sm md:text-base text-right self-start font-bold w-full">
                             <span
@@ -149,8 +152,8 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
             )}
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50 w-full">
                 <ul
-                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md transition-all
-                                ${activeTargetZone === 'unassign' ? 'outline-dashed outline-2 outline-zinc-500 bg-zinc-300/65' : ''}`}
+                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-slate-400 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md transition-all
+                                ${activeTargetZone === 'unassign' ? 'outline-dashed outline-2 outline-zinc-500 bg-slate-200! animate-pulse' : ''}`}
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'unassign')}
                     aria-label="Verfügbare Mitglieder"
@@ -168,8 +171,11 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                               .map((item) => (
                                   <li
                                       key={item.id}
-                                      className="bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base hover:cursor-grab active:cursor-grabbing select-none"
-                                      draggable
+                                      className={`bg-slate-800 text-white rounded-md px-2 py-1 text-sm md:text-base select-none 
+                                                ${currentWorkersCount === job.workers ? 'cursor-not-allowed' : 'hover:cursor-grab active:cursor-grabbing'}`}
+                                      draggable={
+                                          currentWorkersCount !== job.workers
+                                      }
                                       onDragStart={(e) =>
                                           handleDragStart(e, item.id)
                                       }
@@ -181,8 +187,8 @@ const FormAssignJob = ({ index, job }: ListJobsItemProps) => {
                         : undefined}
                 </ul>
                 <ul
-                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-zinc-300 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md transition-all
-                                ${activeTargetZone === 'assign' ? 'outline-dashed outline-2 outline-zinc-500 bg-zinc-300/65' : ''}`}
+                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 bg-slate-400 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md transition-all
+                                ${activeTargetZone === 'assign' ? 'outline-dashed outline-2 outline-zinc-500 bg-slate-200! animate-pulse' : ''}`}
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, 'assign')}
                     aria-label="Dieser Aufgabe zugewiesene Mitglieder"
