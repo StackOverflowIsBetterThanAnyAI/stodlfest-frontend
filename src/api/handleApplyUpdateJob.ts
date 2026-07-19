@@ -4,8 +4,10 @@ import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleApplyUpdateJob = async ({
     allJobs,
+    allMembers,
     job,
     setAllJobs,
+    setAllMembers,
     setIsEdit,
     setIsLoading,
     showToast,
@@ -58,6 +60,20 @@ export const handleApplyUpdateJob = async ({
         setAllJobs(updatedJobs)
         setItemInSessionStorage('allJobs', updatedJobs)
         setIsEdit(false)
+
+        const updatedMembers =
+            allMembers?.map((item) => {
+                if (
+                    item.job === job.job &&
+                    updatedRequiresLegalAge === 'doesRequireLegalAge' &&
+                    item.age === 'underage'
+                ) {
+                    return { ...item, job: null }
+                }
+                return item
+            }) || []
+        setAllMembers(updatedMembers)
+        setItemInSessionStorage('allMembers', updatedMembers)
     } catch {
         showToast({
             label: 'Beim Aktualisieren dieser Aufgabe ist ein Fehler aufgetreten.',

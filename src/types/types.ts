@@ -172,8 +172,10 @@ export type handleDeleteMemberProps = {
 
 export type handleApplyUpdateJobProps = {
     allJobs: JobProps[] | undefined
+    allMembers: MemberProps[] | undefined
     job: JobProps
     setAllJobs: React.Dispatch<React.SetStateAction<JobProps[] | []>>
+    setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
     setIsEdit: React.Dispatch<React.SetStateAction<boolean>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     showToast: (props: ToastProps) => void

@@ -42,8 +42,10 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
         e.preventDefault()
         handleApplyUpdateJob({
             allJobs,
+            allMembers,
             job,
             setAllJobs,
+            setAllMembers,
             setIsEdit,
             setIsLoading,
             showToast,
