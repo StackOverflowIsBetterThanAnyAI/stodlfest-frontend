@@ -201,6 +201,20 @@ export type ListAssignJobItemProps = {
     job: JobProps
 }
 
+export type ListAssignJobItemDnDProps = {
+    activeTargetZone: TargetActionType | null
+    allMembers: MemberProps[] | undefined
+    currentWorkersCount: number
+    isToBeAssigned?: boolean
+    job: JobProps
+    setActiveTargetZone: React.Dispatch<
+        React.SetStateAction<TargetActionType | null>
+    >
+    setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    showToast: (props: ToastProps) => void
+}
+
 export type ListJobsProps = {
     allJobs: JobProps[]
     ariaLabel: string
