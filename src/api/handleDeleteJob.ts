@@ -4,8 +4,10 @@ import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleDeleteJob = async ({
     allJobs,
+    allMembers,
     job,
     setAllJobs,
+    setAllMembers,
     setIsLoading,
     showToast,
 }: handleDeleteJobProps) => {
@@ -30,6 +32,16 @@ export const handleDeleteJob = async ({
             allJobs?.filter((item: JobProps) => item.id !== job.id) || []
         setAllJobs(updatedJobs)
         setItemInSessionStorage('allJobs', updatedJobs)
+
+        const updatedMembers =
+            allMembers?.map((item) => {
+                if (item.job === job.job) {
+                    return { ...item, job: null }
+                }
+                return item
+            }) || []
+        setAllMembers(updatedMembers)
+        setItemInSessionStorage('allMembers', updatedMembers)
     } catch {
         showToast({
             label: 'Beim Löschen der Aufgabe ist ein Fehler aufgetreten.',

@@ -2,11 +2,12 @@ import { useContext, useState, type ChangeEvent } from 'react'
 import FormRadioButton from '../form/FormRadioButton'
 import ListButton from './ListButton'
 import { handleApplyUpdateJob } from '../../api/handleApplyUpdateJob'
+import { handleDeleteJob } from '../../api/handleDeleteJob'
 import { useToast } from '../../context/ToastContext'
 import { AllJobsContext } from '../../context/AllJobsContext'
+import { AllMembersContext } from '../../context/AllMembersContext'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
 import type { ListJobsItemProps, RequiresLegalAgeType } from '../../types/types'
-import { handleDeleteJob } from '../../api/handleDeleteJob'
 
 const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
     const { showToast } = useToast()
@@ -18,6 +19,14 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
         )
     }
     const [allJobs, setAllJobs] = allJobsContext
+
+    const allMembersContext = useContext(AllMembersContext)
+    if (!allMembersContext) {
+        throw new Error(
+            'ListJobsItem must be used within a AllMembersContext.Provider'
+        )
+    }
+    const [allMembers, setAllMembers] = allMembersContext
 
     const JOB_LENGTH = 63
     const SCREEN_WIDTH = useScreenWidth()
@@ -50,7 +59,15 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
         setIsEdit(false)
     }
     const handleDelete = async () => {
-        handleDeleteJob({ allJobs, job, setAllJobs, setIsLoading, showToast })
+        handleDeleteJob({
+            allJobs,
+            allMembers,
+            job,
+            setAllJobs,
+            setAllMembers,
+            setIsLoading,
+            showToast,
+        })
     }
     const handleEscape = (
         e:

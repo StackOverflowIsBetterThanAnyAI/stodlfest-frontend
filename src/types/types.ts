@@ -32,7 +32,7 @@ export type MemberProps = {
     name: string
     age: AgeType
     id: number
-    job?: string
+    job?: string | null
 }
 
 export type TaskProps = {
@@ -154,8 +154,10 @@ export type handleRestoreCompletedTaskProps = {
 
 export type handleDeleteJobProps = {
     allJobs: JobProps[] | undefined
+    allMembers: MemberProps[] | undefined
     job: JobProps
     setAllJobs: React.Dispatch<React.SetStateAction<JobProps[] | []>>
+    setAllMembers: React.Dispatch<React.SetStateAction<[] | MemberProps[]>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     showToast: (props: ToastProps) => void
 }
