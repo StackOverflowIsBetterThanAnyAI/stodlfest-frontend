@@ -14,10 +14,11 @@ const Footer = () => {
     return (
         <footer className="primary-text mt-auto">
             <div className="flex flex-col mx-auto gap-y-2 w-full max-w-7xl text-pretty text-center text-xs md:text-sm p-4">
-                <span>
+                <span aria-hidden="true">
                     Copyright &#169; {year} Michael Münzenhofer. Alle Rechte
                     vorbehalten.
                 </span>
+                <span className="sr-only">{`Copyright ${year} Michael Münzenhofer. Alle Rechte vorbehalten.`}</span>
                 <a
                     href="https://github.com/StackOverflowIsBetterThanAnyAI/stodlfest-frontend"
                     onKeyDown={(e) => handleKeyDown(e)}
