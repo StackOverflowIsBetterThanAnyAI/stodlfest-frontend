@@ -1,5 +1,9 @@
 import { SERVER_ADDRESS } from '../constants/constants'
-import type { handleApplyUpdateJobProps, JobProps } from '../types/types'
+import type {
+    handleApplyUpdateJobProps,
+    JobProps,
+    MemberProps,
+} from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleApplyUpdateJob = async ({
@@ -61,10 +65,20 @@ export const handleApplyUpdateJob = async ({
         setItemInSessionStorage('allJobs', updatedJobs)
         setIsEdit(false)
 
-        const jobMembers =
-            allMembers?.filter((member) => member.job === job.job) || []
-        const notJobMembers =
-            allMembers?.filter((member) => member.job !== job.job) || []
+        const { jobMembers, notJobMembers } = allMembers?.reduce(
+            (total, cur: MemberProps) => {
+                if (cur.job === job.job) {
+                    total.jobMembers.push(cur)
+                } else {
+                    total.notJobMembers.push(cur)
+                }
+                return total
+            },
+            {
+                jobMembers: [] as MemberProps[],
+                notJobMembers: [] as MemberProps[],
+            }
+        ) || { jobMembers: [], notJobMembers: [] }
 
         let jobMembersFiltered = [...jobMembers]
         let notJobMembersFiltered = [...notJobMembers]
