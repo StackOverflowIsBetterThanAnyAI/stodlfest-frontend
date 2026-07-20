@@ -150,11 +150,11 @@ const ListAssignJobItemDnD = ({
                 ${activeTargetZone === 'unassign' ? 'outline-dashed outline-2 outline-slate-200 bg-slate-200 animate-pulse' : 'bg-slate-400'}`}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, 'unassign')}
-            aria-label="Verfügbare Mitglieder"
         >
             {underAgedMembersNoJob?.length ? (
                 <ul
                     className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start ${ofLegalAgeMembersNoJob?.length ? 'border-b-2 border-zinc-200/75 pb-2 w-full' : ''}`}
+                    aria-label="Minderjährige verfügbare Mitglieder"
                 >
                     {underAgedMembersNoJob.map((member) => (
                         <li
@@ -178,7 +178,10 @@ const ListAssignJobItemDnD = ({
                 </ul>
             ) : undefined}
             {ofLegalAgeMembersNoJob?.length ? (
-                <ul className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start">
+                <ul
+                    className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start"
+                    aria-label="Volljährige verfügbare Mitglieder"
+                >
                     {ofLegalAgeMembersNoJob.map((member) => (
                         <li
                             key={member.id}
