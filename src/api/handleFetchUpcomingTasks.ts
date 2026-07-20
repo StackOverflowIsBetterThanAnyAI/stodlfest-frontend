@@ -26,11 +26,19 @@ export const handleFetchUpcomingTasks = async ({
         }
 
         const taskData: TaskProps[] = await response.json()
-        const completedTasks = taskData.filter(
-            (task: TaskProps) => task.finished
-        )
-        const upcomingTasks = taskData.filter(
-            (task: TaskProps) => !task.finished
+        const { completedTasks, upcomingTasks } = taskData.reduce(
+            (total, task: TaskProps) => {
+                if (task.finished) {
+                    total.completedTasks.push(task)
+                } else {
+                    total.upcomingTasks.push(task)
+                }
+                return total
+            },
+            {
+                completedTasks: [] as TaskProps[],
+                upcomingTasks: [] as TaskProps[],
+            }
         )
         setCompletedTasks(completedTasks)
         setUpcomingTasks(upcomingTasks)
