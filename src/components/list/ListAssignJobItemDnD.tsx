@@ -39,14 +39,12 @@ const ListAssignJobItemDnD = ({
         setActiveTargetZone(null)
     }
 
-    const handleDragOver = (
-        e: React.DragEvent<HTMLDivElement | HTMLUListElement>
-    ) => {
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
     }
 
     const handleDrop = async (
-        e: React.DragEvent<HTMLDivElement | HTMLUListElement>,
+        e: React.DragEvent<HTMLDivElement>,
         targetAction: TargetActionType
     ) => {
         e.preventDefault()
@@ -123,26 +121,46 @@ const ListAssignJobItemDnD = ({
         })
     }
 
-    const { underAgedMembersNoJob, ofLegalAgeMembersNoJob } =
-        allMembers?.reduce(
-            (total, cur: MemberProps) => {
-                if (!cur.job?.length) {
-                    if (
-                        job.requires_legal_age === 'doesNotRequireLegalAge' &&
-                        cur.age === 'underage'
-                    ) {
-                        total.underAgedMembersNoJob.push(cur)
-                    } else if (cur.age === 'ofLegalAge') {
-                        total.ofLegalAgeMembersNoJob.push(cur)
-                    }
+    const {
+        underAgedMembersNoJob,
+        ofLegalAgeMembersNoJob,
+        underAgedMembersWithJob,
+        ofLegalAgeMembersWithJob,
+    } = allMembers?.reduce(
+        (total, cur: MemberProps) => {
+            if (!cur.job?.length) {
+                if (
+                    job.requires_legal_age === 'doesNotRequireLegalAge' &&
+                    cur.age === 'underage'
+                ) {
+                    total.underAgedMembersNoJob.push(cur)
+                } else if (cur.age === 'ofLegalAge') {
+                    total.ofLegalAgeMembersNoJob.push(cur)
                 }
-                return total
-            },
-            {
-                underAgedMembersNoJob: [] as MemberProps[],
-                ofLegalAgeMembersNoJob: [] as MemberProps[],
+            } else if (cur.job === job.job) {
+                if (
+                    job.requires_legal_age === 'doesNotRequireLegalAge' &&
+                    cur.age === 'underage'
+                ) {
+                    total.underAgedMembersWithJob.push(cur)
+                } else if (cur.age === 'ofLegalAge') {
+                    total.ofLegalAgeMembersWithJob.push(cur)
+                }
             }
-        ) || { underAgedMembersNoJob: [], ofLegalAgeMembersNoJob: [] }
+            return total
+        },
+        {
+            underAgedMembersNoJob: [] as MemberProps[],
+            ofLegalAgeMembersNoJob: [] as MemberProps[],
+            underAgedMembersWithJob: [] as MemberProps[],
+            ofLegalAgeMembersWithJob: [] as MemberProps[],
+        }
+    ) || {
+        underAgedMembersNoJob: [],
+        ofLegalAgeMembersNoJob: [],
+        underAgedMembersWithJob: [],
+        ofLegalAgeMembersWithJob: [],
+    }
 
     return isToBeAssigned ? (
         <div
@@ -205,35 +223,61 @@ const ListAssignJobItemDnD = ({
             ) : undefined}
         </div>
     ) : (
-        <ul
+        <div
             className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start overflow-y-auto h-32 p-2 flex-1 min-w-44 xs:min-w-64 rounded-md
                 ${activeTargetZone === 'assign' ? 'outline-dashed outline-2 outline-slate-200 bg-slate-200 animate-pulse' : 'bg-slate-400'}`}
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, 'assign')}
-            aria-label="Dieser Aufgabe zugewiesene Mitglieder"
         >
-            {allMembers?.length
-                ? allMembers
-                      .filter((member) => member?.job === job.job)
-                      .map((member) => (
-                          <li
-                              key={member.id}
-                              draggable
-                              onDragStart={(e) => handleDragStart(e, member.id)}
-                              onDragEnd={handleDragEnd}
-                          >
-                              <button
-                                  onKeyDown={(e) =>
-                                      handleKeyDown(e, member, 'unassign')
-                                  }
-                                  className="primary-text-pseudo-tertiary bg-slate-800 text-white px-2 py-1 text-sm md:text-base select-none hover:cursor-grab! active:cursor-grabbing!"
-                              >
-                                  {member.surname} {member.name}
-                              </button>
-                          </li>
-                      ))
-                : undefined}
-        </ul>
+            {underAgedMembersWithJob?.length ? (
+                <ul
+                    className={`flex flex-wrap gap-x-4 gap-y-2 items-start content-start ${ofLegalAgeMembersWithJob?.length ? 'border-b-2 border-zinc-200/75 pb-2 w-full' : ''}`}
+                    aria-label="Minderjährige dieser Aufgabe zugewiesene Mitglieder"
+                >
+                    {underAgedMembersWithJob.map((member) => (
+                        <li
+                            key={member.id}
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, member.id)}
+                            onDragEnd={handleDragEnd}
+                        >
+                            <button
+                                onKeyDown={(e) =>
+                                    handleKeyDown(e, member, 'unassign')
+                                }
+                                className="primary-text-pseudo-tertiary bg-slate-800 text-white px-2 py-1 text-sm md:text-base select-none hover:cursor-grab! active:cursor-grabbing!"
+                            >
+                                {member.surname} {member.name}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            ) : undefined}
+            {ofLegalAgeMembersWithJob?.length ? (
+                <ul
+                    className="flex flex-wrap gap-x-4 gap-y-2 items-start content-start"
+                    aria-label="Volljährige dieser Aufgabe zugewiesene Mitglieder"
+                >
+                    {ofLegalAgeMembersWithJob.map((member) => (
+                        <li
+                            key={member.id}
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, member.id)}
+                            onDragEnd={handleDragEnd}
+                        >
+                            <button
+                                onKeyDown={(e) =>
+                                    handleKeyDown(e, member, 'unassign')
+                                }
+                                className="primary-text-pseudo-tertiary bg-slate-800 text-white px-2 py-1 text-sm md:text-base select-none hover:cursor-grab! active:cursor-grabbing!"
+                            >
+                                {member.surname} {member.name}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            ) : undefined}
+        </div>
     )
 }
 
