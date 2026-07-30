@@ -1,3 +1,12 @@
+export type chatHistoryType = {
+    role: 'bot' | 'user'
+    message: string
+}
+
+export type ChatMessageProps = {
+    message: string
+}
+
 export type FormRadioButtonProps = {
     id: string
     label: string

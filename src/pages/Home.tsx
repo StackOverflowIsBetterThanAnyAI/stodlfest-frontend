@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import Chatbot from '../components/chatbot/Chatbot'
 
 const Home = () => {
     const targetDate = new Date('2026-09-05T18:30:00').getTime()
@@ -97,6 +98,7 @@ const Home = () => {
                     <span>Sekunden</span>
                 </div>
             </div>
+            <Chatbot />
         </main>
     )
 }
