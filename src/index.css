@@ -10,7 +10,7 @@ body {
 }
 
 html {
-    @apply scrollbar-gutter-both bg-slate-900;
+    @apply scrollbar-gutter-stable sm:scrollbar-gutter-both bg-slate-900;
 }
 
 a {
