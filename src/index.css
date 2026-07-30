@@ -9,6 +9,10 @@ body {
     @apply font-exo;
 }
 
+html {
+    @apply scrollbar-gutter-both bg-slate-900;
+}
+
 a {
     @apply underline px-2 py-1;
 }
