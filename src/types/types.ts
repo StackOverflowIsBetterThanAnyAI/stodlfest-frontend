@@ -110,7 +110,6 @@ export type handleBotResponseProps = {
     chatHistory: chatHistoryType[]
     history: chatHistoryType[]
     setChatHistory: (value: React.SetStateAction<chatHistoryType[]>) => void
-    setIsLoading: (value: React.SetStateAction<boolean>) => void
     showToast: (props: ToastProps) => void
     question: string
 }

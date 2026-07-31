@@ -26,7 +26,6 @@ const Chatbot = () => {
         return data
     })
     const [question, setQuestion] = useState<string>('')
-    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const chatRef = useRef<HTMLDivElement>(null)
 
@@ -55,7 +54,7 @@ const Chatbot = () => {
         const updatedChatHistory: chatHistoryType[] = [
             ...chatHistory,
             { role: 'user', message: trimmedQuestion },
-            { role: 'bot', message: 'Denkt nach ...' },
+            { role: 'bot', message: 'loading' },
         ]
         setChatHistory(updatedChatHistory)
         setItemInSessionStorage('chatHistory', updatedChatHistory)
@@ -69,7 +68,6 @@ const Chatbot = () => {
             history,
             question,
             setChatHistory,
-            setIsLoading,
             showToast,
         })
     }
@@ -106,7 +104,7 @@ const Chatbot = () => {
                 />
                 <ListButton
                     handleClick={() => {}}
-                    isLoading={isLoading}
+                    isLoading={false}
                     label="Abschicken"
                     type="form"
                     isDisabled={!question.trim()?.length}

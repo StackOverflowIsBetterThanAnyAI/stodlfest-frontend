@@ -6,11 +6,9 @@ export const handleBotResponse = async ({
     chatHistory,
     history,
     setChatHistory,
-    setIsLoading,
     showToast,
     question,
 }: handleBotResponseProps) => {
-    setIsLoading(true)
     try {
         const response = await fetch(`${SERVER_ADDRESS}/api/chat/`, {
             method: 'POST',
@@ -51,7 +49,5 @@ export const handleBotResponse = async ({
         ]
         setChatHistory(updatedChatHistory)
         setItemInSessionStorage('chatHistory', updatedChatHistory)
-    } finally {
-        setIsLoading(false)
     }
 }
