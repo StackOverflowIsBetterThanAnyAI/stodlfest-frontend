@@ -1,6 +1,13 @@
+import type { GoogleGenAI } from '@google/genai'
+
 export type chatHistoryType = {
     role: 'bot' | 'user'
     message: string
+}
+
+export type ChatMessageListProps = {
+    chatHistory: chatHistoryType[]
+    chatRef: React.RefObject<HTMLDivElement | null>
 }
 
 export type ChatMessageProps = {
@@ -99,6 +106,15 @@ export type handleAssignMemberToJobProps = {
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     showToast: (props: ToastProps) => void
     targetAction: TargetActionType
+}
+
+export type handleBotResponseProps = {
+    ai: GoogleGenAI
+    chatHistory: chatHistoryType[]
+    history: chatHistoryType[]
+    setChatHistory: (value: React.SetStateAction<chatHistoryType[]>) => void
+    setIsLoading: (value: React.SetStateAction<boolean>) => void
+    question: string
 }
 
 export type handleFetchAllJobsProps = {

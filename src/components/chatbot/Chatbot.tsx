@@ -6,9 +6,9 @@ import {
     type KeyboardEvent,
 } from 'react'
 import { GoogleGenAI } from '@google/genai'
-import ChatMessageBot from './ChatMessageBot'
-import ChatMessageUser from './ChatMessageUser'
+import ChatMessageList from './ChatMessageList'
 import ListButton from '../list/ListButton'
+import { handleBotResponse } from '../../api/handleBotResponse'
 import type { chatHistoryType } from '../../types/types'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
@@ -66,45 +66,14 @@ const Chatbot = () => {
     }
 
     const triggerBotResponse = async (history: chatHistoryType[]) => {
-        setIsLoading(true)
-        try {
-            const interaction = await ai.interactions.create({
-                model: 'gemini-3.5-flash-lite',
-                input: question,
-                system_instruction:
-                    'Please only answer in German. Keep yourself as short as possible.',
-                generation_config: {
-                    thinking_level: 'low',
-                },
-            })
-
-            const updatedChatHistory: chatHistoryType[] = [
-                ...history.filter(
-                    (_item, index) => index !== history.length - 1
-                ),
-                {
-                    role: 'bot',
-                    message:
-                        interaction.output_text ||
-                        'Fehler beim Abrufen der Antwort. Bitte versuche es erneut.',
-                },
-            ]
-            setChatHistory(updatedChatHistory)
-            setItemInSessionStorage('chatHistory', updatedChatHistory)
-        } catch (error) {
-            const updatedChatHistory: chatHistoryType[] = [
-                ...chatHistory,
-                {
-                    role: 'bot',
-                    message:
-                        'Fehler beim Abrufen der Antwort. Bitte versuche es erneut.',
-                },
-            ]
-            setChatHistory(updatedChatHistory)
-            setItemInSessionStorage('chatHistory', updatedChatHistory)
-        } finally {
-            setIsLoading(false)
-        }
+        handleBotResponse({
+            ai,
+            chatHistory,
+            history,
+            question,
+            setChatHistory,
+            setIsLoading,
+        })
     }
 
     useEffect(() => {
@@ -123,24 +92,7 @@ const Chatbot = () => {
                 Chatte mit dem Stodlfest-Bot
             </h2>
             {chatHistory?.length ? (
-                <div
-                    className="flex flex-col gap-4 overflow-y-auto h-96 p-4 pt-2 scrollbar-thumb-zinc-200"
-                    ref={chatRef}
-                >
-                    {chatHistory.map((chat, index) => {
-                        return chat.role === 'bot' ? (
-                            <ChatMessageBot
-                                message={chat.message}
-                                key={index}
-                            />
-                        ) : (
-                            <ChatMessageUser
-                                message={chat.message}
-                                key={index}
-                            />
-                        )
-                    })}
-                </div>
+                <ChatMessageList chatHistory={chatHistory} chatRef={chatRef} />
             ) : undefined}
             <form
                 className="flex flex-col gap-y-2 gap-x-4 p-4"
