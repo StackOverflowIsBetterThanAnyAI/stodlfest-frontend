@@ -5,12 +5,17 @@ import {
     type ChangeEvent,
     type KeyboardEvent,
 } from 'react'
+import { GoogleGenAI } from '@google/genai'
 import ChatMessageBot from './ChatMessageBot'
 import ChatMessageUser from './ChatMessageUser'
 import ListButton from '../list/ListButton'
 import type { chatHistoryType } from '../../types/types'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
+
+const ai = new GoogleGenAI({
+    apiKey: import.meta.env.VITE_GEMINI_API_KEY,
+})
 
 const Chatbot = () => {
     const parsedSessionData = getStoredSessionData()
@@ -45,22 +50,56 @@ const Chatbot = () => {
 
     const handleSubmitQuestion = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (!question.trim()?.length) {
+        const trimmedQuestion = question.trim()
+        if (!trimmedQuestion?.length) {
             return
         }
         const updatedChatHistory: chatHistoryType[] = [
             ...chatHistory,
-            { role: 'user', message: question.trim() },
+            { role: 'user', message: trimmedQuestion },
+            { role: 'bot', message: 'Denkt nach ...' },
         ]
         setChatHistory(updatedChatHistory)
         setItemInSessionStorage('chatHistory', updatedChatHistory)
         setQuestion('')
-        triggerBotResponse()
+        triggerBotResponse(updatedChatHistory)
     }
 
-    const triggerBotResponse = async () => {
+    const triggerBotResponse = async (history: chatHistoryType[]) => {
         setIsLoading(true)
-        setIsLoading(false)
+        try {
+            const interaction = await ai.interactions.create({
+                model: 'gemini-3.6-flash',
+                input: question,
+            })
+
+            const updatedChatHistory: chatHistoryType[] = [
+                ...history.filter(
+                    (_item, index) => index !== history.length - 1
+                ),
+                {
+                    role: 'bot',
+                    message:
+                        interaction.output_text ||
+                        'Fehler beim Abrufen der Antwort. Bitte versuche es erneut.',
+                },
+            ]
+            setChatHistory(updatedChatHistory)
+            setItemInSessionStorage('chatHistory', updatedChatHistory)
+        } catch (error) {
+            const updatedChatHistory: chatHistoryType[] = [
+                ...chatHistory,
+                {
+                    role: 'bot',
+                    message:
+                        'Fehler beim Abrufen der Antwort. Bitte versuche es erneut.',
+                },
+            ]
+            setChatHistory(updatedChatHistory)
+            setItemInSessionStorage('chatHistory', updatedChatHistory)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {
