@@ -4,7 +4,7 @@ import ChatMessageBot from './ChatMessageBot'
 import ChatMessageUser from './ChatMessageUser'
 
 const ChatMessageList = memo(
-    ({ chatHistory, chatRef }: ChatMessageListProps) => {
+    ({ chatHistory, chatRef, isLoading }: ChatMessageListProps) => {
         return (
             <div
                 className="flex flex-col gap-4 overflow-y-auto h-96 p-4 pt-2 scrollbar-thumb-zinc-200"
@@ -12,11 +12,18 @@ const ChatMessageList = memo(
             >
                 {chatHistory.map((chat, index) => {
                     return chat.role === 'bot' ? (
-                        <ChatMessageBot message={chat.message} key={index} />
+                        <ChatMessageBot
+                            message={chat.message}
+                            status={null}
+                            key={index}
+                        />
                     ) : (
                         <ChatMessageUser message={chat.message} key={index} />
                     )
                 })}
+                {isLoading ? (
+                    <ChatMessageBot message="" status="isLoading" />
+                ) : undefined}
             </div>
         )
     }

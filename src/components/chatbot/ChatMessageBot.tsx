@@ -3,10 +3,10 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
-import type { ChatMessageProps } from '../../types/types'
+import type { ChatMessageBotProps } from '../../types/types'
 
-const ChatMessageBot = ({ message }: ChatMessageProps) => {
-    return message === 'loading' ? (
+const ChatMessageBot = ({ message, status }: ChatMessageBotProps) => {
+    return status === 'isLoading' ? (
         <div className="rounded-t-lg rounded-r-lg bg-zinc-200 max-w-32 w-full py-2 sn:py-3 flex justify-center items-center">
             <FetchLoading theme="#372aac" />
         </div>

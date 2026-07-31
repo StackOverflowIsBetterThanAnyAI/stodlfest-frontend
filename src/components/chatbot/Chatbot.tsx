@@ -26,6 +26,7 @@ const Chatbot = () => {
         return data
     })
     const [question, setQuestion] = useState<string>('')
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const chatRef = useRef<HTMLDivElement>(null)
 
@@ -48,13 +49,12 @@ const Chatbot = () => {
     const handleSubmitQuestion = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const trimmedQuestion = question.trim()
-        if (!trimmedQuestion?.length) {
+        if (!trimmedQuestion?.length || isLoading) {
             return
         }
         const updatedChatHistory: chatHistoryType[] = [
             ...chatHistory,
             { role: 'user', message: trimmedQuestion },
-            { role: 'bot', message: 'loading' },
         ]
         setChatHistory(updatedChatHistory)
         setItemInSessionStorage('chatHistory', updatedChatHistory)
@@ -68,6 +68,7 @@ const Chatbot = () => {
             history,
             question,
             setChatHistory,
+            setIsLoading,
             showToast,
         })
     }
@@ -88,7 +89,11 @@ const Chatbot = () => {
                 Chatte mit dem Stodlfest-Bot
             </h2>
             {chatHistory?.length ? (
-                <ChatMessageList chatHistory={chatHistory} chatRef={chatRef} />
+                <ChatMessageList
+                    chatHistory={chatHistory}
+                    chatRef={chatRef}
+                    isLoading={isLoading}
+                />
             ) : undefined}
             <form
                 className="flex flex-col gap-y-2 gap-x-4 p-4"

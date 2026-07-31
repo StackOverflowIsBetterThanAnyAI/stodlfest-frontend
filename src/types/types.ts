@@ -6,9 +6,15 @@ export type chatHistoryType = {
 export type ChatMessageListProps = {
     chatHistory: chatHistoryType[]
     chatRef: React.RefObject<HTMLDivElement | null>
+    isLoading: boolean
 }
 
-export type ChatMessageProps = {
+export type ChatMessageBotProps = {
+    message: string
+    status: 'isLoading' | null
+}
+
+export type ChatMessageUserProps = {
     message: string
 }
 
@@ -110,6 +116,7 @@ export type handleBotResponseProps = {
     chatHistory: chatHistoryType[]
     history: chatHistoryType[]
     setChatHistory: (value: React.SetStateAction<chatHistoryType[]>) => void
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     showToast: (props: ToastProps) => void
     question: string
 }

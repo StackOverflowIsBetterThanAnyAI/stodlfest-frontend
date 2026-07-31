@@ -6,9 +6,11 @@ export const handleBotResponse = async ({
     chatHistory,
     history,
     setChatHistory,
+    setIsLoading,
     showToast,
     question,
 }: handleBotResponseProps) => {
+    setIsLoading(true)
     try {
         const response = await fetch(`${SERVER_ADDRESS}/api/chat/`, {
             method: 'POST',
@@ -28,7 +30,7 @@ export const handleBotResponse = async ({
         const data = await response.json()
 
         const updatedChatHistory: chatHistoryType[] = [
-            ...history.filter((_item, index) => index !== history.length - 1),
+            ...history,
             {
                 role: 'bot',
                 message:
@@ -49,5 +51,7 @@ export const handleBotResponse = async ({
         ]
         setChatHistory(updatedChatHistory)
         setItemInSessionStorage('chatHistory', updatedChatHistory)
+    } finally {
+        setIsLoading(false)
     }
 }
