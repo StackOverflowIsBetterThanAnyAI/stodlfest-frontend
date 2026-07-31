@@ -9,7 +9,7 @@
         "lint": "eslint ."
     },
     "dependencies": {
-        "@tailwindcss/vite": "^4.3.2",
+        "@tailwindcss/vite": "^4.3.3",
         "fetch-loading": "^0.1.0",
         "katex": "^0.18.1",
         "react": "^19.2.7",
