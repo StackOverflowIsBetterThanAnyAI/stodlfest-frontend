@@ -69,8 +69,10 @@ const Chatbot = () => {
         setIsLoading(true)
         try {
             const interaction = await ai.interactions.create({
-                model: 'gemini-3.6-flash',
+                model: 'gemini-3.5-flash-lite',
                 input: question,
+                system_instruction:
+                    'Please only answer in German. Keep yourself as short as possible.',
                 generation_config: {
                     thinking_level: 'low',
                 },
