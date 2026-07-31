@@ -119,7 +119,7 @@ const Chatbot = () => {
             </h2>
             {chatHistory?.length ? (
                 <div
-                    className="flex flex-col gap-4 overflow-y-auto h-96 p-4 pt-2"
+                    className="flex flex-col gap-4 overflow-y-auto h-96 p-4 pt-2 scrollbar-thumb-zinc-200"
                     ref={chatRef}
                 >
                     {chatHistory.map((chat, index) => {
