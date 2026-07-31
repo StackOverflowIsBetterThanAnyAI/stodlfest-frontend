@@ -4,11 +4,9 @@ import type { chatHistoryType, handleBotResponseProps } from '../types/types'
 
 export const handleBotResponse = async ({
     chatHistory,
-    history,
     setChatHistory,
     setIsLoading,
     showToast,
-    question,
 }: handleBotResponseProps) => {
     setIsLoading(true)
     try {
@@ -17,7 +15,7 @@ export const handleBotResponse = async ({
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ question }),
+            body: JSON.stringify(chatHistory),
         })
 
         if (!response.ok) {
@@ -30,7 +28,7 @@ export const handleBotResponse = async ({
         const data = await response.json()
 
         const updatedChatHistory: chatHistoryType[] = [
-            ...history,
+            ...chatHistory,
             {
                 role: 'bot',
                 message:

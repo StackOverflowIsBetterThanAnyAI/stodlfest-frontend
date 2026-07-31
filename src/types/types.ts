@@ -114,11 +114,9 @@ export type handleAssignMemberToJobProps = {
 
 export type handleBotResponseProps = {
     chatHistory: chatHistoryType[]
-    history: chatHistoryType[]
     setChatHistory: (value: React.SetStateAction<chatHistoryType[]>) => void
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     showToast: (props: ToastProps) => void
-    question: string
 }
 
 export type handleFetchAllJobsProps = {

@@ -62,11 +62,9 @@ const Chatbot = () => {
         triggerBotResponse(updatedChatHistory)
     }
 
-    const triggerBotResponse = async (history: chatHistoryType[]) => {
+    const triggerBotResponse = async (chatHistory: chatHistoryType[]) => {
         handleBotResponse({
             chatHistory,
-            history,
-            question,
             setChatHistory,
             setIsLoading,
             showToast,
