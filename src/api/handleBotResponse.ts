@@ -1,32 +1,40 @@
-import type { chatHistoryType, handleBotResponseProps } from '../types/types'
+import { SERVER_ADDRESS } from '../constants/constants'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
+import type { chatHistoryType, handleBotResponseProps } from '../types/types'
 
 export const handleBotResponse = async ({
-    ai,
     chatHistory,
     history,
     setChatHistory,
     setIsLoading,
+    showToast,
     question,
 }: handleBotResponseProps) => {
     setIsLoading(true)
     try {
-        const interaction = await ai.interactions.create({
-            model: 'gemini-3.5-flash-lite',
-            input: question,
-            system_instruction:
-                'Please only answer in German. Keep yourself as short as possible.',
-            generation_config: {
-                thinking_level: 'low',
+        const response = await fetch(`${SERVER_ADDRESS}/api/chat/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
             },
+            body: JSON.stringify({ question }),
         })
+
+        if (!response.ok) {
+            showToast({
+                label: 'Fehler beim Abrufen der Antwort. Bitte versuche es erneut.',
+            })
+            return
+        }
+
+        const data = await response.json()
 
         const updatedChatHistory: chatHistoryType[] = [
             ...history.filter((_item, index) => index !== history.length - 1),
             {
                 role: 'bot',
                 message:
-                    interaction.output_text ||
+                    data.output_text ||
                     'Fehler beim Abrufen der Antwort. Bitte versuche es erneut.',
             },
         ]

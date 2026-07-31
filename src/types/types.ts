@@ -1,5 +1,3 @@
-import type { GoogleGenAI } from '@google/genai'
-
 export type chatHistoryType = {
     role: 'bot' | 'user'
     message: string
@@ -109,11 +107,11 @@ export type handleAssignMemberToJobProps = {
 }
 
 export type handleBotResponseProps = {
-    ai: GoogleGenAI
     chatHistory: chatHistoryType[]
     history: chatHistoryType[]
     setChatHistory: (value: React.SetStateAction<chatHistoryType[]>) => void
     setIsLoading: (value: React.SetStateAction<boolean>) => void
+    showToast: (props: ToastProps) => void
     question: string
 }
 

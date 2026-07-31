@@ -5,20 +5,18 @@ import {
     type ChangeEvent,
     type KeyboardEvent,
 } from 'react'
-import { GoogleGenAI } from '@google/genai'
 import ChatMessageList from './ChatMessageList'
 import ListButton from '../list/ListButton'
 import { handleBotResponse } from '../../api/handleBotResponse'
+import { useToast } from '../../context/ToastContext'
 import type { chatHistoryType } from '../../types/types'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
-const ai = new GoogleGenAI({
-    apiKey: import.meta.env.VITE_GEMINI_API_KEY,
-})
-
 const Chatbot = () => {
     const parsedSessionData = getStoredSessionData()
+
+    const { showToast } = useToast()
 
     const [chatHistory, setChatHistory] = useState<chatHistoryType[]>(() => {
         const data = parsedSessionData?.chatHistory
@@ -67,12 +65,12 @@ const Chatbot = () => {
 
     const triggerBotResponse = async (history: chatHistoryType[]) => {
         handleBotResponse({
-            ai,
             chatHistory,
             history,
             question,
             setChatHistory,
             setIsLoading,
+            showToast,
         })
     }
 
