@@ -71,6 +71,9 @@ const Chatbot = () => {
             const interaction = await ai.interactions.create({
                 model: 'gemini-3.6-flash',
                 input: question,
+                generation_config: {
+                    thinking_level: 'low',
+                },
             })
 
             const updatedChatHistory: chatHistoryType[] = [
