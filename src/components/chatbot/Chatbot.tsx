@@ -86,6 +86,13 @@ const Chatbot = () => {
         const updatedIsChatVisible = !isChatVisible
         setIsChatVisible(updatedIsChatVisible)
         setItemInSessionStorage('isChatVisible', updatedIsChatVisible)
+
+        requestAnimationFrame(() => {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth',
+            })
+        })
     }
 
     useEffect(() => {
@@ -100,11 +107,6 @@ const Chatbot = () => {
                 behavior: 'smooth',
             })
         }
-
-        window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: 'smooth',
-        })
     }, [chatHistory, isChatVisible])
 
     return SCREEN_WIDTH === 'MOBILE' ? (
