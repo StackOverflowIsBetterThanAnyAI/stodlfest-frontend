@@ -63,10 +63,12 @@ const Home = () => {
                     Stodlfest
                 </span>
             </h1>
-            <div className="sr-only" aria-live="polite" aria-atomic="true">
-                {days ? `${days} Tage, ` : ''}
-                {hours} Stunden, {minutes} Minuten und {seconds} Sekunden
-            </div>
+            <p
+                className="sr-only"
+                aria-live="polite"
+                aria-atomic="true"
+                aria-label={`${days ? `${days} Tage, ` : ''} ${hours} Stunde${hours !== 1 ? 'n' : ''}, ${minutes} Minute${minutes !== 1 ? 'n' : ''} und ${seconds} Sekunde${seconds !== 1 ? 'n' : ''}`}
+            ></p>
             <div
                 aria-hidden="true"
                 className="flex flex-col items-center gap-4 outline-0 xs:outline-4 outline-zinc-200 outline-offset-16 rounded-lg"
