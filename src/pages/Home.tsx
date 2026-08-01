@@ -71,7 +71,7 @@ const Home = () => {
                 aria-hidden="true"
                 className="flex flex-col items-center gap-4 outline-0 xs:outline-4 outline-zinc-200 outline-offset-16 rounded-lg"
             >
-                <div className="flex text-5xl xs:text-6xl sm:text-7xl md:text-8xl tabular-nums font-mono">
+                <div className="flex text-4xl xs:text-6xl sm:text-7xl md:text-8xl tabular-nums font-mono">
                     {days ? (
                         <>
                             <span>{formatNumber(days)}</span>
@@ -84,7 +84,7 @@ const Home = () => {
                     <span>:</span>
                     <span>{formatNumber(seconds)}</span>
                 </div>
-                <div className="flex gap-2 xs:gap-3 xs:text-xl sm:text-2xl md:text-3xl">
+                <div className="flex gap-2 xs:gap-3 text-sm xs:text-xl sm:text-2xl md:text-3xl">
                     {days ? (
                         <>
                             <span>Tage</span>
