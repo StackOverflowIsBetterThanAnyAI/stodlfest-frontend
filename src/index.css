@@ -21,8 +21,9 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
+div:focus-visible,
 ul:focus-visible {
-    @apply outline-2 outline-zinc-200 rounded-lg;
+    @apply outline-3 outline-zinc-200 rounded-lg;
 }
 
 a:hover,
@@ -41,15 +42,19 @@ button:disabled:hover {
 }
 
 @utility primary-text-pseudo {
-    @apply not-disabled:hover:bg-slate-600 not-disabled:active:bg-slate-500/60 rounded-sm focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75;
+    @apply not-disabled:hover:bg-slate-600 not-disabled:active:bg-slate-500/60 rounded-sm focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75 transition-colors;
 }
 
 @utility primary-text-pseudo-secondary {
-    @apply not-disabled:hover:bg-slate-700/40 not-disabled:active:bg-slate-700 rounded-sm focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75;
+    @apply not-disabled:hover:bg-slate-700/40 not-disabled:active:bg-slate-700 rounded-sm focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75 transition-colors;
 }
 
 @utility primary-text-pseudo-tertiary {
-    @apply not-disabled:hover:bg-slate-700 not-disabled:active:bg-slate-600 rounded-md focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75;
+    @apply not-disabled:hover:bg-slate-700 not-disabled:active:bg-slate-600 rounded-md focus-visible:outline-zinc-200 focus-visible:outline-3 disabled:opacity-75 transition-colors;
+}
+
+@utility chatbot-button {
+    @apply bg-indigo-700 hover:bg-indigo-800 active:bg-indigo-800/75 transition-colors;
 }
 
 @theme {
