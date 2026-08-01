@@ -82,7 +82,7 @@ const Chatbot = () => {
     }, [chatHistory])
 
     return (
-        <section className="flex flex-col gap-2 w-full max-w-3xl outline-4 outline-zinc-200 rounded-lg bg-linear-to-b from-indigo-700 to-indigo-800">
+        <section className="flex flex-col w-full max-w-3xl outline-4 outline-zinc-200 rounded-lg bg-linear-to-b from-indigo-600 to-indigo-900">
             <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold pb-4 border-b-2 border-zinc-200 bg-indigo-700 p-4">
                 Chatte mit dem Stodlfest-Bot
             </h2>
@@ -94,7 +94,7 @@ const Chatbot = () => {
                 />
             ) : undefined}
             <form
-                className="flex flex-col gap-y-2 gap-x-4 p-4"
+                className="flex flex-col gap-y-2 gap-x-4 p-4 border-t-2 border-zinc-200 bg-indigo-800"
                 onSubmit={handleSubmitQuestion}
             >
                 <label htmlFor="chatbotInput">Stell mir eine Frage:</label>
