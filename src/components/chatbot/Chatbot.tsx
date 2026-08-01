@@ -183,8 +183,8 @@ const Chatbot = () => {
             <button
                 onClick={handleOpenChatbot}
                 className="fixed bottom-8 right-8 w-16 h-16 rounded-full focus-visible:rounded-full! flex items-center justify-center outline-2 outline-zinc-500 chatbot-button"
-                title="Dieter.ai-Chatbot öffnen"
-                aria-label="Dieter.ai-Chatbot öffnen"
+                title={`Dieter.ai-Chatbot ${isChatVisible ? 'schließen' : 'öffnen'}`}
+                aria-label={`Dieter.ai-Chatbot ${isChatVisible ? 'schließen' : 'öffnen'}`}
             >
                 <LuBot className="w-8 h-8" />
             </button>
