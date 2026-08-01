@@ -13,6 +13,7 @@ const ChatMessageList = memo(
                 {chatHistory.map((chat, index) => {
                     return chat.role === 'bot' ? (
                         <ChatMessageBot
+                            index={index}
                             message={chat.message}
                             status={null}
                             key={index}
@@ -22,7 +23,11 @@ const ChatMessageList = memo(
                     )
                 })}
                 {isLoading ? (
-                    <ChatMessageBot message="" status="isLoading" />
+                    <ChatMessageBot
+                        index={chatHistory.length}
+                        message=""
+                        status="isLoading"
+                    />
                 ) : undefined}
             </div>
         )

@@ -10,6 +10,7 @@ export type ChatMessageListProps = {
 }
 
 export type ChatMessageBotProps = {
+    index: number
     message: string
     status: 'isLoading' | null
 }
