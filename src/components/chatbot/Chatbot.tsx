@@ -39,7 +39,7 @@ const Chatbot = () => {
         return false
     })
 
-    const chatRef = useRef<HTMLDivElement>(null)
+    const chatRef = useRef<HTMLUListElement>(null)
 
     const handleChangeQuestion = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setQuestion(e.target.value)

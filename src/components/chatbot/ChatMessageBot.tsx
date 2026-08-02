@@ -7,27 +7,27 @@ import type { ChatMessageBotProps } from '../../types/types'
 
 const ChatMessageBot = ({ index, message, status }: ChatMessageBotProps) => {
     return status === 'isLoading' ? (
-        <div className="rounded-t-lg rounded-r-lg bg-zinc-200 max-w-32 w-full py-2 sn:py-3 flex justify-center items-center">
+        <li
+            className="rounded-t-lg rounded-r-lg bg-zinc-200 max-w-32 w-full py-2 sn:py-3 flex justify-center items-center"
+            aria-label="Dieter.ai denkt nach"
+        >
             <FetchLoading theme="#372aac" />
-        </div>
+        </li>
     ) : (
-        <div className="whitespace-pre-wrap text-base md:text-lg rounded-t-lg rounded-r-lg bg-zinc-200 text-indigo-800 p-2 max-w-11/12 sm:max-w-4/5 w-fit">
+        <li
+            className="whitespace-pre-wrap text-base md:text-lg rounded-t-lg rounded-r-lg bg-zinc-200 text-indigo-800 p-2 max-w-11/12 sm:max-w-4/5 w-fit"
+            aria-label={`Dieter.ai ${index === 0 ? 'fragt' : 'antwortet'}:`}
+        >
             <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex]}
                 components={{
-                    p: ({ children }) => (
-                        <p
-                            aria-label={`Dieter.ai ${index === 0 ? 'fragt' : 'antwortet'}: ${message}`}
-                        >
-                            {children}
-                        </p>
-                    ),
+                    p: ({ children }) => <p>{children}</p>,
                 }}
             >
                 {message}
             </ReactMarkdown>
-        </div>
+        </li>
     )
 }
 

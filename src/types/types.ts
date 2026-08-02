@@ -5,7 +5,7 @@ export type chatHistoryType = {
 
 export type ChatMessageListProps = {
     chatHistory: chatHistoryType[]
-    chatRef: React.RefObject<HTMLDivElement | null>
+    chatRef: React.RefObject<HTMLUListElement | null>
     isLoading: boolean
 }
 

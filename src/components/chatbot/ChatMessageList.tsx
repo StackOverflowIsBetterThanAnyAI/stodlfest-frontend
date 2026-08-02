@@ -6,8 +6,9 @@ import ChatMessageUser from './ChatMessageUser'
 const ChatMessageList = memo(
     ({ chatHistory, chatRef, isLoading }: ChatMessageListProps) => {
         return (
-            <div
+            <ul
                 className="flex flex-col gap-4 overflow-y-auto h-96 p-4 pt-2 scrollbar-thumb-zinc-200"
+                aria-label="Chatverlauf mit Dieter.ai"
                 ref={chatRef}
             >
                 {chatHistory.map((chat, index) => {
@@ -29,7 +30,7 @@ const ChatMessageList = memo(
                         status="isLoading"
                     />
                 ) : undefined}
-            </div>
+            </ul>
         )
     }
 )
