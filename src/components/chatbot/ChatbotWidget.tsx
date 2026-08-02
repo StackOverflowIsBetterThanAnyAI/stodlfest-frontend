@@ -28,7 +28,15 @@ const ChatbotWidget = () => {
         }
 
         const handleClickOutside = (event: MouseEvent) => {
-            const target = event.target as Node
+            const target = event.target as HTMLElement
+
+            const isNavLink = Boolean(
+                target.closest('a') && target.closest('nav')
+            )
+
+            if (isNavLink) {
+                return
+            }
 
             if (
                 widgetWindowRef.current &&
