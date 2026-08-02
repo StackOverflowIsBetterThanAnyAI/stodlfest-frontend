@@ -11,7 +11,7 @@ import ListButton from '../list/ListButton'
 import { handleBotResponse } from '../../api/handleBotResponse'
 import { useToast } from '../../context/ToastContext'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
-import type { chatHistoryType } from '../../types/types'
+import type { ChatHistoryType } from '../../types/types'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
@@ -21,24 +21,20 @@ const Chatbot = () => {
     const SCREEN_WIDTH = useScreenWidth()
     const { showToast } = useToast()
 
-    const [chatHistory, setChatHistory] = useState<chatHistoryType[]>(() => {
+    const [chatHistory, setChatHistory] = useState<ChatHistoryType[]>(() => {
         const data = parsedSessionData?.chatHistory
         if (!data?.length) {
-            return [{ role: 'bot', message: 'Hallo, wie kann ich Dir helfen?' }]
+            return [
+                {
+                    role: 'bot',
+                    message: 'Hallo, wie kann ich dir beim Stodlfest helfen?',
+                },
+            ]
         }
         return data
     })
     const [question, setQuestion] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [isChatVisible, setIsChatVisible] = useState<boolean>(() => {
-        const data = parsedSessionData?.isChatVisible
-        if (data && typeof data === 'boolean') {
-            return data
-        }
-        setItemInSessionStorage('isChatVisible', false)
-        return false
-    })
-
     const chatRef = useRef<HTMLUListElement>(null)
 
     const handleChangeQuestion = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -63,7 +59,7 @@ const Chatbot = () => {
         if (!trimmedQuestion?.length || isLoading) {
             return
         }
-        const updatedChatHistory: chatHistoryType[] = [
+        const updatedChatHistory: ChatHistoryType[] = [
             ...chatHistory,
             { role: 'user', message: trimmedQuestion },
         ]
@@ -73,7 +69,7 @@ const Chatbot = () => {
         triggerBotResponse(updatedChatHistory)
     }
 
-    const triggerBotResponse = async (chatHistory: chatHistoryType[]) => {
+    const triggerBotResponse = async (chatHistory: ChatHistoryType[]) => {
         handleBotResponse({
             chatHistory,
             setChatHistory,
@@ -82,24 +78,7 @@ const Chatbot = () => {
         })
     }
 
-    const handleOpenChatbot = () => {
-        const updatedIsChatVisible = !isChatVisible
-        setIsChatVisible(updatedIsChatVisible)
-        setItemInSessionStorage('isChatVisible', updatedIsChatVisible)
-
-        requestAnimationFrame(() => {
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth',
-            })
-        })
-    }
-
     useEffect(() => {
-        if (!isChatVisible) {
-            return
-        }
-
         if (chatRef?.current) {
             chatRef.current.scrollTo({
                 top: chatRef.current.scrollHeight,
@@ -107,12 +86,13 @@ const Chatbot = () => {
                 behavior: 'smooth',
             })
         }
-    }, [chatHistory, isChatVisible])
+    }, [chatHistory])
 
     return SCREEN_WIDTH === 'MOBILE' ? (
         <section className="flex flex-col w-full max-w-3xl outline-4 outline-zinc-200 rounded-lg bg-linear-to-b from-indigo-600 to-indigo-900">
-            <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold pb-4 border-b-2 border-zinc-200 bg-indigo-700 p-4">
+            <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold pb-4 border-b-2 border-zinc-200 bg-indigo-700 p-4 flex justify-between">
                 Chatte mit Dieter.ai
+                <LuBot className="w-6 h-6" />
             </h2>
             {chatHistory?.length ? (
                 <ChatMessageList
@@ -144,53 +124,40 @@ const Chatbot = () => {
             </form>
         </section>
     ) : (
-        <>
-            {isChatVisible && (
-                <section className="flex flex-col w-full max-w-3xl outline-4 outline-zinc-200 rounded-lg bg-linear-to-b from-indigo-600 to-indigo-900">
-                    <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold pb-4 border-b-2 border-zinc-200 p-4">
-                        Chatte mit Dieter.ai
-                    </h2>
-                    {chatHistory?.length ? (
-                        <ChatMessageList
-                            chatHistory={chatHistory}
-                            chatRef={chatRef}
-                            isLoading={isLoading}
-                        />
-                    ) : undefined}
-                    <form
-                        className="flex flex-col gap-y-2 gap-x-4 p-4 border-t-2 border-zinc-200 bg-indigo-800"
-                        onSubmit={handleSubmitQuestion}
-                    >
-                        <label htmlFor="chatbotInput">
-                            Stell mir eine Frage:
-                        </label>
-                        <textarea
-                            id="chatbotInput"
-                            className="resize-none text-sm md:text-base rounded-lg outline-2 outline-zinc-500 h-16 w-full px-2 py-1 mb-2"
-                            onChange={handleChangeQuestion}
-                            value={question}
-                            onKeyDown={handleKeyDownQuestion}
-                        />
-                        <ListButton
-                            handleClick={() => {}}
-                            isLoading={false}
-                            label="Abschicken"
-                            type="form"
-                            isDisabled={!question.trim()?.length}
-                            isSubmit
-                        />
-                    </form>
-                </section>
-            )}
-            <button
-                onClick={handleOpenChatbot}
-                className="fixed bottom-8 right-8 w-16 h-16 rounded-full focus-visible:rounded-full! flex items-center justify-center outline-2 outline-zinc-500 chatbot-button"
-                title={`Dieter.ai-Chatbot ${isChatVisible ? 'schließen' : 'öffnen'}`}
-                aria-label={`Dieter.ai-Chatbot ${isChatVisible ? 'schließen' : 'öffnen'}`}
+        <section className="flex flex-col w-full max-w-3xl outline-4 outline-zinc-200 rounded-lg bg-linear-to-b from-indigo-600 to-indigo-900">
+            <h2 className="text-2xl md:text-3xl font-bold pb-4 border-b-2 border-zinc-200 bg-indigo-700 p-4 flex justify-between">
+                Chatte mit Dieter.ai
+                <LuBot className="w-8 md:w-10 h-8 md:h-10" />
+            </h2>
+            {chatHistory?.length ? (
+                <ChatMessageList
+                    chatHistory={chatHistory}
+                    chatRef={chatRef}
+                    isLoading={isLoading}
+                />
+            ) : undefined}
+            <form
+                className="flex flex-col gap-y-2 gap-x-4 p-4 border-t-2 border-zinc-200 bg-indigo-800"
+                onSubmit={handleSubmitQuestion}
             >
-                <LuBot className="w-8 h-8" />
-            </button>
-        </>
+                <label htmlFor="chatbotInput">Stell mir eine Frage:</label>
+                <textarea
+                    id="chatbotInput"
+                    className="resize-none text-sm md:text-base rounded-lg outline-2 outline-zinc-500 h-16 w-full px-2 py-1 mb-2"
+                    onChange={handleChangeQuestion}
+                    value={question}
+                    onKeyDown={handleKeyDownQuestion}
+                />
+                <ListButton
+                    handleClick={() => {}}
+                    isLoading={false}
+                    label="Abschicken"
+                    type="form"
+                    isDisabled={!question.trim()?.length}
+                    isSubmit
+                />
+            </form>
+        </section>
     )
 }
 

@@ -1,6 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
-import type { chatHistoryType, handleBotResponseProps } from '../types/types'
+import type { ChatHistoryType, handleBotResponseProps } from '../types/types'
 
 export const handleBotResponse = async ({
     chatHistory,
@@ -27,7 +27,7 @@ export const handleBotResponse = async ({
 
         const data = await response.json()
 
-        const updatedChatHistory: chatHistoryType[] = [
+        const updatedChatHistory: ChatHistoryType[] = [
             ...chatHistory,
             {
                 role: 'bot',
@@ -39,7 +39,7 @@ export const handleBotResponse = async ({
         setChatHistory(updatedChatHistory)
         setItemInSessionStorage('chatHistory', updatedChatHistory)
     } catch (_error) {
-        const updatedChatHistory: chatHistoryType[] = [
+        const updatedChatHistory: ChatHistoryType[] = [
             ...chatHistory,
             {
                 role: 'bot',

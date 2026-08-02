@@ -1,10 +1,10 @@
-export type chatHistoryType = {
+export type ChatHistoryType = {
     role: 'bot' | 'user'
     message: string
 }
 
 export type ChatMessageListProps = {
-    chatHistory: chatHistoryType[]
+    chatHistory: ChatHistoryType[]
     chatRef: React.RefObject<HTMLUListElement | null>
     isLoading: boolean
 }
@@ -114,8 +114,8 @@ export type handleAssignMemberToJobProps = {
 }
 
 export type handleBotResponseProps = {
-    chatHistory: chatHistoryType[]
-    setChatHistory: (value: React.SetStateAction<chatHistoryType[]>) => void
+    chatHistory: ChatHistoryType[]
+    setChatHistory: (value: React.SetStateAction<ChatHistoryType[]>) => void
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     showToast: (props: ToastProps) => void
 }
