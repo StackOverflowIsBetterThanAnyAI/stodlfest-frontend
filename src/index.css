@@ -54,7 +54,7 @@ button:disabled:hover {
 }
 
 @utility chatbot-button {
-    @apply bg-indigo-700 hover:bg-indigo-800 active:bg-indigo-800/75 transition-colors;
+    @apply bg-indigo-700 hover:bg-indigo-800 active:bg-indigo-800/75 focus-visible:rounded-full! transition-colors;
 }
 
 @theme {
