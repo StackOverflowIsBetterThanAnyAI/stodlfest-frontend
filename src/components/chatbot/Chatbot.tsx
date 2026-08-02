@@ -24,12 +24,14 @@ const Chatbot = () => {
     const [chatHistory, setChatHistory] = useState<ChatHistoryType[]>(() => {
         const data = parsedSessionData?.chatHistory
         if (!data?.length) {
-            return [
+            const chat = [
                 {
                     role: 'bot',
                     message: 'Hallo, wie kann ich dir beim Stodlfest helfen?',
                 },
             ]
+            setItemInSessionStorage('chatHistory', chat)
+            return chat
         }
         return data
     })
