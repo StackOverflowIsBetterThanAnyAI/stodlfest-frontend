@@ -163,6 +163,7 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
     )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useChatbot = () => {
     const context = useContext(ChatbotContext)
     if (!context) {

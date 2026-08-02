@@ -19,10 +19,6 @@ const ChatbotWidget = () => {
         handleOpenChatbot,
     } = useChatbot()
 
-    if (location.pathname === '/') {
-        return null
-    }
-
     const widgetWindowRef = useRef<HTMLElement>(null)
     const toggleButtonRef = useRef<HTMLButtonElement>(null)
 
@@ -66,6 +62,10 @@ const ChatbotWidget = () => {
             document.removeEventListener('keydown', handleEscape)
         }
     }, [isChatVisible, handleOpenChatbot])
+
+    if (location.pathname === '/') {
+        return null
+    }
 
     return (
         <div className="fixed left-6 bottom-6 lg:bottom-8 right-6 lg:right-8 text-zinc-100 z-50 flex flex-col items-end gap-y-4">

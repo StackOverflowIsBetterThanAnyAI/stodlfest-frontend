@@ -25,7 +25,7 @@ const Chatbot = () => {
                 behavior: 'smooth',
             })
         }
-    }, [chatHistory])
+    }, [chatHistory, chatRef])
 
     return SCREEN_WIDTH === 'MOBILE' ? (
         <section className="flex flex-col w-full max-w-3xl outline-4 outline-zinc-200 rounded-lg bg-linear-to-b from-indigo-600 to-indigo-900">
