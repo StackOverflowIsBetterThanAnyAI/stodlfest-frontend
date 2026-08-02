@@ -1,84 +1,21 @@
-import {
-    useEffect,
-    useRef,
-    useState,
-    type ChangeEvent,
-    type KeyboardEvent,
-} from 'react'
+import { useEffect } from 'react'
 import { LuBot } from 'react-icons/lu'
 import ChatMessageList from './ChatMessageList'
 import ListButton from '../list/ListButton'
-import { handleBotResponse } from '../../api/handleBotResponse'
-import { useToast } from '../../context/ToastContext'
+import { useChatbot } from '../../context/ChatbotContex'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
-import type { ChatHistoryType } from '../../types/types'
-import { getStoredSessionData } from '../../utils/getStoredSessionData'
-import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const Chatbot = () => {
-    const parsedSessionData = getStoredSessionData()
-
     const SCREEN_WIDTH = useScreenWidth()
-    const { showToast } = useToast()
-
-    const [chatHistory, setChatHistory] = useState<ChatHistoryType[]>(() => {
-        const data = parsedSessionData?.chatHistory
-        if (!data?.length) {
-            const chat = [
-                {
-                    role: 'bot',
-                    message: 'Hallo, wie kann ich dir beim Stodlfest helfen?',
-                },
-            ]
-            setItemInSessionStorage('chatHistory', chat)
-            return chat
-        }
-        return data
-    })
-    const [question, setQuestion] = useState<string>('')
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    const chatRef = useRef<HTMLUListElement>(null)
-
-    const handleChangeQuestion = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setQuestion(e.target.value)
-    }
-
-    const handleKeyDownQuestion = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key !== 'Enter') {
-            return
-        }
-        if (!e.shiftKey) {
-            e.preventDefault()
-            handleSubmitQuestion(
-                e as unknown as React.FocusEvent<HTMLFormElement>
-            )
-        }
-    }
-
-    const handleSubmitQuestion = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const trimmedQuestion = question.trim()
-        if (!trimmedQuestion?.length || isLoading) {
-            return
-        }
-        const updatedChatHistory: ChatHistoryType[] = [
-            ...chatHistory,
-            { role: 'user', message: trimmedQuestion },
-        ]
-        setChatHistory(updatedChatHistory)
-        setItemInSessionStorage('chatHistory', updatedChatHistory)
-        setQuestion('')
-        triggerBotResponse(updatedChatHistory)
-    }
-
-    const triggerBotResponse = async (chatHistory: ChatHistoryType[]) => {
-        handleBotResponse({
-            chatHistory,
-            setChatHistory,
-            setIsLoading,
-            showToast,
-        })
-    }
+    const {
+        chatHistory,
+        question,
+        isLoading,
+        chatRef,
+        handleChangeQuestion,
+        handleKeyDownQuestion,
+        handleSubmitQuestion,
+    } = useChatbot()
 
     useEffect(() => {
         if (chatRef?.current) {
