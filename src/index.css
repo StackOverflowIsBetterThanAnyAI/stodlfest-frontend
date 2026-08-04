@@ -33,8 +33,34 @@ input[type='radio'] + label:hover {
     @apply cursor-pointer;
 }
 
-button:disabled:hover {
+button:disabled:hover,
+input:disabled:hover {
     @apply cursor-not-allowed;
+}
+
+input[type='checkbox'] {
+    @apply appearance-none grid place-content-center w-4 h-4 bg-zinc-100 rounded-sm;
+}
+
+input[type='checkbox']:hover {
+    @apply bg-indigo-200;
+}
+
+input[type='checkbox']:disabled {
+    @apply bg-zinc-500;
+}
+
+input[type='checkbox']::before {
+    @apply w-4 h-4 opacity-100 bg-indigo-600 transition-opacity duration-250 ease-in-out rounded-sm;
+    content: '';
+}
+
+input[type='checkbox']:disabled::before {
+    @apply opacity-40;
+}
+
+input[type='checkbox']:not(:checked)::before {
+    @apply opacity-0;
 }
 
 @utility primary-text {
