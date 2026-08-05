@@ -9,9 +9,10 @@ import {
     type ChangeEvent,
     type KeyboardEvent,
 } from 'react'
-import { useLocation } from 'react-router-dom'
-import { handleBotResponse } from '../api/handleBotResponse'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { IsLoggedInContext } from './IsLoggedInContext'
 import { useToast } from './ToastContext'
+import { handleBotResponse } from '../api/handleBotResponse'
 import type { ChatHistoryType } from '../types/types'
 import { getStoredSessionData } from '../utils/getStoredSessionData'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
@@ -32,8 +33,26 @@ const ChatbotContext = createContext<ChatbotContextType | undefined>(undefined)
 
 export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
     const parsedSessionData = getStoredSessionData()
-    const { showToast } = useToast()
     const location = useLocation()
+    const navigate = useNavigate()
+    const { showToast } = useToast()
+
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ChatbotContext must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
 
     const [chatHistory, setChatHistory] = useState<ChatHistoryType[]>(() => {
         const data = parsedSessionData?.chatHistory
@@ -78,13 +97,16 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
     const triggerBotResponse = useCallback(
         async (history: ChatHistoryType[]) => {
             handleBotResponse({
+                accessToken,
                 chatHistory: history,
+                navigate,
                 setChatHistory,
                 setIsLoading,
+                setIsLoggedIn,
                 showToast,
             })
         },
-        [showToast]
+        [accessToken, navigate, setIsLoggedIn, showToast]
     )
 
     const handleSubmitQuestion = (e: React.FormEvent<HTMLFormElement>) => {

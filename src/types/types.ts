@@ -1,3 +1,5 @@
+import type { NavigateFunction } from 'react-router-dom'
+
 export type ChatHistoryType = {
     role: 'bot' | 'user'
     message: string
@@ -27,6 +29,11 @@ export type FormRadioButtonProps = {
     currentValue: string
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+}
+
+export type FormSwitchProps = {
+    isSigningUp: boolean
+    handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export type HeaderProps = {
@@ -74,12 +81,20 @@ export type ToastContextType = {
     hideToast: () => void
 }
 
+export type TokenProps = {
+    access: string
+    refresh: string
+}
+
 export type handleAddNewJobProps = {
+    accessToken: string
     e: React.FormEvent<HTMLFormElement>
     job: string
+    navigate: NavigateFunction
     requiresLegalAge: RequiresLegalAgeType
     setAllJobs: React.Dispatch<React.SetStateAction<JobProps[]>>
     setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void
     setJob: (value: React.SetStateAction<string>) => void
     setWorkers: (value: React.SetStateAction<number>) => void
@@ -88,12 +103,15 @@ export type handleAddNewJobProps = {
 }
 
 export type handleAddNewMemberProps = {
+    accessToken: string
     e: React.FormEvent<HTMLFormElement>
     age: AgeType
     name: string
+    navigate: NavigateFunction
     setAge: React.Dispatch<React.SetStateAction<AgeType>>
     setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
     setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     setIsSubmitDisabled: React.Dispatch<React.SetStateAction<boolean>>
     setName: React.Dispatch<React.SetStateAction<string>>
     setSurname: React.Dispatch<React.SetStateAction<string>>
@@ -104,47 +122,65 @@ export type handleAddNewMemberProps = {
 export type TargetActionType = 'assign' | 'unassign'
 
 export type handleAssignMemberToJobProps = {
+    accessToken: string
     allMembers: MemberProps[] | undefined
     job: JobProps
     member: MemberProps
+    navigate: NavigateFunction
     setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     showToast: (props: ToastProps) => void
     targetAction: TargetActionType
 }
 
 export type handleBotResponseProps = {
+    accessToken: string
     chatHistory: ChatHistoryType[]
+    navigate: NavigateFunction
     setChatHistory: (value: React.SetStateAction<ChatHistoryType[]>) => void
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     showToast: (props: ToastProps) => void
 }
 
 export type handleFetchAllJobsProps = {
+    accessToken: string
+    navigate: NavigateFunction
     setAllJobs: React.Dispatch<React.SetStateAction<JobProps[]>>
     setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     showToast: (props: ToastProps) => void
 }
 
 export type handleFetchAllMembersProps = {
+    accessToken: string
+    navigate: NavigateFunction
     setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
     setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     showToast: (props: ToastProps) => void
 }
 
 export type handleFetchUpcomingTasksProps = {
+    accessToken: string
+    navigate: NavigateFunction
     setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     showToast: (props: ToastProps) => void
 }
 
 export type handleAddNewTaskProps = {
+    accessToken: string
     e: React.FormEvent<HTMLFormElement>
     description: string
+    navigate: NavigateFunction
     priority: PriorityType
     setDescription: React.Dispatch<React.SetStateAction<string>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void
     setPriority: React.Dispatch<React.SetStateAction<PriorityType>>
     setTask: React.Dispatch<React.SetStateAction<string>>
@@ -154,8 +190,11 @@ export type handleAddNewTaskProps = {
 }
 
 export type handleCompleteTaskProps = {
+    accessToken: string
+    navigate: NavigateFunction
     setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     showToast: (props: ToastProps) => void
     task: TaskProps
@@ -164,48 +203,63 @@ export type handleCompleteTaskProps = {
 }
 
 export type handleDeleteCompletedTaskProps = {
+    accessToken: string
+    navigate: NavigateFunction
     setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     showToast: (props: ToastProps) => void
     task: TaskProps
     completedTasks: TaskProps[]
 }
 
 export type handleRestoreCompletedTaskProps = {
+    accessToken: string
+    completedTasks: TaskProps[]
+    navigate: NavigateFunction
     setCompletedTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     setUpcomingTasks: (value: React.SetStateAction<TaskProps[] | []>) => void
     showToast: (props: ToastProps) => void
     task: TaskProps
-    completedTasks: TaskProps[]
 }
 
 export type handleDeleteJobProps = {
+    accessToken: string
     allJobs: JobProps[] | undefined
     allMembers: MemberProps[] | undefined
     job: JobProps
+    navigate: NavigateFunction
     setAllJobs: React.Dispatch<React.SetStateAction<JobProps[] | []>>
     setAllMembers: React.Dispatch<React.SetStateAction<[] | MemberProps[]>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     showToast: (props: ToastProps) => void
 }
 
 export type handleDeleteMemberProps = {
+    accessToken: string
     allMembers: MemberProps[] | undefined
     member: MemberProps
+    navigate: NavigateFunction
     setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     showToast: (props: ToastProps) => void
 }
 
 export type handleApplyUpdateJobProps = {
+    accessToken: string
     allJobs: JobProps[] | undefined
     allMembers: MemberProps[] | undefined
     job: JobProps
+    navigate: NavigateFunction
     setAllJobs: React.Dispatch<React.SetStateAction<JobProps[] | []>>
     setAllMembers: React.Dispatch<React.SetStateAction<MemberProps[] | []>>
     setIsEdit: React.Dispatch<React.SetStateAction<boolean>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     showToast: (props: ToastProps) => void
     updatedJob: string
     updatedRequiresLegalAge: RequiresLegalAgeType
@@ -213,8 +267,11 @@ export type handleApplyUpdateJobProps = {
 }
 
 export type handleApplyUpdateTaskProps = {
+    accessToken: string
+    navigate: NavigateFunction
     setIsEdit: (value: React.SetStateAction<boolean>) => void
     setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | undefined>>
     setUpcomingTasks: React.Dispatch<React.SetStateAction<TaskProps[] | []>>
     showToast: (props: ToastProps) => void
     task: TaskProps
@@ -222,6 +279,24 @@ export type handleApplyUpdateTaskProps = {
     updatedDescription: string
     updatedPriority: PriorityType
     updatedTask: string
+}
+
+export type handleLoginProps = {
+    password: string
+    setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void
+    setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void
+    showToast: (props: ToastProps) => void
+    userName: string
+}
+
+export type handleSignUpProps = {
+    password: string
+    setIsLoading: (value: React.SetStateAction<boolean>) => void
+    setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void
+    setIsSubmitDisabled: (value: React.SetStateAction<boolean>) => void
+    showToast: (props: ToastProps) => void
+    userName: string
 }
 
 export type ListAssignJobItemProps = {

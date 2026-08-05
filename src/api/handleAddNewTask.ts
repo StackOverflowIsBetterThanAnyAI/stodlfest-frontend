@@ -3,11 +3,14 @@ import type { handleAddNewTaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleAddNewTask = async ({
+    accessToken,
     e,
     description,
     priority,
+    navigate,
     setDescription,
     setIsLoading,
+    setIsLoggedIn,
     setIsSubmitDisabled,
     setPriority,
     setTask,
@@ -29,10 +32,21 @@ export const handleAddNewTask = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/tasks/`, {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(taskData),
         })
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             const errorData = await response.json()

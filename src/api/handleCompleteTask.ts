@@ -3,8 +3,11 @@ import type { handleCompleteTaskProps, TaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleCompleteTask = async ({
+    accessToken,
+    navigate,
     setCompletedTasks,
     setIsLoading,
+    setIsLoggedIn,
     setUpcomingTasks,
     showToast,
     task,
@@ -19,11 +22,22 @@ export const handleCompleteTask = async ({
             {
                 method: 'PATCH',
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ finished: true }),
             }
         )
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

@@ -3,8 +3,11 @@ import type { handleDeleteCompletedTaskProps, TaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleDeleteCompletedTask = async ({
+    accessToken,
+    navigate,
     setCompletedTasks,
     setIsLoading,
+    setIsLoggedIn,
     showToast,
     task,
     completedTasks,
@@ -17,11 +20,22 @@ export const handleDeleteCompletedTask = async ({
             {
                 method: 'DELETE',
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ finished: true }),
             }
         )
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

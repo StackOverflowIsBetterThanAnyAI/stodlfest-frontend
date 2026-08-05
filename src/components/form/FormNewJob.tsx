@@ -1,16 +1,19 @@
 import { useContext, useState, type ChangeEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import FormRadioButton from './FormRadioButton'
 import Header from '../header/Header'
 import ListButton from '../list/ListButton'
 import { handleAddNewJob } from '../../api/handleAddNewJob'
-import { useToast } from '../../context/ToastContext'
-import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
-import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { AllJobsContext } from '../../context/AllJobsContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { useToast } from '../../context/ToastContext'
 import type { RequiresLegalAgeType } from '../../types/types'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const FormNewJob = () => {
     const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const allJobsContext = useContext(AllJobsContext)
@@ -20,6 +23,23 @@ const FormNewJob = () => {
         )
     }
     const [_allJobs, setAllJobs] = allJobsContext
+
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'FormNewJob must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
 
     const JOB_LENGTH = 63
 
@@ -82,11 +102,14 @@ const FormNewJob = () => {
     }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         handleAddNewJob({
+            accessToken,
             e,
             job,
+            navigate,
             requiresLegalAge,
             setAllJobs,
             setIsLoading,
+            setIsLoggedIn,
             setIsSubmitDisabled,
             setJob,
             setWorkers,

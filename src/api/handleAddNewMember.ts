@@ -3,12 +3,15 @@ import type { handleAddNewMemberProps, MemberProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleAddNewMember = async ({
+    accessToken,
     e,
     age,
     name,
+    navigate,
     setAge,
     setAllMembers,
     setIsLoading,
+    setIsLoggedIn,
     setIsSubmitDisabled,
     setName,
     setSurname,
@@ -29,10 +32,21 @@ export const handleAddNewMember = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/members/`, {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(memberData),
         })
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             const errorData = await response.json()

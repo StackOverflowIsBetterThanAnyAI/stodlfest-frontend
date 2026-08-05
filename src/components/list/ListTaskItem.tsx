@@ -1,4 +1,5 @@
 import { useContext, useState, type ChangeEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import FormRadioButton from '../form/FormRadioButton'
 import ListButton from './ListButton'
 import ListPriority from './ListPriority'
@@ -6,11 +7,16 @@ import { handleApplyUpdateTask } from '../../api/handleApplyUpdateTask'
 import { handleCompleteTask } from '../../api/handleCompleteTask'
 import { handleDeleteCompletedTask } from '../../api/handleDeleteCompletedTask'
 import { handleRestoreCompletedTask } from '../../api/handleRestoreCompletedTask'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import { useToast } from '../../context/ToastContext'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import type { ListTaskItemProps, PriorityType } from '../../types/types'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const upcomingTasksContext = useContext(UpcomingTasksContext)
@@ -20,6 +26,23 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
         )
     }
     const [upcomingTasks, setUpcomingTasks] = upcomingTasksContext
+
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListTaskItem must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
 
     const [isEdit, setIsEdit] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -34,8 +57,11 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         handleApplyUpdateTask({
+            accessToken,
+            navigate,
             setIsEdit,
             setIsLoading,
+            setIsLoggedIn,
             setUpcomingTasks,
             showToast,
             task,
@@ -194,12 +220,15 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     <ListButton
                         handleClick={() =>
                             handleRestoreCompletedTask({
+                                accessToken,
+                                completedTasks: props.completedTasks,
+                                navigate,
                                 setCompletedTasks: props.setCompletedTasks,
-                                setIsLoading: setIsLoading,
+                                setIsLoading,
+                                setIsLoggedIn,
                                 setUpcomingTasks: setUpcomingTasks,
                                 showToast: props.showToast,
                                 task,
-                                completedTasks: props.completedTasks,
                             })
                         }
                         index={index}
@@ -212,8 +241,11 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     <ListButton
                         handleClick={() =>
                             handleDeleteCompletedTask({
+                                accessToken,
+                                navigate,
                                 setCompletedTasks: props.setCompletedTasks,
-                                setIsLoading: setIsLoading,
+                                setIsLoading,
+                                setIsLoggedIn,
                                 showToast: props.showToast,
                                 task,
                                 completedTasks: props.completedTasks,
@@ -238,8 +270,11 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                     <ListButton
                         handleClick={() =>
                             handleCompleteTask({
+                                accessToken,
+                                navigate,
                                 setCompletedTasks: props.setCompletedTasks,
-                                setIsLoading: setIsLoading,
+                                setIsLoading,
+                                setIsLoggedIn,
                                 setUpcomingTasks: props.setUpcomingTasks,
                                 showToast: props.showToast,
                                 task,

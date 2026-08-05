@@ -3,8 +3,11 @@ import type { handleFetchAllJobsProps, JobProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleFetchAllJobs = async ({
+    accessToken,
+    navigate,
     setAllJobs,
     setIsLoading,
+    setIsLoggedIn,
     showToast,
 }: handleFetchAllJobsProps) => {
     try {
@@ -13,9 +16,20 @@ export const handleFetchAllJobs = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/jobs/`, {
             method: 'GET',
             headers: {
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
         })
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

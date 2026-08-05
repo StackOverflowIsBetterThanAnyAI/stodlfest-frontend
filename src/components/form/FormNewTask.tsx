@@ -1,16 +1,19 @@
 import { useContext, useState, type ChangeEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import FormRadioButton from './FormRadioButton'
 import Header from '../header/Header'
 import ListButton from '../list/ListButton'
-import { useToast } from '../../context/ToastContext'
 import { handleAddNewTask } from '../../api/handleAddNewTask'
-import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
-import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { useToast } from '../../context/ToastContext'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import type { PriorityType } from '../../types/types'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const FormNewTask = () => {
     const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const upcomingTasksContext = useContext(UpcomingTasksContext)
@@ -20,6 +23,23 @@ const FormNewTask = () => {
         )
     }
     const [_upcomingTasks, setUpcomingTasks] = upcomingTasksContext
+
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'FormNewTask must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
 
     const TASK_LENGTH = 127
     const DESCRIPTION_LENGTH = 255
@@ -78,11 +98,14 @@ const FormNewTask = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         handleAddNewTask({
+            accessToken,
             e,
             description,
             priority,
+            navigate,
             setDescription,
             setIsLoading,
+            setIsLoggedIn,
             setIsSubmitDisabled,
             setPriority,
             setTask,

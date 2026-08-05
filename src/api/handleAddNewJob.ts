@@ -3,11 +3,14 @@ import type { handleAddNewJobProps, JobProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleAddNewJob = async ({
+    accessToken,
     e,
     job,
+    navigate,
     requiresLegalAge,
     setAllJobs,
     setIsLoading,
+    setIsLoggedIn,
     setIsSubmitDisabled,
     setJob,
     setWorkers,
@@ -28,10 +31,21 @@ export const handleAddNewJob = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/jobs/`, {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(jobData),
         })
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             const errorData = await response.json()

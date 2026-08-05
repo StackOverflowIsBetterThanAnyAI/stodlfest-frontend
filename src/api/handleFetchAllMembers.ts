@@ -3,8 +3,11 @@ import type { handleFetchAllMembersProps, MemberProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleFetchAllMembers = async ({
+    accessToken,
+    navigate,
     setAllMembers,
     setIsLoading,
+    setIsLoggedIn,
     showToast,
 }: handleFetchAllMembersProps) => {
     try {
@@ -13,9 +16,20 @@ export const handleFetchAllMembers = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/members/`, {
             method: 'GET',
             headers: {
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
         })
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

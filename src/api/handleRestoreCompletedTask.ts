@@ -3,12 +3,15 @@ import type { handleRestoreCompletedTaskProps, TaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleRestoreCompletedTask = async ({
+    accessToken,
+    completedTasks,
+    navigate,
     setCompletedTasks,
     setIsLoading,
+    setIsLoggedIn,
     setUpcomingTasks,
     showToast,
     task,
-    completedTasks,
 }: handleRestoreCompletedTaskProps) => {
     setIsLoading(true)
 
@@ -18,11 +21,22 @@ export const handleRestoreCompletedTask = async ({
             {
                 method: 'PATCH',
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ finished: false }),
             }
         )
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

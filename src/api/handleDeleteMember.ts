@@ -3,10 +3,13 @@ import type { handleDeleteMemberProps, MemberProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleDeleteMember = async ({
+    accessToken,
     allMembers,
     member,
+    navigate,
     setAllMembers,
     setIsLoading,
+    setIsLoggedIn,
     showToast,
 }: handleDeleteMemberProps) => {
     try {
@@ -17,10 +20,21 @@ export const handleDeleteMember = async ({
             {
                 method: 'DELETE',
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
             }
         )
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

@@ -3,11 +3,14 @@ import type { handleAssignMemberToJobProps, MemberProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleAssignMemberToJob = async ({
+    accessToken,
     allMembers,
     job,
     member,
+    navigate,
     setAllMembers,
     setIsLoading,
+    setIsLoggedIn,
     showToast,
     targetAction,
 }: handleAssignMemberToJobProps) => {
@@ -22,11 +25,22 @@ export const handleAssignMemberToJob = async ({
             {
                 method: 'PATCH',
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ job_id: newJobValue }),
             }
         )
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

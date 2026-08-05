@@ -3,8 +3,11 @@ import type { handleApplyUpdateTaskProps, TaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleApplyUpdateTask = async ({
+    accessToken,
+    navigate,
     setIsEdit,
     setIsLoading,
+    setIsLoggedIn,
     setUpcomingTasks,
     showToast,
     task,
@@ -30,6 +33,7 @@ export const handleApplyUpdateTask = async ({
             {
                 method: 'PATCH',
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
@@ -39,6 +43,16 @@ export const handleApplyUpdateTask = async ({
                 }),
             }
         )
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

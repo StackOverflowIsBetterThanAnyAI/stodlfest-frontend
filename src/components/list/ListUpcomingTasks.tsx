@@ -1,14 +1,20 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useToast } from '../../context/ToastContext'
 import Header from '../header/Header'
 import ListButton from './ListButton'
 import ListNoItems from './ListNoItems'
 import ListTask from './ListTask'
-import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import { handleFetchUpcomingTasks } from '../../api/handleFetchUpcomingTasks'
 import { CompletedTasksContext } from '../../context/CompletedTasksContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListUpcomingTasks = () => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const upcomingTasksContext = useContext(UpcomingTasksContext)
@@ -27,16 +33,44 @@ const ListUpcomingTasks = () => {
     }
     const [completedTasks, setCompletedTasks] = completedTasksContext
 
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListUpcomingTasks must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
+
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const fetchUpcomingTasks = useCallback(async () => {
         handleFetchUpcomingTasks({
+            accessToken,
+            navigate,
             setCompletedTasks,
             setIsLoading,
+            setIsLoggedIn,
             setUpcomingTasks,
             showToast,
         })
-    }, [setCompletedTasks, setIsLoading, setUpcomingTasks, showToast])
+    }, [
+        accessToken,
+        navigate,
+        setCompletedTasks,
+        setIsLoading,
+        setIsLoggedIn,
+        setUpcomingTasks,
+        showToast,
+    ])
 
     useEffect(() => {
         fetchUpcomingTasks()

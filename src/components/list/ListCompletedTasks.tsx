@@ -1,14 +1,20 @@
 import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../header/Header'
 import ListButton from './ListButton'
 import ListNoItems from './ListNoItems'
 import ListTask from './ListTask'
 import { handleFetchUpcomingTasks } from '../../api/handleFetchUpcomingTasks'
 import { CompletedTasksContext } from '../../context/CompletedTasksContext'
-import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import { useToast } from '../../context/ToastContext'
+import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListCompletedTasks = () => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -16,7 +22,7 @@ const ListCompletedTasks = () => {
     const upcomingTasksContext = useContext(UpcomingTasksContext)
     if (!upcomingTasksContext) {
         throw new Error(
-            'ListUpcomingTasks must be used within a UpcomingTasksContext.Provider'
+            'ListCompletedTasks must be used within a UpcomingTasksContext.Provider'
         )
     }
     const [_upcomingTasks, setUpcomingTasks] = upcomingTasksContext
@@ -24,15 +30,35 @@ const ListCompletedTasks = () => {
     const completedTasksContext = useContext(CompletedTasksContext)
     if (!completedTasksContext) {
         throw new Error(
-            'ListUpcomingTasks must be used within a CompletedTasksContext.Provider'
+            'ListCompletedTasks must be used within a CompletedTasksContext.Provider'
         )
     }
     const [completedTasks, setCompletedTasks] = completedTasksContext
 
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListCompletedTasks must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
+
     const fetchUpcomingTasks = async () => {
         handleFetchUpcomingTasks({
+            accessToken,
+            navigate,
             setCompletedTasks,
             setIsLoading,
+            setIsLoggedIn,
             setUpcomingTasks,
             showToast,
         })

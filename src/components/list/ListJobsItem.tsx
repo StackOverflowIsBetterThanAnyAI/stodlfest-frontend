@@ -1,15 +1,21 @@
 import { useContext, useState, type ChangeEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import FormRadioButton from '../form/FormRadioButton'
 import ListButton from './ListButton'
 import { handleApplyUpdateJob } from '../../api/handleApplyUpdateJob'
 import { handleDeleteJob } from '../../api/handleDeleteJob'
-import { useToast } from '../../context/ToastContext'
 import { AllJobsContext } from '../../context/AllJobsContext'
 import { AllMembersContext } from '../../context/AllMembersContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { useToast } from '../../context/ToastContext'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
 import type { ListJobsItemProps, RequiresLegalAgeType } from '../../types/types'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const allJobsContext = useContext(AllJobsContext)
@@ -28,6 +34,23 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
     }
     const [allMembers, setAllMembers] = allMembersContext
 
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListJobsItem must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
+
     const JOB_LENGTH = 63
     const SCREEN_WIDTH = useScreenWidth()
 
@@ -41,13 +64,16 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         handleApplyUpdateJob({
+            accessToken,
             allJobs,
             allMembers,
             job,
+            navigate,
             setAllJobs,
             setAllMembers,
             setIsEdit,
             setIsLoading,
+            setIsLoggedIn,
             showToast,
             updatedJob,
             updatedRequiresLegalAge,
@@ -62,12 +88,15 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
     }
     const handleDelete = async () => {
         handleDeleteJob({
+            accessToken,
             allJobs,
             allMembers,
             job,
+            navigate,
             setAllJobs,
             setAllMembers,
             setIsLoading,
+            setIsLoggedIn,
             showToast,
         })
     }

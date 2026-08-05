@@ -3,9 +3,12 @@ import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 import type { ChatHistoryType, handleBotResponseProps } from '../types/types'
 
 export const handleBotResponse = async ({
+    accessToken,
     chatHistory,
+    navigate,
     setChatHistory,
     setIsLoading,
+    setIsLoggedIn,
     showToast,
 }: handleBotResponseProps) => {
     setIsLoading(true)
@@ -13,10 +16,21 @@ export const handleBotResponse = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/chat/`, {
             method: 'POST',
             headers: {
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(chatHistory),
         })
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

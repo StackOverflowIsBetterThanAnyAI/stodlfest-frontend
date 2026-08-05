@@ -3,8 +3,11 @@ import type { handleFetchUpcomingTasksProps, TaskProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleFetchUpcomingTasks = async ({
+    accessToken,
+    navigate,
     setCompletedTasks,
     setIsLoading,
+    setIsLoggedIn,
     setUpcomingTasks,
     showToast,
 }: handleFetchUpcomingTasksProps) => {
@@ -14,9 +17,20 @@ export const handleFetchUpcomingTasks = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/tasks/`, {
             method: 'GET',
             headers: {
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
         })
+
+        if (response.status === 401) {
+            showToast({
+                label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
+            })
+            setIsLoggedIn(false)
+            setItemInSessionStorage('isLoggedIn', false)
+            navigate('/')
+            return
+        }
 
         if (!response.ok) {
             showToast({

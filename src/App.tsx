@@ -1,24 +1,35 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useContext, useState } from 'react'
 import Arbeitseinteilung from './pages/Arbeitseinteilung'
 import Aufgaben from './pages/Aufgaben'
 import Home from './pages/Home'
+import Login from './pages/Login'
 import Mitglieder from './pages/Mitglieder'
 import Vorbereitung from './pages/Vorbereitung'
 import ChatbotWidget from './components/chatbot/ChatbotWidget'
 import Footer from './components/footer/Footer'
 import Navigation from './components/navigation/Navigation'
-import { useDocumentTitle } from './hooks/useDocumentTitle'
 import { ChatbotProvider } from './context/ChatbotContex'
+import { IsLoggedInContext } from './context/IsLoggedInContext'
 import { ToastProvider } from './context/ToastContext'
+import { useDocumentTitle } from './hooks/useDocumentTitle'
+import { getStoredSessionData } from './utils/getStoredSessionData'
+import { setItemInSessionStorage } from './utils/setItemInSessionStorage'
 
 const AppContent = () => {
     useDocumentTitle()
+
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error('App must be used within a IsLoggedInContext.Provider')
+    }
+    const [isLoggedIn, _setIsLoggedIn] = isLoggedInContext
 
     return (
         <div className="flex flex-col min-h-screen bg-linear-to-b from-slate-900 to-slate-800 text-zinc-100 primary-text">
             <Navigation />
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={isLoggedIn ? <Home /> : <Login />} />
                 <Route
                     path="/arbeitseinteilung"
                     element={<Arbeitseinteilung />}
@@ -34,12 +45,25 @@ const AppContent = () => {
 }
 
 const App = () => {
+    const parsedSessionData = getStoredSessionData()
+
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(() => {
+        const data = parsedSessionData?.isLoggedIn
+        if (data && typeof data === 'boolean') {
+            return data
+        }
+        setItemInSessionStorage('isLoggedIn', false)
+        return false
+    })
+
     return (
         <ToastProvider>
             <BrowserRouter>
-                <ChatbotProvider>
-                    <AppContent />
-                </ChatbotProvider>
+                <IsLoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
+                    <ChatbotProvider>
+                        <AppContent />
+                    </ChatbotProvider>
+                </IsLoggedInContext.Provider>
             </BrowserRouter>
         </ToastProvider>
     )

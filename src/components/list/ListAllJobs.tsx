@@ -1,13 +1,19 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../header/Header'
 import ListButton from './ListButton'
 import ListJobs from './ListJobs'
 import ListNoItems from './ListNoItems'
-import { useToast } from '../../context/ToastContext'
-import { AllJobsContext } from '../../context/AllJobsContext'
 import { handleFetchAllJobs } from '../../api/handleFetchAllJobs'
+import { AllJobsContext } from '../../context/AllJobsContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { useToast } from '../../context/ToastContext'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListAllJobs = () => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -20,9 +26,40 @@ const ListAllJobs = () => {
     }
     const [allJobs, setAllJobs] = allJobsContext
 
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListAllJobs must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
+
     const fetchAllJobs = useCallback(async () => {
-        handleFetchAllJobs({ setAllJobs, setIsLoading, showToast })
-    }, [setAllJobs, setIsLoading, showToast])
+        handleFetchAllJobs({
+            accessToken,
+            navigate,
+            setAllJobs,
+            setIsLoading,
+            setIsLoggedIn,
+            showToast,
+        })
+    }, [
+        accessToken,
+        navigate,
+        setAllJobs,
+        setIsLoading,
+        setIsLoggedIn,
+        showToast,
+    ])
 
     useEffect(() => {
         fetchAllJobs()

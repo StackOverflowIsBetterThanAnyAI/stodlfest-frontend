@@ -1,9 +1,14 @@
+import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { handleAssignMemberToJob } from '../../api/handleAssignMemberToJob'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import type {
     TargetActionType,
     MemberProps,
     ListAssignJobItemDnDProps,
 } from '../../types/types'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListAssignJobItemDnD = ({
     activeTargetZone,
@@ -16,6 +21,26 @@ const ListAssignJobItemDnD = ({
     setIsLoading,
     showToast,
 }: ListAssignJobItemDnDProps) => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
+
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListAssignJobItemDnD must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
+
     const handleDragStart = (
         e: React.DragEvent<HTMLLIElement>,
         memberId: number
@@ -75,11 +100,14 @@ const ListAssignJobItemDnD = ({
         }
 
         await handleAssignMemberToJob({
+            accessToken,
             allMembers,
             job,
             member: draggedMember,
+            navigate,
             setAllMembers,
             setIsLoading,
+            setIsLoggedIn,
             showToast,
             targetAction,
         })
@@ -111,11 +139,14 @@ const ListAssignJobItemDnD = ({
         }
 
         await handleAssignMemberToJob({
+            accessToken,
             allMembers,
             job,
             member: draggedMember,
+            navigate,
             setAllMembers,
             setIsLoading,
+            setIsLoggedIn,
             showToast,
             targetAction,
         })

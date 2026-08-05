@@ -1,15 +1,21 @@
 import { useState, useContext, useCallback, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../header/Header'
+import ListAssignJob from './ListAssignJob'
 import ListButton from './ListButton'
 import ListNoItems from './ListNoItems'
 import { handleFetchAllJobs } from '../../api/handleFetchAllJobs'
-import { AllJobsContext } from '../../context/AllJobsContext'
-import { useToast } from '../../context/ToastContext'
-import ListAssignJob from './ListAssignJob'
 import { handleFetchAllMembers } from '../../api/handleFetchAllMembers'
+import { AllJobsContext } from '../../context/AllJobsContext'
 import { AllMembersContext } from '../../context/AllMembersContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { useToast } from '../../context/ToastContext'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListAssignJobs = () => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -30,10 +36,49 @@ const ListAssignJobs = () => {
     }
     const [_allMembers, setAllMembers] = allMembersContext
 
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListAssignJob must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
+
     const fetchAllJobsAndMembers = useCallback(async () => {
-        handleFetchAllJobs({ setAllJobs, setIsLoading, showToast })
-        handleFetchAllMembers({ setAllMembers, setIsLoading, showToast })
-    }, [setAllJobs, setAllMembers, setIsLoading, showToast])
+        handleFetchAllJobs({
+            accessToken,
+            navigate,
+            setAllJobs,
+            setIsLoading,
+            setIsLoggedIn,
+            showToast,
+        })
+        handleFetchAllMembers({
+            accessToken,
+            navigate,
+            setAllMembers,
+            setIsLoading,
+            setIsLoggedIn,
+            showToast,
+        })
+    }, [
+        accessToken,
+        navigate,
+        setAllJobs,
+        setAllMembers,
+        setIsLoading,
+        setIsLoggedIn,
+        showToast,
+    ])
 
     useEffect(() => {
         fetchAllJobsAndMembers()

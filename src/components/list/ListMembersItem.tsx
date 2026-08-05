@@ -1,11 +1,17 @@
 import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ListButton from './ListButton'
+import { handleDeleteMember } from '../../api/handleDeleteMember'
+import { AllMembersContext } from '../../context/AllMembersContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import { useToast } from '../../context/ToastContext'
 import type { ListMembersItemProps } from '../../types/types'
-import { AllMembersContext } from '../../context/AllMembersContext'
-import { handleDeleteMember } from '../../api/handleDeleteMember'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListMembersItem = ({ index, member }: ListMembersItemProps) => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const allMembersContext = useContext(AllMembersContext)
@@ -16,14 +22,34 @@ const ListMembersItem = ({ index, member }: ListMembersItemProps) => {
     }
     const [allMembers, setAllMembers] = allMembersContext
 
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListMembersItem must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
+
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const deleteMember = async () => {
         handleDeleteMember({
+            accessToken,
             allMembers,
             member,
+            navigate,
             setAllMembers,
             setIsLoading,
+            setIsLoggedIn,
             showToast,
         })
     }

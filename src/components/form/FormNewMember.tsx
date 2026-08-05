@@ -1,16 +1,19 @@
 import { useContext, useState, type ChangeEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import FormRadioButton from './FormRadioButton'
 import Header from '../header/Header'
 import ListButton from '../list/ListButton'
-import { useToast } from '../../context/ToastContext'
+import { handleAddNewMember } from '../../api/handleAddNewMember'
 import { AllMembersContext } from '../../context/AllMembersContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { useToast } from '../../context/ToastContext'
+import type { AgeType } from '../../types/types'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
-import type { AgeType } from '../../types/types'
-import { handleAddNewMember } from '../../api/handleAddNewMember'
 
 const FormNewMember = () => {
     const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const allMembersContext = useContext(AllMembersContext)
@@ -20,6 +23,23 @@ const FormNewMember = () => {
         )
     }
     const [_allMembers, setAllMembers] = allMembersContext
+
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'FormNewMember must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
 
     const NAME_LENGTH = 63
 
@@ -76,12 +96,15 @@ const FormNewMember = () => {
     }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         handleAddNewMember({
+            accessToken,
             e,
             age,
             name,
+            navigate,
             setAge,
             setAllMembers,
             setIsLoading,
+            setIsLoggedIn,
             setIsSubmitDisabled,
             setName,
             setSurname,

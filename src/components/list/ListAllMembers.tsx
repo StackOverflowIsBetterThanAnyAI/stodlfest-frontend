@@ -1,13 +1,19 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../header/Header'
 import ListButton from './ListButton'
 import ListMembers from './ListMembers'
 import ListNoItems from './ListNoItems'
-import { AllMembersContext } from '../../context/AllMembersContext'
-import { useToast } from '../../context/ToastContext'
 import { handleFetchAllMembers } from '../../api/handleFetchAllMembers'
+import { AllMembersContext } from '../../context/AllMembersContext'
+import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { useToast } from '../../context/ToastContext'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const ListAllMembers = () => {
+    const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -20,9 +26,40 @@ const ListAllMembers = () => {
     }
     const [allMembers, setAllMembers] = allMembersContext
 
+    const isLoggedInContext = useContext(IsLoggedInContext)
+    if (!isLoggedInContext) {
+        throw new Error(
+            'ListAllMembers must be used within a IsLoggedInContext.Provider'
+        )
+    }
+    const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
+
+    const [accessToken, _setAccessToken] = useState<string>(() => {
+        const data = parsedSessionData?.accessToken
+        if (data?.length && typeof data === 'string') {
+            return data
+        }
+        setItemInSessionStorage('accessToken', '')
+        return ''
+    })
+
     const fetchAllMembers = useCallback(async () => {
-        handleFetchAllMembers({ setAllMembers, setIsLoading, showToast })
-    }, [setAllMembers, setIsLoading, showToast])
+        handleFetchAllMembers({
+            accessToken,
+            navigate,
+            setAllMembers,
+            setIsLoading,
+            setIsLoggedIn,
+            showToast,
+        })
+    }, [
+        accessToken,
+        navigate,
+        setAllMembers,
+        setIsLoading,
+        setIsLoggedIn,
+        showToast,
+    ])
 
     useEffect(() => {
         fetchAllMembers()
