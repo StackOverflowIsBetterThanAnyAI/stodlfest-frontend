@@ -45,15 +45,6 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedSessionData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInSessionStorage('accessToken', '')
-        return ''
-    })
-
     const [chatHistory, setChatHistory] = useState<ChatHistoryType[]>(() => {
         const data = parsedSessionData?.chatHistory
         if (!data?.length) {
@@ -96,6 +87,15 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
 
     const triggerBotResponse = useCallback(
         async (history: ChatHistoryType[]) => {
+            const accessToken = (() => {
+                const parsedSessionData = getStoredSessionData()
+                const data = parsedSessionData?.accessToken
+                if (data?.length && typeof data === 'string') {
+                    return data
+                }
+                setItemInSessionStorage('accessToken', '')
+                return ''
+            })()
             handleBotResponse({
                 accessToken,
                 chatHistory: history,
@@ -106,7 +106,7 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
                 showToast,
             })
         },
-        [accessToken, navigate, setIsLoggedIn, showToast]
+        [navigate, setIsLoggedIn, showToast]
     )
 
     const handleSubmitQuestion = (e: React.FormEvent<HTMLFormElement>) => {
