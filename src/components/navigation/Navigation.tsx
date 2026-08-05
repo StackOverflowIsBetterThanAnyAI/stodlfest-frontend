@@ -1,11 +1,15 @@
-import { Link } from 'react-router-dom'
-import { useScreenWidth } from '../../hooks/useScreenWidth'
 import { useContext, useState } from 'react'
-import logo from './../../assets/stodlfest.png'
+import { Link } from 'react-router-dom'
+import { LuLogOut } from 'react-icons/lu'
 import { IsLoggedInContext } from '../../context/IsLoggedInContext'
+import { useToast } from '../../context/ToastContext'
+import { useScreenWidth } from '../../hooks/useScreenWidth'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
+import logo from './../../assets/stodlfest.png'
 
 const Navigation = () => {
     const SCREEN_WIDTH = useScreenWidth()
+    const { showToast } = useToast()
 
     const isLoggedInContext = useContext(IsLoggedInContext)
     if (!isLoggedInContext) {
@@ -13,19 +17,24 @@ const Navigation = () => {
             'Navigation must be used within a IsLoggedInContext.Provider'
         )
     }
-    const [isLoggedIn, _setIsLoggedIn] = isLoggedInContext
+    const [isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
     const [isMenuExpanded, setIsMenuExpanded] = useState<boolean>(false)
 
     const toggleMenuExpanded = () => {
         setIsMenuExpanded((prev) => !prev)
     }
+    const handleLogout = () => {
+        showToast({ label: 'Erfolgreich abgemeldet.' })
+        setIsLoggedIn(false)
+        setItemInSessionStorage('isLoggedIn', false)
+    }
 
     return (
         <nav className="primary-text border-b-zinc-200 border-b">
             {isLoggedIn ? (
                 <>
-                    <div className="flex justify-between items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-8 py-2 md:py-4 text-md md:text-lg">
+                    <div className="flex justify-between items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-8 py-2 md:py-4 text-sm md:text-base">
                         <Link
                             to="/"
                             className="primary-text-pseudo-secondary flex items-center gap-3 md:gap-4"
@@ -85,12 +94,21 @@ const Navigation = () => {
                                 >
                                     Vorbereitung
                                 </Link>
+                                <button
+                                    className="flex gap-2 justify-center items-center px-2 primary-text-pseudo-secondary"
+                                    onClick={handleLogout}
+                                >
+                                    <span className="max-lg:sr-only">
+                                        Abmelden
+                                    </span>
+                                    <LuLogOut aria-hidden="true" />
+                                </button>
                             </div>
                         )}
                     </div>
                     {SCREEN_WIDTH === 'MOBILE' && isMenuExpanded && (
                         <nav
-                            className="flex gap-2 px-2 sm:px-4 md:px-8 py-2 justify-evenly flex-wrap border-b-zinc-200 border-t"
+                            className="flex gap-2 px-2 sm:px-4 md:px-8 py-2 justify-evenly flex-wrap border-b-zinc-200 border-t text-sm"
                             id="mobile-navigation"
                         >
                             <Link
@@ -117,11 +135,18 @@ const Navigation = () => {
                             >
                                 Vorbereitung
                             </Link>
+                            <button
+                                className="flex gap-2 justify-center items-center px-2 primary-text-pseudo-secondary"
+                                onClick={handleLogout}
+                            >
+                                <span>Abmelden</span>
+                                <LuLogOut aria-hidden="true" />
+                            </button>
                         </nav>
                     )}
                 </>
             ) : (
-                <div className="flex justify-between items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-8 py-2 md:py-4 text-md md:text-lg">
+                <div className="flex justify-between items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-8 py-2 md:py-4 text-sm md:text-base">
                     <Link
                         to="/"
                         className="primary-text-pseudo-secondary flex items-center gap-3 md:gap-4"
