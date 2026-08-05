@@ -1,5 +1,5 @@
 import { SERVER_ADDRESS } from '../constants/constants'
-import type { handleSignUpProps } from '../types/types'
+import type { handleSignUpProps, TokenProps } from '../types/types'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleSignUp = async ({
@@ -35,6 +35,11 @@ export const handleSignUp = async ({
             return
         }
 
+        const token: TokenProps = await response.json()
+        const { access, refresh } = token
+
+        setItemInSessionStorage('accessToken', access)
+        setItemInSessionStorage('refreshToken', refresh)
         setIsLoggedIn(true)
         setItemInSessionStorage('isLoggedIn', true)
     } catch {
