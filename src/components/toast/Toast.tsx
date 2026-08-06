@@ -25,13 +25,13 @@ const Toast = ({ label }: ToastProps) => {
     return (
         <div
             className={`text-normal fixed flex gap-2 bottom-6 ${positionX} rounded-sm z-75
-            outline-1 outline-zinc-50 p-2 transition-all duration-700 ${opacity} bg-red-400 text-stone-950`}
+            outline-1 outline-zinc-50 p-2 transition-all duration-700 ${opacity} bg-indigo-700 text-zinc-100`}
             role="status"
             aria-live="polite"
         >
             {label}
             <button
-                className="flex items-center justify-center rounded-full outline-1 outline-stone-900 text-xs h-6 w-6 bg-zinc-50/80"
+                className="flex items-center justify-center rounded-full outline-1 outline-stone-900 text-xs h-6 w-6 bg-zinc-50/80 text-stone-950"
                 onClick={handleCloseToast}
                 aria-label="Nachricht schließen"
             >
