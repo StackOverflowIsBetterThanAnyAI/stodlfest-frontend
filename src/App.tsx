@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import Arbeitseinteilung from './pages/Arbeitseinteilung'
 import Aufgaben from './pages/Aufgaben'
@@ -30,13 +30,44 @@ const AppContent = () => {
             <Navigation />
             <Routes>
                 <Route path="/" element={isLoggedIn ? <Home /> : <Login />} />
+                {!isLoggedIn && <Route path="*" element={<Login />} />}
                 <Route
                     path="/arbeitseinteilung"
-                    element={<Arbeitseinteilung />}
+                    element={
+                        isLoggedIn ? (
+                            <Arbeitseinteilung />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
                 />
-                <Route path="/mitglieder" element={<Mitglieder />} />
-                <Route path="/aufgaben" element={<Aufgaben />} />
-                <Route path="/vorbereitung" element={<Vorbereitung />} />
+                <Route
+                    path="/mitglieder"
+                    element={
+                        isLoggedIn ? (
+                            <Mitglieder />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route
+                    path="/aufgaben"
+                    element={
+                        isLoggedIn ? <Aufgaben /> : <Navigate to="/" replace />
+                    }
+                />
+                <Route
+                    path="/vorbereitung"
+                    element={
+                        isLoggedIn ? (
+                            <Vorbereitung />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
             <ChatbotWidget />
             <Footer />
