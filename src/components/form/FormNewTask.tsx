@@ -8,10 +8,13 @@ import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import { useToast } from '../../context/ToastContext'
 import { UpcomingTasksContext } from '../../context/UpcomingTasksContext'
 import type { PriorityType } from '../../types/types'
+import { getStoredLocalData } from '../../utils/getStoredLocalData'
 import { getStoredSessionData } from '../../utils/getStoredSessionData'
+import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const FormNewTask = () => {
+    const parsedLocalData = getStoredLocalData()
     const parsedSessionData = getStoredSessionData()
     const navigate = useNavigate()
     const { showToast } = useToast()
@@ -33,11 +36,11 @@ const FormNewTask = () => {
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
     const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedSessionData?.accessToken
+        const data = parsedLocalData?.accessToken
         if (data?.length && typeof data === 'string') {
             return data
         }
-        setItemInSessionStorage('accessToken', '')
+        setItemInLocalStorage('accessToken', '')
         return ''
     })
 

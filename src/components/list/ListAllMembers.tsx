@@ -8,11 +8,11 @@ import { handleFetchAllMembers } from '../../api/handleFetchAllMembers'
 import { AllMembersContext } from '../../context/AllMembersContext'
 import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import { useToast } from '../../context/ToastContext'
-import { getStoredSessionData } from '../../utils/getStoredSessionData'
-import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
+import { getStoredLocalData } from '../../utils/getStoredLocalData'
+import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListAllMembers = () => {
-    const parsedSessionData = getStoredSessionData()
+    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -35,11 +35,11 @@ const ListAllMembers = () => {
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
     const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedSessionData?.accessToken
+        const data = parsedLocalData?.accessToken
         if (data?.length && typeof data === 'string') {
             return data
         }
-        setItemInSessionStorage('accessToken', '')
+        setItemInLocalStorage('accessToken', '')
         return ''
     })
 

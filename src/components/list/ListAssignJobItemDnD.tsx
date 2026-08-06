@@ -7,8 +7,8 @@ import type {
     MemberProps,
     ListAssignJobItemDnDProps,
 } from '../../types/types'
-import { getStoredSessionData } from '../../utils/getStoredSessionData'
-import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
+import { getStoredLocalData } from '../../utils/getStoredLocalData'
+import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListAssignJobItemDnD = ({
     activeTargetZone,
@@ -21,7 +21,7 @@ const ListAssignJobItemDnD = ({
     setIsLoading,
     showToast,
 }: ListAssignJobItemDnDProps) => {
-    const parsedSessionData = getStoredSessionData()
+    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
 
     const isLoggedInContext = useContext(IsLoggedInContext)
@@ -33,11 +33,11 @@ const ListAssignJobItemDnD = ({
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
     const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedSessionData?.accessToken
+        const data = parsedLocalData?.accessToken
         if (data?.length && typeof data === 'string') {
             return data
         }
-        setItemInSessionStorage('accessToken', '')
+        setItemInLocalStorage('accessToken', '')
         return ''
     })
 

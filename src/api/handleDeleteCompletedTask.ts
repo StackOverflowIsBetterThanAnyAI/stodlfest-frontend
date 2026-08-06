@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleDeleteCompletedTaskProps, TaskProps } from '../types/types'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleDeleteCompletedTask = async ({
@@ -32,7 +33,7 @@ export const handleDeleteCompletedTask = async ({
                 label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
             })
             setIsLoggedIn(false)
-            setItemInSessionStorage('isLoggedIn', false)
+            setItemInLocalStorage('isLoggedIn', false)
             navigate('/')
             return
         }

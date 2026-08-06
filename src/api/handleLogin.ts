@@ -1,6 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleLoginProps, TokenProps } from '../types/types'
-import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 
 export const handleLogin = async ({
     password,
@@ -27,17 +27,17 @@ export const handleLogin = async ({
                 label: 'Nutzer konnte nicht angemeldet werden',
             })
             setIsLoggedIn(false)
-            setItemInSessionStorage('isLoggedIn', false)
+            setItemInLocalStorage('isLoggedIn', false)
             return
         }
 
         const token: TokenProps = await response.json()
         const { access, refresh } = token
 
-        setItemInSessionStorage('accessToken', access)
-        setItemInSessionStorage('refreshToken', refresh)
+        setItemInLocalStorage('accessToken', access)
+        setItemInLocalStorage('refreshToken', refresh)
         setIsLoggedIn(true)
-        setItemInSessionStorage('isLoggedIn', true)
+        setItemInLocalStorage('isLoggedIn', true)
     } catch {
         showToast({
             label: 'Beim Anmelden ist ein Fehler aufgetreten.',

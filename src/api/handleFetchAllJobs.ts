@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleFetchAllJobsProps, JobProps } from '../types/types'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleFetchAllJobs = async ({
@@ -26,7 +27,7 @@ export const handleFetchAllJobs = async ({
                 label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
             })
             setIsLoggedIn(false)
-            setItemInSessionStorage('isLoggedIn', false)
+            setItemInLocalStorage('isLoggedIn', false)
             navigate('/')
             return
         }

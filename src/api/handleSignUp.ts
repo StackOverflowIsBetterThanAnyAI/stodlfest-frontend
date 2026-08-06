@@ -1,6 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleSignUpProps, TokenProps } from '../types/types'
-import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 
 export const handleSignUp = async ({
     password,
@@ -31,17 +31,17 @@ export const handleSignUp = async ({
                 label: error,
             })
             setIsLoggedIn(false)
-            setItemInSessionStorage('isLoggedIn', false)
+            setItemInLocalStorage('isLoggedIn', false)
             return
         }
 
         const token: TokenProps = await response.json()
         const { access, refresh } = token
 
-        setItemInSessionStorage('accessToken', access)
-        setItemInSessionStorage('refreshToken', refresh)
+        setItemInLocalStorage('accessToken', access)
+        setItemInLocalStorage('refreshToken', refresh)
         setIsLoggedIn(true)
-        setItemInSessionStorage('isLoggedIn', true)
+        setItemInLocalStorage('isLoggedIn', true)
     } catch {
         showToast({
             label: 'Beim Erstellen dieses Accounts ist ein Fehler aufgetreten.',

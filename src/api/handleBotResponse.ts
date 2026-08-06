@@ -1,6 +1,7 @@
 import { SERVER_ADDRESS } from '../constants/constants'
-import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 import type { ChatHistoryType, handleBotResponseProps } from '../types/types'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
+import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleBotResponse = async ({
     accessToken,
@@ -27,7 +28,7 @@ export const handleBotResponse = async ({
                 label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
             })
             setIsLoggedIn(false)
-            setItemInSessionStorage('isLoggedIn', false)
+            setItemInLocalStorage('isLoggedIn', false)
             navigate('/')
             return
         }

@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleAddNewMemberProps, MemberProps } from '../types/types'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleAddNewMember = async ({
@@ -43,7 +44,7 @@ export const handleAddNewMember = async ({
                 label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
             })
             setIsLoggedIn(false)
-            setItemInSessionStorage('isLoggedIn', false)
+            setItemInLocalStorage('isLoggedIn', false)
             navigate('/')
             return
         }

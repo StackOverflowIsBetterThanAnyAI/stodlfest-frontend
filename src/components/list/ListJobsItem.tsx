@@ -10,11 +10,11 @@ import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import { useToast } from '../../context/ToastContext'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
 import type { ListJobsItemProps, RequiresLegalAgeType } from '../../types/types'
-import { getStoredSessionData } from '../../utils/getStoredSessionData'
-import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
+import { getStoredLocalData } from '../../utils/getStoredLocalData'
+import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
-    const parsedSessionData = getStoredSessionData()
+    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -43,11 +43,11 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
     const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedSessionData?.accessToken
+        const data = parsedLocalData?.accessToken
         if (data?.length && typeof data === 'string') {
             return data
         }
-        setItemInSessionStorage('accessToken', '')
+        setItemInLocalStorage('accessToken', '')
         return ''
     })
 

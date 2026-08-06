@@ -14,7 +14,9 @@ import { IsLoggedInContext } from './IsLoggedInContext'
 import { useToast } from './ToastContext'
 import { handleBotResponse } from '../api/handleBotResponse'
 import type { ChatHistoryType } from '../types/types'
+import { getStoredLocalData } from '../utils/getStoredLocalData'
 import { getStoredSessionData } from '../utils/getStoredSessionData'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 interface ChatbotContextType {
@@ -88,12 +90,12 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
     const triggerBotResponse = useCallback(
         async (history: ChatHistoryType[]) => {
             const accessToken = (() => {
-                const parsedSessionData = getStoredSessionData()
-                const data = parsedSessionData?.accessToken
+                const parsedLocalData = getStoredLocalData()
+                const data = parsedLocalData?.accessToken
                 if (data?.length && typeof data === 'string') {
                     return data
                 }
-                setItemInSessionStorage('accessToken', '')
+                setItemInLocalStorage('accessToken', '')
                 return ''
             })()
             handleBotResponse({

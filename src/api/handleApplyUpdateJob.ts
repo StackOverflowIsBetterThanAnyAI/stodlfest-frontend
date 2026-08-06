@@ -4,6 +4,7 @@ import type {
     JobProps,
     MemberProps,
 } from '../types/types'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleApplyUpdateJob = async ({
@@ -52,7 +53,7 @@ export const handleApplyUpdateJob = async ({
                 label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
             })
             setIsLoggedIn(false)
-            setItemInSessionStorage('isLoggedIn', false)
+            setItemInLocalStorage('isLoggedIn', false)
             navigate('/')
             return
         }

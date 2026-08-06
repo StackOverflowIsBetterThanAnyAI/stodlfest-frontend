@@ -13,8 +13,8 @@ import { ChatbotProvider } from './context/ChatbotContex'
 import { IsLoggedInContext } from './context/IsLoggedInContext'
 import { ToastProvider } from './context/ToastContext'
 import { useDocumentTitle } from './hooks/useDocumentTitle'
-import { getStoredSessionData } from './utils/getStoredSessionData'
-import { setItemInSessionStorage } from './utils/setItemInSessionStorage'
+import { getStoredLocalData } from './utils/getStoredLocalData'
+import { setItemInLocalStorage } from './utils/setItemInLocalStorage'
 
 const AppContent = () => {
     useDocumentTitle()
@@ -45,14 +45,14 @@ const AppContent = () => {
 }
 
 const App = () => {
-    const parsedSessionData = getStoredSessionData()
+    const parsedLocalData = getStoredLocalData()
 
     const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(() => {
-        const data = parsedSessionData?.isLoggedIn
+        const data = parsedLocalData?.isLoggedIn
         if (data && typeof data === 'boolean') {
             return data
         }
-        setItemInSessionStorage('isLoggedIn', false)
+        setItemInLocalStorage('isLoggedIn', false)
         return false
     })
 

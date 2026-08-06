@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleDeleteMemberProps, MemberProps } from '../types/types'
+import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleDeleteMember = async ({
@@ -31,7 +32,7 @@ export const handleDeleteMember = async ({
                 label: 'Nutzersession ungültig. Bitte melde Dich erneut an.',
             })
             setIsLoggedIn(false)
-            setItemInSessionStorage('isLoggedIn', false)
+            setItemInLocalStorage('isLoggedIn', false)
             navigate('/')
             return
         }

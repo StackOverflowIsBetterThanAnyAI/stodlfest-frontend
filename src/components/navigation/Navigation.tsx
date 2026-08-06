@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LuLogOut } from 'react-icons/lu'
+import logo from '../../assets/stodlfest.png'
 import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import { useToast } from '../../context/ToastContext'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
-import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
-import logo from './../../assets/stodlfest.png'
+import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const Navigation = () => {
     const SCREEN_WIDTH = useScreenWidth()
@@ -27,7 +27,7 @@ const Navigation = () => {
     const handleLogout = () => {
         showToast({ label: 'Erfolgreich abgemeldet.' })
         setIsLoggedIn(false)
-        setItemInSessionStorage('isLoggedIn', false)
+        setItemInLocalStorage('isLoggedIn', false)
     }
 
     return (
