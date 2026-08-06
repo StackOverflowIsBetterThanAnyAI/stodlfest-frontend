@@ -243,12 +243,12 @@ const Login = () => {
                     >
                         * erforderlich
                     </em>
-                    <div className="min-w-32 w-full flex gap-2 items-center outline outline-zinc-500 rounded-lg pr-2">
+                    <div className="min-w-32 w-full flex gap-2 items-center outline outline-zinc-500 rounded-lg pr-2 focus-within:outline-zinc-200 focus-within:outline-2">
                         <input
                             type={`${isPasswordVisible ? 'text' : 'password'}`}
                             placeholder={`${isPasswordVisible ? 'Passwort' : '••••••••••••••••'}`}
                             id="password"
-                            className="w-full rounded-md px-2 py-1 hover:bg-slate-700/40 text-sm md:text-base"
+                            className="w-full rounded-md px-2 py-1 hover:bg-slate-700/40 text-sm md:text-base outline-0!"
                             onChange={handleChangePassword}
                             onKeyDown={handleKeyDown}
                             autoComplete={`${
@@ -309,12 +309,12 @@ const Login = () => {
                         >
                             * erforderlich
                         </em>
-                        <div className="min-w-32 w-full flex gap-2 items-center outline outline-zinc-500 rounded-lg pr-2">
+                        <div className="min-w-32 w-full flex gap-2 items-center outline outline-zinc-500 rounded-lg pr-2 focus-within:outline-zinc-200 focus-within:outline-2">
                             <input
                                 type={`${isPasswordVisible ? 'text' : 'password'}`}
                                 placeholder={`${isPasswordVisible ? 'Passwort' : '••••••••••••••••'}`}
                                 id="confirmPassword"
-                                className="w-full rounded-md px-2 py-1 not-disabled:hover:bg-slate-700/40 text-sm md:text-base"
+                                className="w-full rounded-md px-2 py-1 not-disabled:hover:bg-slate-700/40 text-sm md:text-base outline-0!"
                                 onChange={handleChangeConfirmPassword}
                                 onKeyDown={handleKeyDown}
                                 autoComplete="current-password"
