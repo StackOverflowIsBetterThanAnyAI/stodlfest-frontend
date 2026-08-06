@@ -104,7 +104,7 @@ const Navigation = () => {
                                     Vorbereitung
                                 </Link>
                                 <button
-                                    className="flex gap-2 justify-center items-center px-2 primary-text-pseudo-secondary"
+                                    className="flex gap-2 justify-center items-center px-2 outline-2 outline-zinc-500 primary-text-pseudo-secondary"
                                     onClick={handleLogout}
                                 >
                                     <span className="max-lg:sr-only">
@@ -145,7 +145,7 @@ const Navigation = () => {
                                 Vorbereitung
                             </Link>
                             <button
-                                className="flex gap-2 justify-center items-center px-2 primary-text-pseudo-secondary"
+                                className="flex gap-2 justify-center items-center px-2 outline-2 outline-zinc-500 primary-text-pseudo-secondary"
                                 onClick={handleLogout}
                             >
                                 <span>Abmelden</span>
