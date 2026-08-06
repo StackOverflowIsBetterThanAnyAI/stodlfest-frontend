@@ -1,4 +1,5 @@
 import { useContext, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import FormSwitch from './../components/form/FormSwitch'
 import HeaderMain from '../components/header/HeaderMain'
 import ListButton from '../components/list/ListButton'
@@ -12,6 +13,7 @@ import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 const Login = () => {
     const parsedSessionData = getStoredSessionData()
+    const navigate = useNavigate()
     const { showToast } = useToast()
 
     const USERNAME_MINLENGTH = 5
@@ -88,6 +90,7 @@ const Login = () => {
 
         if (isSigningUp) {
             handleSignUp({
+                navigate,
                 password,
                 setIsLoading,
                 setIsLoggedIn,
@@ -97,6 +100,7 @@ const Login = () => {
             })
         } else {
             handleLogin({
+                navigate,
                 password,
                 setIsLoading,
                 setIsLoggedIn,

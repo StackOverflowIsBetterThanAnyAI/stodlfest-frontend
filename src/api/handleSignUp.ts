@@ -3,6 +3,7 @@ import type { handleSignUpProps, TokenProps } from '../types/types'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 
 export const handleSignUp = async ({
+    navigate,
     password,
     setIsLoading,
     setIsLoggedIn,
@@ -42,6 +43,7 @@ export const handleSignUp = async ({
         setItemInLocalStorage('refreshToken', refresh)
         setIsLoggedIn(true)
         setItemInLocalStorage('isLoggedIn', true)
+        navigate('/')
     } catch {
         showToast({
             label: 'Beim Erstellen dieses Accounts ist ein Fehler aufgetreten.',

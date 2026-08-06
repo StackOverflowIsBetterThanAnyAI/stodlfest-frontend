@@ -282,6 +282,7 @@ export type handleApplyUpdateTaskProps = {
 }
 
 export type handleLoginProps = {
+    navigate: NavigateFunction
     password: string
     setIsLoading: (value: React.SetStateAction<boolean>) => void
     setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void
@@ -291,6 +292,7 @@ export type handleLoginProps = {
 }
 
 export type handleSignUpProps = {
+    navigate: NavigateFunction
     password: string
     setIsLoading: (value: React.SetStateAction<boolean>) => void
     setIsLoggedIn: (value: React.SetStateAction<boolean | undefined>) => void

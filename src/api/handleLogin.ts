@@ -3,6 +3,7 @@ import type { handleLoginProps, TokenProps } from '../types/types'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 
 export const handleLogin = async ({
+    navigate,
     password,
     setIsLoading,
     setIsLoggedIn,
@@ -38,6 +39,7 @@ export const handleLogin = async ({
         setItemInLocalStorage('refreshToken', refresh)
         setIsLoggedIn(true)
         setItemInLocalStorage('isLoggedIn', true)
+        navigate('/')
     } catch {
         showToast({
             label: 'Beim Anmelden ist ein Fehler aufgetreten.',
