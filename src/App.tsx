@@ -30,54 +30,27 @@ const AppContent = () => {
         <div className="flex flex-col min-h-screen bg-linear-to-b from-slate-900 to-slate-800 text-zinc-100 primary-text">
             <Navigation />
             <Routes>
-                <Route path="/" element={isLoggedIn ? <Home /> : <Login />} />
-                {!isLoggedIn && <Route path="*" element={<Login />} />}
-                <Route
-                    path="/arbeitseinteilung"
-                    element={
-                        isLoggedIn ? (
-                            <Arbeitseinteilung />
-                        ) : (
-                            <Navigate to="/" replace />
-                        )
-                    }
-                />
-                <Route
-                    path="/mitglieder"
-                    element={
-                        isLoggedIn ? (
-                            <Mitglieder />
-                        ) : (
-                            <Navigate to="/" replace />
-                        )
-                    }
-                />
-                <Route
-                    path="/aufgaben"
-                    element={
-                        isLoggedIn ? <Aufgaben /> : <Navigate to="/" replace />
-                    }
-                />
-                <Route
-                    path="/vorbereitung"
-                    element={
-                        isLoggedIn ? (
-                            <Vorbereitung />
-                        ) : (
-                            <Navigate to="/" replace />
-                        )
-                    }
-                />
-                <Route
-                    path="*"
-                    element={
-                        isLoggedIn ? (
-                            <FourOhFour />
-                        ) : (
-                            <Navigate to="/" replace />
-                        )
-                    }
-                />
+                {isLoggedIn ? (
+                    <>
+                        <Route path="/" element={<Home />} />
+                        <Route
+                            path="/arbeitseinteilung"
+                            element={<Arbeitseinteilung />}
+                        />
+                        <Route path="/mitglieder" element={<Mitglieder />} />
+                        <Route path="/aufgaben" element={<Aufgaben />} />
+                        <Route
+                            path="/vorbereitung"
+                            element={<Vorbereitung />}
+                        />
+                        <Route path="*" element={<FourOhFour />} />
+                    </>
+                ) : (
+                    <>
+                        <Route path="/" element={<Login />} />
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </>
+                )}
             </Routes>
             <ChatbotWidget />
             <Footer />
