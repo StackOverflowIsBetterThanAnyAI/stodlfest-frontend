@@ -60,7 +60,9 @@ const App = () => {
         <ToastProvider>
             <BrowserRouter>
                 <IsLoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
-                    <ChatbotProvider>
+                    <ChatbotProvider
+                        key={isLoggedIn ? 'user-logged-in' : 'user-logged-out'}
+                    >
                         <AppContent />
                     </ChatbotProvider>
                 </IsLoggedInContext.Provider>
