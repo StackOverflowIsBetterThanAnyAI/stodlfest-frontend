@@ -15,7 +15,6 @@ import { getStoredLocalData } from '../../utils/getStoredLocalData'
 import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
-    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -35,15 +34,6 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedLocalData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInLocalStorage('accessToken', '')
-        return ''
-    })
-
     const [isEdit, setIsEdit] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [updatedDescription, setUpdatedDescription] = useState<string>(
@@ -56,6 +46,16 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         handleApplyUpdateTask({
             accessToken,
             navigate,
@@ -94,6 +94,88 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
     }
     const handleUpdateTask = (e: ChangeEvent<HTMLInputElement>) => {
         setUpdatedTask(e.target.value)
+    }
+
+    const handleRestore = () => {
+        if (!props.allowRestore) {
+            return
+        }
+
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
+        handleRestoreCompletedTask({
+            accessToken,
+            completedTasks: props.completedTasks,
+            navigate,
+            setCompletedTasks: props.setCompletedTasks,
+            setIsLoading,
+            setIsLoggedIn,
+            setUpcomingTasks: setUpcomingTasks,
+            showToast,
+            task,
+        })
+    }
+    const handleDelete = () => {
+        if (!props.allowDelete) {
+            return
+        }
+
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
+        handleDeleteCompletedTask({
+            accessToken,
+            navigate,
+            setCompletedTasks: props.setCompletedTasks,
+            setIsLoading,
+            setIsLoggedIn,
+            showToast,
+            task,
+            completedTasks: props.completedTasks,
+        })
+    }
+    const handleComplete = () => {
+        if (!props.allowComplete) {
+            return
+        }
+
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
+        handleCompleteTask({
+            accessToken,
+            navigate,
+            setCompletedTasks: props.setCompletedTasks,
+            setIsLoading,
+            setIsLoggedIn,
+            setUpcomingTasks: props.setUpcomingTasks,
+            showToast,
+            task,
+            completedTasks: props.completedTasks,
+            upcomingTasks: props.upcomingTasks,
+        })
     }
 
     return isEdit ? (
@@ -218,19 +300,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             <div className="flex flex-wrap justify-evenly gap-x-4 gap-y-3 pt-4 pb-1 border-t-2 border-zinc-200/50">
                 {props.allowRestore ? (
                     <ListButton
-                        handleClick={() =>
-                            handleRestoreCompletedTask({
-                                accessToken,
-                                completedTasks: props.completedTasks,
-                                navigate,
-                                setCompletedTasks: props.setCompletedTasks,
-                                setIsLoading,
-                                setIsLoggedIn,
-                                setUpcomingTasks: setUpcomingTasks,
-                                showToast: props.showToast,
-                                task,
-                            })
-                        }
+                        handleClick={handleRestore}
                         index={index}
                         isLoading={isLoading}
                         label="Wiederherstellen"
@@ -239,18 +309,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 ) : undefined}
                 {props.allowDelete ? (
                     <ListButton
-                        handleClick={() =>
-                            handleDeleteCompletedTask({
-                                accessToken,
-                                navigate,
-                                setCompletedTasks: props.setCompletedTasks,
-                                setIsLoading,
-                                setIsLoggedIn,
-                                showToast: props.showToast,
-                                task,
-                                completedTasks: props.completedTasks,
-                            })
-                        }
+                        handleClick={handleDelete}
                         index={index}
                         isLoading={isLoading}
                         label="Löschen"
@@ -268,20 +327,7 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
                 ) : undefined}
                 {props.allowComplete ? (
                     <ListButton
-                        handleClick={() =>
-                            handleCompleteTask({
-                                accessToken,
-                                navigate,
-                                setCompletedTasks: props.setCompletedTasks,
-                                setIsLoading,
-                                setIsLoggedIn,
-                                setUpcomingTasks: props.setUpcomingTasks,
-                                showToast: props.showToast,
-                                task,
-                                completedTasks: props.completedTasks,
-                                upcomingTasks: props.upcomingTasks,
-                            })
-                        }
+                        handleClick={handleComplete}
                         isLoading={isLoading}
                         index={index}
                         label="Erledigt"

@@ -14,7 +14,6 @@ import { getStoredLocalData } from '../../utils/getStoredLocalData'
 import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
-    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -42,15 +41,6 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedLocalData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInLocalStorage('accessToken', '')
-        return ''
-    })
-
     const JOB_LENGTH = 63
     const SCREEN_WIDTH = useScreenWidth()
 
@@ -63,6 +53,17 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         handleApplyUpdateJob({
             accessToken,
             allJobs,
@@ -87,6 +88,16 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
         setIsEdit(false)
     }
     const handleDelete = async () => {
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         handleDeleteJob({
             accessToken,
             allJobs,

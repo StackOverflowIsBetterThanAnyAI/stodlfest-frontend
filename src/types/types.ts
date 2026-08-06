@@ -342,6 +342,16 @@ export type ListPriorityType = {
     priority: PriorityType
 }
 
+export type ListButtonProps = {
+    handleClick: () => void
+    index?: number
+    isLoading: boolean
+    label: string
+    type: 'refresh' | 'regular' | 'form'
+    isDisabled?: boolean
+    isSubmit?: boolean
+}
+
 type BaseListTaskProps = {
     tasks: TaskProps[]
     ariaLabel: string
@@ -358,7 +368,6 @@ type CompleteProps =
           >
           completedTasks: TaskProps[]
           upcomingTasks: TaskProps[]
-          showToast: (props: ToastProps) => void
       }
     | {
           allowComplete?: false
@@ -370,7 +379,6 @@ type DeleteProps =
           setCompletedTasks: React.Dispatch<
               React.SetStateAction<TaskProps[] | []>
           >
-          showToast: (props: ToastProps) => void
           completedTasks: TaskProps[]
       }
     | {
@@ -391,7 +399,6 @@ type RestoreType =
           setCompletedTasks: React.Dispatch<
               React.SetStateAction<TaskProps[] | []>
           >
-          showToast: (props: ToastProps) => void
           completedTasks: TaskProps[]
       }
     | {
@@ -403,16 +410,6 @@ export type ListTaskProps = BaseListTaskProps &
     EditProps &
     DeleteProps &
     RestoreType
-
-export type ListButtonProps = {
-    handleClick: () => void
-    index?: number
-    isLoading: boolean
-    label: string
-    type: 'refresh' | 'regular' | 'form'
-    isDisabled?: boolean
-    isSubmit?: boolean
-}
 
 export type ListTaskItemProps = {
     props: ListTaskProps

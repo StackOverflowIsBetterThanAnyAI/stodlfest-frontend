@@ -12,7 +12,6 @@ import { getStoredLocalData } from '../../utils/getStoredLocalData'
 import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListAllJobs = () => {
-    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -34,16 +33,17 @@ const ListAllJobs = () => {
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedLocalData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInLocalStorage('accessToken', '')
-        return ''
-    })
-
     const fetchAllJobs = useCallback(async () => {
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         handleFetchAllJobs({
             accessToken,
             navigate,
@@ -52,14 +52,7 @@ const ListAllJobs = () => {
             setIsLoggedIn,
             showToast,
         })
-    }, [
-        accessToken,
-        navigate,
-        setAllJobs,
-        setIsLoading,
-        setIsLoggedIn,
-        showToast,
-    ])
+    }, [navigate, setAllJobs, setIsLoading, setIsLoggedIn, showToast])
 
     useEffect(() => {
         fetchAllJobs()

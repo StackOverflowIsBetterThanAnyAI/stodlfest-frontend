@@ -12,7 +12,6 @@ import { getStoredLocalData } from '../../utils/getStoredLocalData'
 import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListAllMembers = () => {
-    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -34,16 +33,17 @@ const ListAllMembers = () => {
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedLocalData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInLocalStorage('accessToken', '')
-        return ''
-    })
-
     const fetchAllMembers = useCallback(async () => {
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         handleFetchAllMembers({
             accessToken,
             navigate,
@@ -52,14 +52,7 @@ const ListAllMembers = () => {
             setIsLoggedIn,
             showToast,
         })
-    }, [
-        accessToken,
-        navigate,
-        setAllMembers,
-        setIsLoading,
-        setIsLoggedIn,
-        showToast,
-    ])
+    }, [navigate, setAllMembers, setIsLoading, setIsLoggedIn, showToast])
 
     useEffect(() => {
         fetchAllMembers()

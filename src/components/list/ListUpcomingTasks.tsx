@@ -13,7 +13,6 @@ import { getStoredLocalData } from '../../utils/getStoredLocalData'
 import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListUpcomingTasks = () => {
-    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -41,18 +40,19 @@ const ListUpcomingTasks = () => {
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedLocalData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInLocalStorage('accessToken', '')
-        return ''
-    })
-
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const fetchUpcomingTasks = useCallback(async () => {
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         handleFetchUpcomingTasks({
             accessToken,
             navigate,
@@ -63,7 +63,6 @@ const ListUpcomingTasks = () => {
             showToast,
         })
     }, [
-        accessToken,
         navigate,
         setCompletedTasks,
         setIsLoading,
@@ -96,7 +95,6 @@ const ListUpcomingTasks = () => {
                     setUpcomingTasks={setUpcomingTasks}
                     completedTasks={completedTasks}
                     upcomingTasks={upcomingTasks}
-                    showToast={showToast}
                     tasks={upcomingTasks}
                 />
             ) : (

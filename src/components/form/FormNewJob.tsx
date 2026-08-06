@@ -14,7 +14,6 @@ import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const FormNewJob = () => {
-    const parsedLocalData = getStoredLocalData()
     const parsedSessionData = getStoredSessionData()
     const navigate = useNavigate()
     const { showToast } = useToast()
@@ -34,15 +33,6 @@ const FormNewJob = () => {
         )
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
-
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedLocalData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInLocalStorage('accessToken', '')
-        return ''
-    })
 
     const JOB_LENGTH = 63
 
@@ -104,6 +94,16 @@ const FormNewJob = () => {
         setItemInSessionStorage('requiresLegalAgeAdd', e.target.value)
     }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         handleAddNewJob({
             accessToken,
             e,

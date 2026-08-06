@@ -13,7 +13,6 @@ import { getStoredLocalData } from '../../utils/getStoredLocalData'
 import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
 
 const ListCompletedTasks = () => {
-    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -43,16 +42,17 @@ const ListCompletedTasks = () => {
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedLocalData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInLocalStorage('accessToken', '')
-        return ''
-    })
-
     const fetchUpcomingTasks = async () => {
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         handleFetchUpcomingTasks({
             accessToken,
             navigate,
@@ -82,7 +82,6 @@ const ListCompletedTasks = () => {
                     ariaLabel="Erledigte Aufgaben"
                     completedTasks={completedTasks}
                     setCompletedTasks={setCompletedTasks}
-                    showToast={showToast}
                     tasks={completedTasks}
                 />
             ) : (

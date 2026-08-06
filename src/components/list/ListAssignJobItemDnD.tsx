@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { handleAssignMemberToJob } from '../../api/handleAssignMemberToJob'
 import { IsLoggedInContext } from '../../context/IsLoggedInContext'
@@ -21,7 +21,6 @@ const ListAssignJobItemDnD = ({
     setIsLoading,
     showToast,
 }: ListAssignJobItemDnDProps) => {
-    const parsedLocalData = getStoredLocalData()
     const navigate = useNavigate()
 
     const isLoggedInContext = useContext(IsLoggedInContext)
@@ -31,15 +30,6 @@ const ListAssignJobItemDnD = ({
         )
     }
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
-
-    const [accessToken, _setAccessToken] = useState<string>(() => {
-        const data = parsedLocalData?.accessToken
-        if (data?.length && typeof data === 'string') {
-            return data
-        }
-        setItemInLocalStorage('accessToken', '')
-        return ''
-    })
 
     const handleDragStart = (
         e: React.DragEvent<HTMLLIElement>,
@@ -99,6 +89,16 @@ const ListAssignJobItemDnD = ({
             }
         }
 
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+
         await handleAssignMemberToJob({
             accessToken,
             allMembers,
@@ -137,6 +137,16 @@ const ListAssignJobItemDnD = ({
                 return
             }
         }
+
+        const accessToken = (() => {
+            const parsedLocalData = getStoredLocalData()
+            const data = parsedLocalData?.accessToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
 
         await handleAssignMemberToJob({
             accessToken,
