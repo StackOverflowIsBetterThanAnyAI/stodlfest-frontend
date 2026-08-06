@@ -53,7 +53,7 @@ export const handleBotResponse = async ({
         ]
         setChatHistory(updatedChatHistory)
         setItemInSessionStorage('chatHistory', updatedChatHistory)
-    } catch (_error) {
+    } catch {
         const updatedChatHistory: ChatHistoryType[] = [
             ...chatHistory,
             {
