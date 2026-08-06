@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import Arbeitseinteilung from './pages/Arbeitseinteilung'
 import Aufgaben from './pages/Aufgaben'
+import FourOhFour from './pages/FourOhFour'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Mitglieder from './pages/Mitglieder'
@@ -67,7 +68,16 @@ const AppContent = () => {
                         )
                     }
                 />
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route
+                    path="*"
+                    element={
+                        isLoggedIn ? (
+                            <FourOhFour />
+                        ) : (
+                            <Navigate to="/" replace />
+                        )
+                    }
+                />
             </Routes>
             <ChatbotWidget />
             <Footer />
