@@ -124,6 +124,7 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
         setChatHistory(updatedChatHistory)
         setItemInSessionStorage('chatHistory', updatedChatHistory)
         setQuestion('')
+        setItemInSessionStorage('chatQuestion', '')
         triggerBotResponse(updatedChatHistory)
     }
 
