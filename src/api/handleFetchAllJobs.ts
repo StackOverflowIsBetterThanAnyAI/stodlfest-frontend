@@ -1,11 +1,13 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleFetchAllJobsProps, JobProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleFetchAllJobs = async ({
     accessToken,
     navigate,
+    refreshToken,
     setAllJobs,
     setIsLoading,
     setIsLoggedIn,
@@ -17,7 +19,7 @@ export const handleFetchAllJobs = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/jobs/`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                 'Content-Type': 'application/json',
             },
         })

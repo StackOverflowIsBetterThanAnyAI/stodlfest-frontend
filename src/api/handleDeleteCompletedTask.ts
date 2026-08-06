@@ -1,11 +1,13 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleDeleteCompletedTaskProps, TaskProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleDeleteCompletedTask = async ({
     accessToken,
     navigate,
+    refreshToken,
     setCompletedTasks,
     setIsLoading,
     setIsLoggedIn,
@@ -21,7 +23,7 @@ export const handleDeleteCompletedTask = async ({
             {
                 method: 'DELETE',
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ finished: true }),

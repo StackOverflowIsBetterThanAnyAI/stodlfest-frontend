@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { ChatHistoryType, handleBotResponseProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
@@ -7,6 +8,7 @@ export const handleBotResponse = async ({
     accessToken,
     chatHistory,
     navigate,
+    refreshToken,
     setChatHistory,
     setIsLoading,
     setIsLoggedIn,
@@ -17,7 +19,7 @@ export const handleBotResponse = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/chat/`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(chatHistory),

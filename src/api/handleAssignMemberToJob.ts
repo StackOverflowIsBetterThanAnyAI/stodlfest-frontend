@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleAssignMemberToJobProps, MemberProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
@@ -9,6 +10,7 @@ export const handleAssignMemberToJob = async ({
     job,
     member,
     navigate,
+    refreshToken,
     setAllMembers,
     setIsLoading,
     setIsLoggedIn,
@@ -26,7 +28,7 @@ export const handleAssignMemberToJob = async ({
             {
                 method: 'PATCH',
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ job_id: newJobValue }),

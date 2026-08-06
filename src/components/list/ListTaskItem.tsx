@@ -46,8 +46,9 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
@@ -55,10 +56,19 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             setItemInLocalStorage('accessToken', '')
             return ''
         })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
+            return ''
+        })()
 
         handleApplyUpdateTask({
             accessToken,
             navigate,
+            refreshToken,
             setIsEdit,
             setIsLoading,
             setIsLoggedIn,
@@ -101,8 +111,8 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             return
         }
 
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
@@ -110,11 +120,20 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             setItemInLocalStorage('accessToken', '')
             return ''
         })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
+            return ''
+        })()
 
         handleRestoreCompletedTask({
             accessToken,
             completedTasks: props.completedTasks,
             navigate,
+            refreshToken,
             setCompletedTasks: props.setCompletedTasks,
             setIsLoading,
             setIsLoggedIn,
@@ -128,8 +147,8 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             return
         }
 
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
@@ -137,10 +156,19 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             setItemInLocalStorage('accessToken', '')
             return ''
         })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
+            return ''
+        })()
 
         handleDeleteCompletedTask({
             accessToken,
             navigate,
+            refreshToken,
             setCompletedTasks: props.setCompletedTasks,
             setIsLoading,
             setIsLoggedIn,
@@ -154,8 +182,8 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             return
         }
 
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
@@ -163,10 +191,19 @@ const ListTaskItem = ({ props, task, index }: ListTaskItemProps) => {
             setItemInLocalStorage('accessToken', '')
             return ''
         })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
+            return ''
+        })()
 
         handleCompleteTask({
             accessToken,
             navigate,
+            refreshToken,
             setCompletedTasks: props.setCompletedTasks,
             setIsLoading,
             setIsLoggedIn,

@@ -94,13 +94,21 @@ const FormNewJob = () => {
         setItemInSessionStorage('requiresLegalAgeAdd', e.target.value)
     }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
             }
             setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
             return ''
         })()
 
@@ -109,6 +117,7 @@ const FormNewJob = () => {
             e,
             job,
             navigate,
+            refreshToken,
             requiresLegalAge,
             setAllJobs,
             setIsLoading,

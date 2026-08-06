@@ -89,8 +89,8 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
 
     const triggerBotResponse = useCallback(
         async (history: ChatHistoryType[]) => {
+            const parsedLocalData = getStoredLocalData()
             const accessToken = (() => {
-                const parsedLocalData = getStoredLocalData()
                 const data = parsedLocalData?.accessToken
                 if (data?.length && typeof data === 'string') {
                     return data
@@ -98,10 +98,20 @@ export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
                 setItemInLocalStorage('accessToken', '')
                 return ''
             })()
+            const refreshToken = (() => {
+                const data = parsedLocalData?.refreshToken
+                if (data?.length && typeof data === 'string') {
+                    return data
+                }
+                setItemInLocalStorage('refreshToken', '')
+                return ''
+            })()
+
             handleBotResponse({
                 accessToken,
                 chatHistory: history,
                 navigate,
+                refreshToken,
                 setChatHistory,
                 setIsLoading,
                 setIsLoggedIn,

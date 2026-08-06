@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleDeleteMemberProps, MemberProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
@@ -8,6 +9,7 @@ export const handleDeleteMember = async ({
     allMembers,
     member,
     navigate,
+    refreshToken,
     setAllMembers,
     setIsLoading,
     setIsLoggedIn,
@@ -21,7 +23,7 @@ export const handleDeleteMember = async ({
             {
                 method: 'DELETE',
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                     'Content-Type': 'application/json',
                 },
             }

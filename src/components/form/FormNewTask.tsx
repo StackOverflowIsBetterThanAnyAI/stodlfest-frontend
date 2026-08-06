@@ -90,8 +90,8 @@ const FormNewTask = () => {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
@@ -99,13 +99,22 @@ const FormNewTask = () => {
             setItemInLocalStorage('accessToken', '')
             return ''
         })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
+            return ''
+        })()
 
         handleAddNewTask({
             accessToken,
             e,
             description,
-            priority,
             navigate,
+            priority,
+            refreshToken,
             setDescription,
             setIsLoading,
             setIsLoggedIn,

@@ -88,13 +88,21 @@ const FormNewMember = () => {
         setIsSubmitDisabled(!input.length || !name.length)
     }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
             }
             setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
             return ''
         })()
 
@@ -104,6 +112,7 @@ const FormNewMember = () => {
             age,
             name,
             navigate,
+            refreshToken,
             setAge,
             setAllMembers,
             setIsLoading,

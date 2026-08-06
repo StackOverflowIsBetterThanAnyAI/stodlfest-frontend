@@ -4,6 +4,7 @@ import type {
     JobProps,
     MemberProps,
 } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
@@ -13,6 +14,7 @@ export const handleApplyUpdateJob = async ({
     allMembers,
     job,
     navigate,
+    refreshToken,
     setAllJobs,
     setAllMembers,
     setIsEdit,
@@ -38,7 +40,7 @@ export const handleApplyUpdateJob = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/jobs/${job.id}/`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({

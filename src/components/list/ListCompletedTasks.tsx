@@ -43,8 +43,8 @@ const ListCompletedTasks = () => {
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
     const fetchUpcomingTasks = async () => {
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
@@ -52,10 +52,19 @@ const ListCompletedTasks = () => {
             setItemInLocalStorage('accessToken', '')
             return ''
         })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
+            return ''
+        })()
 
         handleFetchUpcomingTasks({
             accessToken,
             navigate,
+            refreshToken,
             setCompletedTasks,
             setIsLoading,
             setIsLoggedIn,

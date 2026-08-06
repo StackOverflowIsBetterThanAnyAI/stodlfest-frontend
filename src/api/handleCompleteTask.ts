@@ -1,11 +1,13 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleCompleteTaskProps, TaskProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleCompleteTask = async ({
     accessToken,
     navigate,
+    refreshToken,
     setCompletedTasks,
     setIsLoading,
     setIsLoggedIn,
@@ -23,7 +25,7 @@ export const handleCompleteTask = async ({
             {
                 method: 'PATCH',
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ finished: true }),

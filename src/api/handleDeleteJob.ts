@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleDeleteJobProps, JobProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
@@ -9,6 +10,7 @@ export const handleDeleteJob = async ({
     allMembers,
     job,
     navigate,
+    refreshToken,
     setAllJobs,
     setAllMembers,
     setIsLoading,
@@ -21,7 +23,7 @@ export const handleDeleteJob = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/jobs/${job.id}/`, {
             method: 'DELETE',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                 'Content-Type': 'application/json',
             },
         })

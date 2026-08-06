@@ -54,13 +54,21 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
             }
             setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
             return ''
         })()
 
@@ -70,6 +78,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
             allMembers,
             job,
             navigate,
+            refreshToken,
             setAllJobs,
             setAllMembers,
             setIsEdit,
@@ -88,13 +97,21 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
         setIsEdit(false)
     }
     const handleDelete = async () => {
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
             }
             setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
             return ''
         })()
 
@@ -104,6 +121,7 @@ const ListJobsItem = ({ index, job }: ListJobsItemProps) => {
             allMembers,
             job,
             navigate,
+            refreshToken,
             setAllJobs,
             setAllMembers,
             setIsLoading,

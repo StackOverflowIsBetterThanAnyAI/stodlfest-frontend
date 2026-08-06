@@ -1,11 +1,13 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleFetchUpcomingTasksProps, TaskProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleFetchUpcomingTasks = async ({
     accessToken,
     navigate,
+    refreshToken,
     setCompletedTasks,
     setIsLoading,
     setIsLoggedIn,
@@ -18,7 +20,7 @@ export const handleFetchUpcomingTasks = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/tasks/`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                 'Content-Type': 'application/json',
             },
         })

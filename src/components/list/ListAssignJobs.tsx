@@ -44,8 +44,8 @@ const ListAssignJobs = () => {
     const [_isLoggedIn, setIsLoggedIn] = isLoggedInContext
 
     const fetchAllJobsAndMembers = useCallback(async () => {
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
@@ -53,10 +53,19 @@ const ListAssignJobs = () => {
             setItemInLocalStorage('accessToken', '')
             return ''
         })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
+            return ''
+        })()
 
         handleFetchAllJobs({
             accessToken,
             navigate,
+            refreshToken,
             setAllJobs,
             setIsLoading,
             setIsLoggedIn,
@@ -65,6 +74,7 @@ const ListAssignJobs = () => {
         handleFetchAllMembers({
             accessToken,
             navigate,
+            refreshToken,
             setAllMembers,
             setIsLoading,
             setIsLoggedIn,

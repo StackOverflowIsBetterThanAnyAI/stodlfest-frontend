@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleAddNewTaskProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
@@ -9,6 +10,7 @@ export const handleAddNewTask = async ({
     description,
     priority,
     navigate,
+    refreshToken,
     setDescription,
     setIsLoading,
     setIsLoggedIn,
@@ -33,7 +35,7 @@ export const handleAddNewTask = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/tasks/`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(taskData),

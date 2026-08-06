@@ -1,11 +1,13 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleFetchAllMembersProps, MemberProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleFetchAllMembers = async ({
     accessToken,
     navigate,
+    refreshToken,
     setAllMembers,
     setIsLoading,
     setIsLoggedIn,
@@ -17,7 +19,7 @@ export const handleFetchAllMembers = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/members/`, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                 'Content-Type': 'application/json',
             },
         })

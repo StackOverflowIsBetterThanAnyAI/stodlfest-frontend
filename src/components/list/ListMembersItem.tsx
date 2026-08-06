@@ -32,13 +32,21 @@ const ListMembersItem = ({ index, member }: ListMembersItemProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const deleteMember = async () => {
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
             }
             setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
             return ''
         })()
 
@@ -47,6 +55,7 @@ const ListMembersItem = ({ index, member }: ListMembersItemProps) => {
             allMembers,
             member,
             navigate,
+            refreshToken,
             setAllMembers,
             setIsLoading,
             setIsLoggedIn,

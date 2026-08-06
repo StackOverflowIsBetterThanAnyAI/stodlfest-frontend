@@ -1,11 +1,13 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleApplyUpdateTaskProps, TaskProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
 export const handleApplyUpdateTask = async ({
     accessToken,
     navigate,
+    refreshToken,
     setIsEdit,
     setIsLoading,
     setIsLoggedIn,
@@ -34,7 +36,7 @@ export const handleApplyUpdateTask = async ({
             {
                 method: 'PATCH',
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({

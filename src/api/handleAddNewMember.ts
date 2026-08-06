@@ -1,5 +1,6 @@
 import { SERVER_ADDRESS } from '../constants/constants'
 import type { handleAddNewMemberProps, MemberProps } from '../types/types'
+import { getValidAccessToken } from '../utils/getValidAccessToken'
 import { setItemInLocalStorage } from '../utils/setItemInLocalStorage'
 import { setItemInSessionStorage } from '../utils/setItemInSessionStorage'
 
@@ -9,6 +10,7 @@ export const handleAddNewMember = async ({
     age,
     name,
     navigate,
+    refreshToken,
     setAge,
     setAllMembers,
     setIsLoading,
@@ -33,7 +35,7 @@ export const handleAddNewMember = async ({
         const response = await fetch(`${SERVER_ADDRESS}/api/members/`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${await getValidAccessToken({ accessToken, refreshToken })}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(memberData),

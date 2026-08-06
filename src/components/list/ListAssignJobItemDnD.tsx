@@ -89,13 +89,21 @@ const ListAssignJobItemDnD = ({
             }
         }
 
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
             }
             setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
             return ''
         })()
 
@@ -105,6 +113,7 @@ const ListAssignJobItemDnD = ({
             job,
             member: draggedMember,
             navigate,
+            refreshToken,
             setAllMembers,
             setIsLoading,
             setIsLoggedIn,
@@ -138,13 +147,21 @@ const ListAssignJobItemDnD = ({
             }
         }
 
+        const parsedLocalData = getStoredLocalData()
         const accessToken = (() => {
-            const parsedLocalData = getStoredLocalData()
             const data = parsedLocalData?.accessToken
             if (data?.length && typeof data === 'string') {
                 return data
             }
             setItemInLocalStorage('accessToken', '')
+            return ''
+        })()
+        const refreshToken = (() => {
+            const data = parsedLocalData?.refreshToken
+            if (data?.length && typeof data === 'string') {
+                return data
+            }
+            setItemInLocalStorage('refreshToken', '')
             return ''
         })()
 
@@ -154,6 +171,7 @@ const ListAssignJobItemDnD = ({
             job,
             member: draggedMember,
             navigate,
+            refreshToken,
             setAllMembers,
             setIsLoading,
             setIsLoggedIn,
