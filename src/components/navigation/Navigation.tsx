@@ -5,10 +5,13 @@ import logo from '../../assets/stodlfest.png'
 import { IsLoggedInContext } from '../../context/IsLoggedInContext'
 import { useToast } from '../../context/ToastContext'
 import { useScreenWidth } from '../../hooks/useScreenWidth'
+import { getStoredSessionData } from '../../utils/getStoredSessionData'
 import { setItemInLocalStorage } from '../../utils/setItemInLocalStorage'
+import { setItemInSessionStorage } from '../../utils/setItemInSessionStorage'
 
 const Navigation = () => {
     const SCREEN_WIDTH = useScreenWidth()
+    const parsedSessionData = getStoredSessionData()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -30,6 +33,10 @@ const Navigation = () => {
         setItemInLocalStorage('isLoggedIn', false)
         showToast({ label: 'Erfolgreich abgemeldet.' })
         navigate('/')
+        const sessionStorageKeys = Object.keys(parsedSessionData)
+        for (const key in sessionStorageKeys) {
+            setItemInSessionStorage(sessionStorageKeys[key], null)
+        }
     }
 
     return (
