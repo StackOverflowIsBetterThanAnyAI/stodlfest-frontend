@@ -174,7 +174,7 @@ const FormNewJob = () => {
                 >
                     * erforderlich
                 </em>
-                <span className="flex justify-center items-end w-full gap-4">
+                <span className="flex justify-center items-center w-full gap-4">
                     <span
                         className="text-sm md:text-base w-3 md:w-4"
                         aria-hidden="true"
