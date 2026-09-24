@@ -13,7 +13,7 @@
         "fetch-loading": "^0.1.0",
         "jwt-decode": "^4.0.0",
         "katex": "^0.18.1",
-        "react": "^19.2.8",
+        "react": "^19.3.0",
         "react-dom": "^19.2.8",
         "react-icons": "^5.7.0",
         "react-markdown": "^10.1.0",
@@ -27,7 +27,7 @@
     "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@types/node": "^24.13.2",
-        "@types/react": "^19.2.18",
+        "@types/react": "^19.3.0",
         "@types/react-dom": "^19.2.4",
         "@vitejs/plugin-react": "^6.1.1",
         "eslint": "^10.11.0",
