@@ -7,7 +7,7 @@ const ChatMessageList = memo(
     ({ chatHistory, chatRef, isLoading }: ChatMessageListProps) => {
         return (
             <ul
-                className="flex flex-col gap-4 overflow-y-auto h-96 p-4 pt-2 scrollbar-thumb-zinc-200"
+                className="flex flex-col gap-4 overflow-y-auto h-[40dvh] max-h-96 p-4 pt-2 scrollbar-thumb-zinc-200"
                 aria-label="Chatverlauf mit Dieter.ai"
                 ref={chatRef}
             >
