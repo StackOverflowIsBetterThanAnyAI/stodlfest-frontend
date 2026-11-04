@@ -191,7 +191,7 @@ const Login = () => {
         <main className="max-w-7xl w-full mx-auto items-center p-4 md:p-8 flex flex-col gap-6 xs:gap-8">
             <HeaderMain label={isSigningUp ? 'Signup' : 'Login'} />
             <form
-                className="flex flex-col gap-6 md:gap-8 outline-2 outline-zinc-200 rounded-lg p-4 max-w-3xl w-full bg-slate-900"
+                className="flex flex-col gap-6 md:gap-8 outline-2 outline-zinc-200 rounded-lg p-4 max-w-xl w-full bg-slate-900"
                 autoComplete="on"
                 onSubmit={handleSubmit}
             >
