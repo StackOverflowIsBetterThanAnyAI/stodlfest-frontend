@@ -5,7 +5,8 @@
             "/arbeitseinteilung",
             "/aufgaben",
             "/mitglieder",
-            "/vorbereitung"
+            "/vorbereitung",
+            "/seite-nicht-gefunden"
         ],
         "excluded": []
     },
