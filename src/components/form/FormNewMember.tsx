@@ -66,7 +66,7 @@ const FormNewMember = () => {
     })
 
     const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(
-        !parsedSessionData?.surnameAdd?.length ||
+        !parsedSessionData?.nameAdd?.length ||
             !parsedSessionData?.surnameAdd?.length
     )
     const [isLoading, setIsLoading] = useState<boolean>(false)
