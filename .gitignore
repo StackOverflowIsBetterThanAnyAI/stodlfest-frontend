@@ -2,3 +2,5 @@ node_modules
 .env
 *.local
 dist
+cypress/screenshots
+cypress/videos
