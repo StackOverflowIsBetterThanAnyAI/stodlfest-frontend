@@ -1,0 +1,21 @@
+{
+    "config": {
+        "only": [],
+        "included": [
+            "/arbeitseinteilung",
+            "/aufgaben",
+            "/mitglieder",
+            "/vorbereitung"
+        ],
+        "excluded": []
+    },
+    "state": {
+        "localStorage": {
+            "stodlfest": {
+                "isLoggedIn": true,
+                "accessToken": "{{env.AUDIT_ACCESS_TOKEN}}",
+                "refreshToken": "{{env.AUDIT_REFRESH_TOKEN}}"
+            }
+        }
+    }
+}
